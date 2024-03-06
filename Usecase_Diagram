@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-03-06T08:05:40.769Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="uhBhh16KJcgxne1PSdl4" version="24.0.1" type="device">
+<mxfile host="app.diagrams.net" modified="2024-03-06T09:02:45.181Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="9K54zvbF68JCkyRcB5_1" version="24.0.2" type="device">
   <diagram name="Trang-1" id="CSJiYWNDMam5VDgcsUmr">
-    <mxGraphModel dx="1050" dy="618" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="292" dy="172" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -127,7 +127,7 @@
         <mxCell id="kGvJBDc9nKfldGlCOWaW-43" value="&lt;h1&gt;Use-case Diagram for YoloHome&lt;/h1&gt;" style="text;html=1;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="221" y="40" width="385" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="BoCNKVwcaZ8Ky1kUQKvI-5" value="User" style="shape=umlActor;verticalLabelPosition=top;verticalAlign=bottom;html=1;labelPosition=center;align=center;" parent="1" vertex="1">
+        <mxCell id="BoCNKVwcaZ8Ky1kUQKvI-5" value="Authenticated User" style="shape=umlActor;verticalLabelPosition=top;verticalAlign=bottom;html=1;labelPosition=center;align=center;" parent="1" vertex="1">
           <mxGeometry x="80" y="200" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="BoCNKVwcaZ8Ky1kUQKvI-6" value="Authenticate User" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
