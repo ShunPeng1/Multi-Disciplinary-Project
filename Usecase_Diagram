@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-03-07T12:27:33.692Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="2XLbf01OqmdlczgHsyX8" version="24.0.2" type="github">
+<mxfile host="app.diagrams.net" modified="2024-03-07T12:29:42.989Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="ntuhBv1rzgJF3B4PxSIQ" version="24.0.2" type="github">
   <diagram name="Trang-1" id="CSJiYWNDMam5VDgcsUmr">
     <mxGraphModel dx="1509" dy="813" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -175,7 +175,7 @@
             <mxPoint x="95" y="510" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="O5_tZGLfjPYYLa0cp90T-1" value="Authentication Sever" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+        <mxCell id="O5_tZGLfjPYYLa0cp90T-1" value="YoloHome&lt;div&gt;Verification Service&lt;/div&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
           <mxGeometry x="740" y="200" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="O5_tZGLfjPYYLa0cp90T-3" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="BoCNKVwcaZ8Ky1kUQKvI-6" target="O5_tZGLfjPYYLa0cp90T-1">
