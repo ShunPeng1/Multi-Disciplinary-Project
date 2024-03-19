@@ -1,0 +1,6 @@
+@YoloHomeAPI_HostAddress = http://localhost:5221
+
+GET {{YoloHomeAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
