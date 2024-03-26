@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 [ApiController]
 public class AuthenticationApiController : Controller
 {
-    private readonly IGameAuthenticationService _authenticationService;
+    private readonly IAuthenticationService _authenticationService;
     
-    public AuthenticationApiController(IGameAuthenticationService authenticationService)
+    public AuthenticationApiController(IAuthenticationService authenticationService)
     {
         _authenticationService = authenticationService;
     }

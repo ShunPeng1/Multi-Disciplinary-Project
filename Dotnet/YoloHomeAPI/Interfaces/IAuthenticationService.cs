@@ -1,6 +1,6 @@
 ﻿namespace YoloHomeAPI.Interfaces;
 
-public interface IGameAuthenticationService
+public interface IAuthenticationService
 {
     public class AuthenticationResult
     {

@@ -13,28 +13,31 @@ using YoloHomeAPI.Interfaces;
 namespace YoloHomeAPI.Services
 {
 
-    public class AuthenticationService : IGameAuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly Settings _settings;
-        private readonly YoloHomeDbContext _context;
+        //private readonly YoloHomeDbContext _context;
 
-        public AuthenticationService(YoloHomeDbContext context, Settings settings)
+        //public AuthenticationService(YoloHomeDbContext context, Settings settings)
+        public AuthenticationService(Settings settings)
         {
-            _context = context;
+            //_context = context;
             _settings = settings;
         }
 
-        public IGameAuthenticationService.AuthenticationResult Register(string username, string password)
+        public IAuthenticationService.AuthenticationResult Register(string username, string password)
         {
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
                 return new(false, "Username or password cannot be empty.", "");
             }
 
+            /*
             if (_context.Users.Any(x => x.UserName == username))
             {
                 return new(false, "Username already exists.", "");
             }
+            */
 
             var (hashedPassword, salt) = HashPassword(password);
 
@@ -45,20 +48,21 @@ namespace YoloHomeAPI.Services
                 PasswordSalt = salt
             };
 
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            //_context.Users.Add(user);
+            //_context.SaveChanges();
 
             return new(true, "User created successfully.", GenerateJwtToken(user.UserId.ToString()));
         }
 
 
-        public IGameAuthenticationService.AuthenticationResult Login(string username, string password)
+        public IAuthenticationService.AuthenticationResult Login(string username, string password)
         {
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
                 return new(false, "Username or password cannot be empty.", "");
             }
 
+            /*
             var user = _context.Users.SingleOrDefault(x => x.UserName == username);
 
             if (user == null)
@@ -70,8 +74,10 @@ namespace YoloHomeAPI.Services
             {
                 return new(false, "Username or password is incorrect.", "");
             }
-
             return new(true, "Login successful.", GenerateJwtToken(user.UserId.ToString()));
+            
+            */
+            return new(true, "Login successful.", GenerateJwtToken("123456789"));
         }
 
         private static (string hash, string salt) HashPassword(string password)

@@ -21,7 +21,7 @@ var settings = new Settings();
 builder.Configuration.Bind("Settings", settings);
 builder.Services.AddSingleton(settings);
 
-builder.Services.AddScoped<IGameAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
     {
@@ -47,9 +47,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 
-
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -66,12 +63,17 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseStaticFiles(new StaticFileOptions
+
+string reactAppPath = Path.Combine(Directory.GetCurrentDirectory(), @"..\yolohome-client\build");
+app.UseFileServer(new FileServerOptions()
 {
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "client-app/build")),
-    RequestPath = "/static"
+    FileProvider = new PhysicalFileProvider(reactAppPath),
+    RequestPath = "",
+    EnableDefaultFiles = true,
 });
+
+Console.WriteLine(reactAppPath);
+
 
 app.Run();
 
