@@ -6,6 +6,7 @@ using YoloHomeAPI.Interfaces;
 
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.FileProviders;
 using YoloHomeAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -65,6 +66,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "client-app/build")),
+    RequestPath = "/static"
+});
 
 app.Run();
 
