@@ -1,4 +1,4 @@
-﻿using YoloHomeAPI.Interfaces;
+﻿using YoloHomeAPI.Services.Interfaces;
 
 namespace YoloHomeAPI.Controllers;
 
@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 [Route("api/AuthenticationApi")]
 [ApiController]
-public class AuthenticationApiController : Controller
+public class AuthenticationApiController : ControllerBase
 {
     private readonly IAuthenticationService _authenticationService;
     

@@ -2,12 +2,12 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
 using YoloHomeAPI;
-using YoloHomeAPI.Interfaces;
-
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 using YoloHomeAPI.Services;
+using YoloHomeAPI.Services.Interfaces;
+using YoloHomeAPI.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +17,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-var settings = new Settings();
-builder.Configuration.Bind("Settings", settings);
+var settings = new AuthenticationSettings();
+builder.Configuration.Bind("AuthenticationSettings", settings);
 builder.Services.AddSingleton(settings);
+
+var adafruitSettings = new AdafruitSettings();
+builder.Configuration.Bind("AdafruitSettings", adafruitSettings);
+builder.Services.AddSingleton(adafruitSettings);
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
@@ -76,5 +80,3 @@ Console.WriteLine(reactAppPath);
 
 
 app.Run();
-
-

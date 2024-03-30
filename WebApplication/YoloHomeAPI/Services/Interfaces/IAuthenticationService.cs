@@ -1,4 +1,4 @@
-﻿namespace YoloHomeAPI.Interfaces;
+﻿namespace YoloHomeAPI.Services.Interfaces;
 
 public interface IAuthenticationService
 {

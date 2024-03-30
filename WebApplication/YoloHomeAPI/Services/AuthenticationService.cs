@@ -8,21 +8,22 @@ using Microsoft.IdentityModel.Tokens;
 using YoloHomeAPI;
 using YoloHomeAPI.Contexts;
 using YoloHomeAPI.Data;
-using YoloHomeAPI.Interfaces;
+using YoloHomeAPI.Services.Interfaces;
+using YoloHomeAPI.Settings;
 
 namespace YoloHomeAPI.Services
 {
 
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly Settings _settings;
+        private readonly AuthenticationSettings _authenticationSettings;
         //private readonly YoloHomeDbContext _context;
 
-        //public AuthenticationService(YoloHomeDbContext context, Settings settings)
-        public AuthenticationService(Settings settings)
+        //public AuthenticationService(YoloHomeDbContext context, AuthenticationSettings authenticationSettings)
+        public AuthenticationService(AuthenticationSettings authenticationSettings)
         {
             //_context = context;
-            _settings = settings;
+            _authenticationSettings = authenticationSettings;
         }
 
         public IAuthenticationService.AuthenticationResult Register(string username, string password)
@@ -98,7 +99,7 @@ namespace YoloHomeAPI.Services
         private string GenerateJwtToken(string userId)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_settings.JwtKey);
+            var key = Encoding.ASCII.GetBytes(_authenticationSettings.JwtKey);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
