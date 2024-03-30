@@ -1,7 +1,8 @@
 // Login.js
 import React, { useState } from 'react';
 import './Login.css'; // Import CSS file for styling
-
+import LeftImage1 from './LeftImage1';
+import LeftImage2 from './LeftImage2';
 function Login() {
   // State variables for username and password
   const [username, setUsername] = useState('');
@@ -15,29 +16,31 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit} className="login-form">
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+    <div className='login'>
+      <LeftImage1 />
+      <LeftImage2 />
+      <section>
+        <div className='form-loginbox'>
+          <div className='form-value'>
+            <form onSubmit={handleSubmit}>
+              <h2>Login</h2>
+              <div className='inputbox'>
+                <input type = 'text' onChange={(e) => setUsername(e.target.value)} required/>
+                <label>Email</label>
+              </div>
+              <div className='inputbox'>
+                <input type = 'password' onChange={(e) => setPassword(e.target.value)} required/>
+                <label>Password</label>
+              </div>
+              <button type='submit' className='login-btn'>Log in</button>
+              <div class='register-block'>
+                  <p>Don't have an account?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='/register'>Register</a></p>
+              </div>
+
+            </form>
+          </div>
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
+      </section>
     </div>
   );
 }
