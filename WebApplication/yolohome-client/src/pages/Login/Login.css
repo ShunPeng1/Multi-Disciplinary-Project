@@ -18,7 +18,7 @@
 .form-loginbox {
   position: relative;
   width: 25%; /* Set width to 25% of the page */
-  height: 100%; /* Set height to 80% of the page */
+  height: 550px; /* Adjust height to stretch the bottom */
   background: #fff; /* Set background color to white */
   border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 20px;
@@ -28,14 +28,17 @@
   align-items: center;
   margin-left: auto; /* Push the box to the left */
   margin-right: 250px; /* Ensure there's no extra space on the left */
+  margin-top: 80px; /* Adjust margin-top to move the box down */
 }
+
 
 
 .form-value h2{
     font-size: 1.5em;
+    min-height: 10vh;
     color: #000;
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
 }
 .inputbox {
   position: relative;
