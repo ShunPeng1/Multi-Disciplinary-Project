@@ -40,23 +40,23 @@
     text-align: center;
     margin-bottom: 40px;
 }
-.inputbox {
+.login .inputbox {
   position: relative;
   margin: 30px 0;
-  width: 300px; /* Adjust width */
+  width: 350px; /* Adjust width */
   /* Remove border-bottom and add border around the input */
-  /* border: 2px solid #000; /* Set border color */
-  /* border-radius: 10px; /* Add border-radius for rounded corners */
+  border: 2px solid #000; /* Set border color */
+  border-radius: 10px; /* Add border-radius for rounded corners */
 }
 
-.inputbox label {
+.login .inputbox label {
   position: absolute;
-  top: -50%; /* Adjust label position */
+  top: -60%; /* Adjust label position */
   left: 0px; /* Adjust label position */
   color: #000;
   font-size: 1em;
   pointer-events: none;
-  transition: .5s;
+  transition: .2s;
 }
 
 .login input:focus ~ label,
@@ -65,7 +65,7 @@
   left: 0px; /* Adjust label position */
 }
 
-.inputbox input {
+.login .inputbox input {
   width: calc(100% - 20px); /* Adjust width to accommodate borders */
   height: 40px; /* Adjust height */
   background: transparent;
@@ -89,17 +89,17 @@
     font-weight: 600;
 }
 
-.register-block{
+.login .register-block{
     font-size: .9em;
     color: #000;
     text-align: center;
     margin: 25px 0 10px;
 }
-.register-block p a{
+.login .register-block p a{
     text-decoration: none;
     color: #000;
     font-weight: 600;
 }
-.register-block p a:hover{
+.login .register-block p a:hover{
     text-decoration: underline;
 }

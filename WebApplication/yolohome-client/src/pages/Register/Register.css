@@ -15,7 +15,7 @@
     background-size: cover;
 }
 
-.form-loginbox {
+.register .form-box {
   position: relative;
   width: 25%; /* Set width to 25% of the page */
   height: 550px; /* Adjust height to stretch the bottom */
@@ -31,30 +31,35 @@
   margin-top: 80px; /* Adjust margin-top to move the box down */
 }
 
-.form-value h2{
+.register .form-value {
+  width: 90%;
+  padding-right: 0px;
+}
+
+.register .form-value h2{
     font-size: 1.5em;
     min-height: 10vh;
     color: #000;
     text-align: center;
     margin-bottom: 40px;
 }
-.inputbox {
+.register .inputbox {
   position: relative;
   margin: 30px 0;
-  width: 300px; /* Adjust width */
+  width: 350px; /* Adjust width */
   /* Remove border-bottom and add border around the input */
   border: 2px solid #000; /* Set border color */
   border-radius: 10px; /* Add border-radius for rounded corners */
 }
 
-.inputbox label {
+.register .inputbox label {
   position: absolute;
-  top: -50%; /* Adjust label position */
+  top: -60%; /* Adjust label position */
   left: 0px; /* Adjust label position */
   color: #000;
   font-size: 1em;
   pointer-events: none;
-  transition: .5s;
+  transition: .2s;
 }
 
 .register input:focus ~ label,
@@ -63,7 +68,7 @@
   left: 0px; /* Adjust label position */
 }
 
-.inputbox input {
+.register .inputbox input {
   width: calc(100% - 20px); /* Adjust width to accommodate borders */
   height: 40px; /* Adjust height */
   background: transparent;
@@ -74,30 +79,36 @@
   color: #000;
   border-radius: 10px; /* Add border-radius for rounded corners */
 }
-
-.register-btn{
-    width: 100%;
-    height: 40px;
-    border-radius: 40px;
-    background: #2655fb;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 600;
+.signup-btn{
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  background: #2655fb;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
 }
 
-.register-block{
-    font-size: .9em;
-    color: #000;
-    text-align: center;
-    margin: 25px 0 10px;
+.register-btn-wrap {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 20px;
 }
-.register-block p a{
-    text-decoration: none;
-    color: #000;
-    font-weight: 600;
+
+.register .register-block{
+  font-size: .9em;
+  color: #000;
+  text-align: center;
+  margin: 25px 0 10px;
 }
-.register-block p a:hover{
-    text-decoration: underline;
+.register .register-block p a{
+  text-decoration: none;
+  color: #000;
+  font-weight: 600;
+}
+.register .register-block p a:hover{
+  text-decoration: underline;
 }
