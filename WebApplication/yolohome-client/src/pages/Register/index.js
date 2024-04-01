@@ -1,6 +1,6 @@
 // Register.js
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import './Register.css'; // Import CSS file for styling
 import LeftImage1 from './LeftImage1';
 import LeftImage2 from './LeftImage2';
@@ -17,7 +17,7 @@ function Register() {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Add logic to handle registration
-    console.log('Registering with:', { username, email, password });
+    console.log('Registering with:', { lastname, firstname, username, email, password });
   };
 
   return (
@@ -38,6 +38,10 @@ function Register() {
                   <input type='text' onChange={(e) => setLastname(e.target.value)} required/>
                   <label>Last Name</label>
                 </div>
+              </div>
+              <div className="inputbox">
+                  <input type="text" onChange={(event) => setEmail(event.target.value)} />
+                  <label>Email</label>
               </div>
               <div className="inputbox">
                   <input type="text" onChange={(event) => setUsername(event.target.value)} />
