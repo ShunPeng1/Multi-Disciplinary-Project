@@ -300,9 +300,6 @@
 
 
 
-/* button checkbox*/
-
-
 .switch {
     position: relative;
     display: inline-block;
@@ -312,14 +309,13 @@
     
 }
 
-/* Thiết lập style cho btn-switch checkbox */
+
 .switch .btn-switch { 
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-/* Thiết lập style cho dòng bên trong công tắc */
 .slider {
     position: absolute;
     cursor: pointer;
@@ -333,7 +329,6 @@
     border-radius: 8px;
 }
 
-/* Thiết lập style cho dấu vết trên dòng bên trong công tắc */
 .slider:before {
     position: absolute;
     content: "";
@@ -347,7 +342,7 @@
     border-radius: 5px;
 }
 
-/* Thiết lập style cho công tắc khi btn-switch được checked */
+
 .btn-switch:checked + .slider {
     background-color: #2196F3;
     background-color: #3e98c7,
@@ -356,12 +351,11 @@
 .btn-switch:checked ~ .btn-led{
     background-color: var(--primary2-color);
 }
-/* Thiết lập style cho dấu vết khi công tắc được bật */
+
 .btn-switch:focus + .slider:before {
     box-shadow: 0 0 1px #2196F3;
 }
 
-/* Thiết lập style cho dấu vết khi công tắc được bật */
 .btn-switch:checked + .slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
