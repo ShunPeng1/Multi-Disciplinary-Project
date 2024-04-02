@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import './Login.css'; // Import CSS file for styling
 import LeftImage1 from './LeftImage1';
 import LeftImage2 from './LeftImage2';
+
+import FetchRequest from '../../components/api/api';
 function Login() {
   // State variables for username and password
   const [username, setUsername] = useState('');
@@ -11,9 +13,20 @@ function Login() {
   // Function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Add logic to handle login
-    console.log('Logging in with:', { username, password });
+    FetchRequest('api/AuthenticationApi/Login', 'POST', {
+        UserName: username,
+        Password: password
+        }, successCallback, errorCallback);
   };
+  
+  const successCallback = (data) => {
+    console.log('Success:', data);
+    localStorage.setItem('token', data);
+  }
+  
+  const errorCallback = (error) => {
+    console.error('Error:', error);
+  }
 
   return (
     <div className='login'>

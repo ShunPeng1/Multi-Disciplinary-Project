@@ -27,7 +27,7 @@ public class AuthenticationApiController : ControllerBase
         public string Token { get; set; } = null!;
     }
     
-    [Route("api/AuthenticationApi/Login")]
+    [Route("Login")]
     [HttpPost]
     public ActionResult<AuthenticationResponse> Login(AuthenticationRequest authenticationRequest)
     {
@@ -43,7 +43,7 @@ public class AuthenticationApiController : ControllerBase
     }
     
     
-    [Route("api/AuthenticationApi/Register")]
+    [Route("Register")]
     [HttpPost]
     public ActionResult<AuthenticationResponse> Register(AuthenticationRequest authenticationRequest)
     {

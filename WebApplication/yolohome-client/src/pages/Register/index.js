@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import './Register.css'; // Import CSS file for styling
 import LeftImage1 from './LeftImage1';
 import LeftImage2 from './LeftImage2';
+import FetchRequest from "../../components/api/api";
 
 function Register() {
   // State variables for registration fields
@@ -14,11 +15,22 @@ function Register() {
   const [password, setPassword] = useState('');
 
   // Function to handle form submission
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Add logic to handle registration
-    console.log('Registering with:', { username, email, password });
-  };
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        FetchRequest('api/AuthenticationApi/Register', 'POST', {
+            UserName: username,
+            Password: password
+        }, successCallback, errorCallback);
+    };
+
+    const successCallback = (data) => {
+        console.log('Success:', data);
+        localStorage.setItem('token', data);
+    }
+
+    const errorCallback = (error) => {
+        console.error('Error:', error);
+    }
 
   return (
     <div className='register'>

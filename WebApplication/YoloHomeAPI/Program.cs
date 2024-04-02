@@ -1,4 +1,6 @@
 using System.Text;
+using System.Diagnostics;
+
 using Microsoft.IdentityModel.Tokens;
 
 using YoloHomeAPI;
@@ -25,7 +27,7 @@ var adafruitSettings = new AdafruitSettings();
 builder.Configuration.Bind("AdafruitSettings", adafruitSettings);
 builder.Services.AddSingleton(adafruitSettings);
 
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IAuthenticationService, MockAuthenticationService>();
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
     {
@@ -67,7 +69,25 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Run npm run build before starting the application
+var process = new Process()
+{
+    StartInfo = new ProcessStartInfo
+    {
+        FileName = "cmd.exe",
+        RedirectStandardInput = true,
+        RedirectStandardOutput = true,
+        CreateNoWindow = true,
+        UseShellExecute = false,
+        WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), @"..\yolohome-client")
+    }
+};
+process.Start();
+process.StandardInput.WriteLine("npm run build");
+process.StandardInput.Close();
+process.WaitForExit();
 
+// Serve the React app
 string reactAppPath = Path.Combine(Directory.GetCurrentDirectory(), @"..\yolohome-client\build");
 app.UseFileServer(new FileServerOptions()
 {
@@ -75,8 +95,5 @@ app.UseFileServer(new FileServerOptions()
     RequestPath = "",
     EnableDefaultFiles = true,
 });
-
-Console.WriteLine(reactAppPath);
-
 
 app.Run();
