@@ -18,12 +18,13 @@ namespace YoloHomeAPI.Services
     public class AuthenticationService : IAuthenticationService
     {
         private readonly AuthenticationSettings _authenticationSettings;
-        //private readonly YoloHomeDbContext _context;
+        
+        // In-memory data store TODO replace with database
+        private readonly List<User> _users = new List<User>();
 
         //public AuthenticationService(YoloHomeDbContext context, AuthenticationSettings authenticationSettings)
         public AuthenticationService(AuthenticationSettings authenticationSettings)
         {
-            //_context = context;
             _authenticationSettings = authenticationSettings;
         }
 
@@ -54,14 +55,12 @@ namespace YoloHomeAPI.Services
             {
                 return new(false, "Password must be between 8 and 20 characters long.", "");
             }
-            
 
-            /*
-            if (_context.Users.Any(x => x.UserName == userName))
+            // TODO: Check if username already exists in database
+            if (_users.Any(x => x.UserName == username))
             {
                 return new(false, "Username already exists.", "");
             }
-            */
 
             var (hashedPassword, salt) = HashPassword(password);
 
@@ -71,10 +70,11 @@ namespace YoloHomeAPI.Services
                 PasswordHash = hashedPassword,
                 PasswordSalt = salt
             };
-
-            //_context.Users.Add(user);
-            //_context.SaveChanges();
-
+            
+            // TODO: Save user to database
+            _users.Add(user);
+            
+            
             return new(true, "User created successfully.", GenerateJwtToken(user.UserId.ToString()));
         }
 
@@ -106,9 +106,9 @@ namespace YoloHomeAPI.Services
                 return new(false, "Password must be between 8 and 20 characters long.", "");
             }
 
-            /*
-            var user = _context.Users.SingleOrDefault(x => x.UserName == userName);
-
+            // TODO: Check if username already exists in database
+            var user = _users.SingleOrDefault(x => x.UserName == username);
+            
             if (user == null)
             {
                 return new(false, "Username or password is incorrect.", "");
@@ -120,8 +120,7 @@ namespace YoloHomeAPI.Services
             }
             return new(true, "Login successful.", GenerateJwtToken(user.UserId.ToString()));
             
-            */
-            return new(true, "Login successful.", GenerateJwtToken("123456789"));
+            
         }
         
         private bool CheckNull(string input)

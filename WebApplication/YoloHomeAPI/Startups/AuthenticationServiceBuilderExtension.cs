@@ -17,7 +17,7 @@ public static class AuthenticationServiceBuilderExtension
         builder.Configuration.Bind("AuthenticationSettings", settings);
         builder.Services.AddSingleton(settings);
         
-        builder.Services.AddScoped<IAuthenticationService, MockAuthenticationService>();
+        builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
         
         builder.Services.AddControllers().AddNewtonsoftJson(options =>
             {
