@@ -21,13 +21,19 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
     private IMqttClient _mqttClient;
 
     private string _accumulatorStartTimeString = DateTime.UtcNow.ToString();
+    private MqttClientOptions _mqttClientOptions;
 
-    
+
     public AdafruitMqttService(AdafruitSettings adafruitSetting, IServiceScopeFactory serviceScopeFactory, IMqttClient mqttClient)
     {
         _adafruitSetting = adafruitSetting;
         _serviceScopeFactory = serviceScopeFactory;
         _mqttClient = mqttClient;
+        _mqttClientOptions = new MqttClientOptionsBuilder()
+            .WithTcpServer("io.adafruit.com", 8883)
+            .WithCredentials(_adafruitSetting.AdafruitUsername, _adafruitSetting.AdafruitKey)
+            .WithTls()
+            .Build();
     }
 
     public override async Task StartAsync(CancellationToken cancellationToken)
@@ -42,14 +48,9 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
 
         Console.WriteLine($"Initializing AdafruitMqttService...  {_adafruitSetting.AdafruitUsername}, {_adafruitSetting.AdafruitKey}");
         
-        var mqttClientOptions = new MqttClientOptionsBuilder()
-            .WithTcpServer("io.adafruit.com", 8883)
-            .WithCredentials(_adafruitSetting.AdafruitUsername, _adafruitSetting.AdafruitKey)
-            .WithTls()
-            .Build();
         
         _mqttClient.ApplicationMessageReceivedAsync += ApplicationMessageReceivedHandler;
-        await _mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
+        await _mqttClient.ConnectAsync(_mqttClientOptions, CancellationToken.None);
 
         var mqttSubscribeOptions = mqttFactory.CreateSubscribeOptionsBuilder()
             .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.AnnounceTopicPath); })
@@ -65,6 +66,8 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
 
     public override async Task StopAsync(CancellationToken cancellationToken)
     {
+        Console.WriteLine("Stopping AdafruitMqttService...");
+        
         await base.StopAsync(cancellationToken);
         await _mqttClient.DisconnectAsync();
         
@@ -122,8 +125,27 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
 
     public async void PublishMessage(string topic, string content)
     {
+        if (!_mqttClient.IsConnected)
+        {
+            Console.WriteLine("Error: MQTT client is not connected.");
+            try
+            {
+                await _mqttClient.ConnectAsync(_mqttClientOptions, CancellationToken.None);
+                Console.WriteLine("MQTT client reconnected.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: Failed to reconnect MQTT client: {ex.Message}");
+                return;
+            }
+        }
+        
+        Console.WriteLine("Publishing message to topic: " + topic + " with content: " + content);
         var applicationMessage = new MqttApplicationMessageBuilder().WithTopic(topic).WithPayload(content).Build();
         await _mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
+
+        Console.WriteLine("Message published.");
+    
     }
 
     private Task ApplicationMessageReceivedHandler(MqttApplicationMessageReceivedEventArgs args)
@@ -213,8 +235,4 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
         return Encoding.UTF8.GetString(base64EncodedBytes);
     }
 
-    public IAdafruitMqttService.AdafruitMqttResult Execute(string command)
-    {
-        throw new NotImplementedException();
-    }
 }

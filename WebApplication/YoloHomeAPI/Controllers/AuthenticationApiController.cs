@@ -5,7 +5,7 @@ namespace YoloHomeAPI.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 
-[Route("api/AuthenticationApi")]
+[Route("api/[controller]")]
 [ApiController]
 public class AuthenticationApiController : ControllerBase
 {

@@ -23,9 +23,12 @@ public static class AdafruitServiceBuilderExtension
             return factory.CreateMqttClient();
         });
 
+        builder.Services.AddSingleton<IAdafruitMqttService, AdafruitMqttService>();
+        
         builder.Services.AddSingleton<IManualControlService, ManualControlService>();
         builder.Services.AddSingleton<IIotDeviceService, IotDeviceService>();
-        builder.Services.AddSingleton<IAdafruitMqttService, AdafruitMqttService>();
+        builder.Services.AddSingleton<IActivityLogService, ActivityLogService>();
+        
     }
     
 }
