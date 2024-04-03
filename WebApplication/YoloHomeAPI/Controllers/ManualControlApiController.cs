@@ -6,11 +6,11 @@ namespace YoloHomeAPI.Controllers;
 [ApiController]
 public class ManualControlApiController : ControllerBase
 {
-    private readonly IManualControlService _manualControlService;
+    private readonly IAdafruitMqttService _adafruitMqttService;
     
-    public ManualControlApiController(IManualControlService manualControlService)
+    public ManualControlApiController(IAdafruitMqttService adafruitMqttService)
     {
-        _manualControlService = manualControlService;
+        _adafruitMqttService = adafruitMqttService;
     }
     
     public class ManualControlRequest
@@ -27,7 +27,7 @@ public class ManualControlApiController : ControllerBase
     [HttpPost]
     public ActionResult<ManualControlResponse> Execute(ManualControlRequest manualControlRequest)
     {
-        var result = _manualControlService.Execute(manualControlRequest.Command);
+        var result = _adafruitMqttService.Execute(manualControlRequest.Command);
         if (result.IsSuccess)
         {
             return Ok(result.Response);

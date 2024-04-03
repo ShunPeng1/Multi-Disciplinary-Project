@@ -1,13 +1,14 @@
 ﻿using System.Text;
 using MQTTnet;
 using MQTTnet.Client;
+using YoloHomeAPI.Controllers;
 using YoloHomeAPI.Settings;
 
 namespace YoloHomeAPI.Services;
 
 
 
-public class AdafruitMqttService : BackgroundService
+public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
 {
     private const float SEND_DATA_BACK_TIMER = 120f;
 
@@ -22,26 +23,37 @@ public class AdafruitMqttService : BackgroundService
     private string _accumulatorStartTimeString = DateTime.UtcNow.ToString();
 
     
-    public AdafruitMqttService(AdafruitSettings adafruitSetting, IServiceScopeFactory serviceScopeFactory)
+    public AdafruitMqttService(AdafruitSettings adafruitSetting, IServiceScopeFactory serviceScopeFactory, IMqttClient mqttClient)
     {
         _adafruitSetting = adafruitSetting;
         _serviceScopeFactory = serviceScopeFactory;
+        _mqttClient = mqttClient;
     }
 
-    public async override Task StartAsync(CancellationToken cancellationToken)
+    public override async Task StartAsync(CancellationToken cancellationToken)
     {
+        Console.WriteLine("Starting AdafruitMqttService...");
+        
         await base.StartAsync(cancellationToken);
-
+        
+        
         var mqttFactory = new MqttFactory();
         _mqttClient = mqttFactory.CreateMqttClient();
 
-        var mqttClientOptions = new MqttClientOptionsBuilder().WithTcpServer("io.adafruit.com", 8883).WithCredentials(_adafruitSetting.AdafruitUsername, _adafruitSetting.AdafruitKey).WithTls().Build();
+        Console.WriteLine($"Initializing AdafruitMqttService...  {_adafruitSetting.AdafruitUsername}, {_adafruitSetting.AdafruitKey}");
+        
+        var mqttClientOptions = new MqttClientOptionsBuilder()
+            .WithTcpServer("io.adafruit.com", 8883)
+            .WithCredentials(_adafruitSetting.AdafruitUsername, _adafruitSetting.AdafruitKey)
+            .WithTls()
+            .Build();
+        
         _mqttClient.ApplicationMessageReceivedAsync += ApplicationMessageReceivedHandler;
         await _mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
 
         var mqttSubscribeOptions = mqttFactory.CreateSubscribeOptionsBuilder()
             .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.AnnounceTopicPath); })
-            .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.SensorTopicPath); })
+            //.WithTopicFilter(f => { f.WithTopic(_adafruitSetting.SensorTopicPath); })
             .Build();
 
         await _mqttClient.SubscribeAsync(mqttSubscribeOptions, CancellationToken.None);
@@ -51,15 +63,17 @@ public class AdafruitMqttService : BackgroundService
         Console.WriteLine("AdafruitMqttService initialized successfully.");
     }
 
-    public async override Task StopAsync(CancellationToken cancellationToken)
+    public override async Task StopAsync(CancellationToken cancellationToken)
     {
         await base.StopAsync(cancellationToken);
         await _mqttClient.DisconnectAsync();
         
         AnnounceMessageArrived -= InitializeMessageReceivedHandler;
+        
+        Console.WriteLine("AdafruitMqttService stopped successfully.");
     }
 
-    protected async override Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         var timer = new PeriodicTimer(TimeSpan.FromSeconds(SEND_DATA_BACK_TIMER));
         while (await timer.WaitForNextTickAsync(stoppingToken))
@@ -197,5 +211,10 @@ public class AdafruitMqttService : BackgroundService
     {
         var base64EncodedBytes = Convert.FromBase64String(Convert.ToBase64String(encodedData));
         return Encoding.UTF8.GetString(base64EncodedBytes);
+    }
+
+    public IAdafruitMqttService.AdafruitMqttResult Execute(string command)
+    {
+        throw new NotImplementedException();
     }
 }
