@@ -6,52 +6,47 @@ namespace YoloHomeAPI.Services;
 
 public class ManualControlService : IManualControlService
 {
-    private readonly IAdafruitMqttService _adafruitMqttService;
     private readonly AdafruitSettings _adafruitSettings;
+    private readonly IAdafruitMqttService _adafruitMqttService;
+
+    private readonly IActivityLogService _activityLogService;
     
-    public ManualControlService(AdafruitSettings adafruitSettings, IAdafruitMqttService adafruitMqttService)
+    public ManualControlService(AdafruitSettings adafruitSettings, IAdafruitMqttService adafruitMqttService, IActivityLogService activityLogService)
     {
         _adafruitSettings = adafruitSettings;
         _adafruitMqttService = adafruitMqttService;
+        _activityLogService = activityLogService;
     }
     
     
-    public IManualControlService.ManualControlResult Execute(string id, string command)
+    public IManualControlService.ManualControlResult Execute(string userName, string id, string command)
     {
         Console.WriteLine($"Executing command {command} on {id}");
-        if (id == "announce")
+        switch (id)
         {
-            if (command == "on")
-            {
-                _adafruitMqttService.PublishMessage(_adafruitSettings.AnnounceTopicPath, "1");
-            }
-            else if (command == "off")
-            {
-                _adafruitMqttService.PublishMessage(_adafruitSettings.AnnounceTopicPath, "0");
-            }
-            else
-            {
-                return new IManualControlService.ManualControlResult(false, "Invalid command");
-            }
-        }
-        else if (id == "fan")
-        {
-            if (command == "on")
-            {
+            case "announce":
+                try
+                {
+                    _adafruitMqttService.PublishMessage(_adafruitSettings.AnnounceTopicPath, command == "on" ? "1" : "0" );
+                    _activityLogService.Add(userName, "Announce "+command+" on", DateTime.Now);
+                }
+                catch (Exception e)
+                {
+                    return new IManualControlService.ManualControlResult(false, "Invalid command");
+
+                }
+                    
+                break;
+            case "fan" when command == "on":
                 _adafruitMqttService.PublishMessage("yolo-home/feeds/fan", "1");
-            }
-            else if (command == "off")
-            {
+                break;
+            case "fan" when command == "off":
                 _adafruitMqttService.PublishMessage("yolo-home/feeds/fan", "0");
-            }
-            else
-            {
+                break;
+            case "fan":
                 return new IManualControlService.ManualControlResult(false, "Invalid command");
-            }
-        }
-        else
-        {
-            return new IManualControlService.ManualControlResult(false, "Invalid id");
+            default:
+                return new IManualControlService.ManualControlResult(false, "Invalid id");
         }
         
         

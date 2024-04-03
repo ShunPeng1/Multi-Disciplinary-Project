@@ -14,5 +14,5 @@ public interface IManualControlService
         public string Response { get; set; }
     }
     
-    public ManualControlResult Execute(string id, string command);
+    public ManualControlResult Execute(string userName, string id, string command);
 }
