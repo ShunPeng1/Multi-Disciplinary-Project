@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Login from './pages/Login';
 import Register from './pages/Register'; // Update import
 import Dashboard from './pages/Dashboard';
-import NavBar from './pages/NavBar';
+import NavBar  from "./components/NavBar";
 // import DefaultLayout from './components/layouts/DefaultLayout';
 const MaybeShowNavbar = ({children}) => {
   const location = useLocation();
@@ -27,18 +27,19 @@ const MaybeShowNavbar = ({children}) => {
 function App() {
   return (
     <Router>
-      <div className="App">
+      <div className="App" style={{ display: 'flex' }}>
         <MaybeShowNavbar>
           <NavBar/>
         </MaybeShowNavbar>
         <div className='content'>
           <Routes>
             <Route path="/" element={<Login></Login>} />
-            <Route path="/register" element={<Register></Register>} /> {/* Update Route */}
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/register" element={<Register></Register>} /> 
+            <Route path="/dashboard" element={<Dashboard></Dashboard>} />
           </Routes>
         </div>
       </div>
+
     </Router>
   );
 }

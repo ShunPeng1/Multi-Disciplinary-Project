@@ -17,29 +17,34 @@ const NavBar = () => {
         <Logo width={160} />
       </div>
       <div className="navbar-content">
-        <Link to="/Print" className={getNavItemClass("/Dashboard")} id="mainFunction">
+        <Link to="/Print" className={getNavItemClass("/Print")} id="mainFunction">
           <img src="./Images/addIcon.png" alt="Add Icon" />
-          <p>Home</p>
+          <p>Tạo bản in</p>
         </Link>
 
-        <Link to="/Home" className={getNavItemClass("/History")}>
+        <Link to="/Home" className={getNavItemClass("/Home")}>
           <img src="./Images/home.png" alt="Home Icon" />
-          <p>History</p>
+          <p>Trang chủ</p>
         </Link>
 
-        <Link to="/BuyPaper" className={getNavItemClass("/Help")}>
+        <Link to="/BuyPaper" className={getNavItemClass("/BuyPaper")}>
           <img src="./Images/shopping-cart.png" alt="Shopping Cart Icon" />
-          <p>Help</p>
+          <p>Mua giấy</p>
         </Link>
 
-        <Link to="/History" className={getNavItemClass("/Profile")}>
+        <Link to="/History" className={getNavItemClass("/History")}>
           <img src="./Images/history.png" alt="History Icon" />
-          <p>Profile</p>
+          <p>Lịch sử in</p>
+        </Link>
+
+        <Link to="/Profile" className={getNavItemClass("/Profile")}>
+          <img src="./Images/profile.png" alt="Profile Icon" />
+          <p>Xem hồ sơ</p>
         </Link>
 
         <Link to="/" className={getNavItemClass("/")} id="logout">
           <img src="./Images/logout.png" alt="Logout Icon" />
-          <p>Log out</p>
+          <p>Đăng xuất</p>
         </Link>
       </div>
     </nav>

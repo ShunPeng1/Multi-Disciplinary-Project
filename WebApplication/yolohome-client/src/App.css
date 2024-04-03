@@ -1,5 +1,7 @@
 .App {
-  display: flex;
+
+  /* style = display: flex */
+  flex-direction: row;
 }
 .content {
   width: 80vw;

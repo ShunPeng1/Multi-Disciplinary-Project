@@ -1,0 +1,13 @@
+.footer {
+    display: flex;
+    flex-direction: row;
+    margin-top: auto;
+    width: 100%;
+    color: #667085;
+    background-color: #E4E7EC;
+    padding: 5px 2.5%;
+  }
+  .university {
+    margin-left: auto;
+  }
+  
