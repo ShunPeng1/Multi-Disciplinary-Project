@@ -3,7 +3,7 @@ using YoloHomeAPI.Services.Interfaces;
 
 namespace YoloHomeAPI.Controllers;
 
-[Route("api/ManualControlApi")]
+[Route("api/[controller]")]
 [ApiController]
 public class ManualControlApiController : ControllerBase
 {

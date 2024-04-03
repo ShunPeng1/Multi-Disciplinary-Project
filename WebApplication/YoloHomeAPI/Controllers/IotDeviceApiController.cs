@@ -3,6 +3,7 @@ using YoloHomeAPI.Services.Interfaces;
 
 namespace YoloHomeAPI.Controllers;
 
+[Route("api/[controller]")]
 public class IotDeviceApiController : ControllerBase
 {
     private readonly IIotDeviceService _iotDeviceService;
