@@ -7,9 +7,12 @@ using YoloHomeAPI;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
+using MQTTnet;
+using YoloHomeAPI.Controllers;
 using YoloHomeAPI.Services;
 using YoloHomeAPI.Services.Interfaces;
 using YoloHomeAPI.Settings;
+using YoloHomeAPI.Startups;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +31,15 @@ builder.Configuration.Bind("AdafruitSettings", adafruitSettings);
 builder.Services.AddSingleton(adafruitSettings);
 
 builder.Services.AddScoped<IAuthenticationService, MockAuthenticationService>();
+builder.Services.AddScoped<IAdafruitMqttService, AdafruitMqttService>();
+
+builder.Services.AddHostedService<AdafruitMqttService>(); 
+
+builder.Services.AddSingleton<MQTTnet.Client.IMqttClient>(sp =>
+{
+    var factory = new MqttFactory();
+    return factory.CreateMqttClient();
+});
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
     {
@@ -69,31 +81,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Run npm run build before starting the application
-var process = new Process()
-{
-    StartInfo = new ProcessStartInfo
-    {
-        FileName = "cmd.exe",
-        RedirectStandardInput = true,
-        RedirectStandardOutput = true,
-        CreateNoWindow = true,
-        UseShellExecute = false,
-        WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), @"..\yolohome-client")
-    }
-};
-process.Start();
-process.StandardInput.WriteLine("npm run build");
-process.StandardInput.Close();
-process.WaitForExit();
-
-// Serve the React app
-string reactAppPath = Path.Combine(Directory.GetCurrentDirectory(), @"..\yolohome-client\build");
-app.UseFileServer(new FileServerOptions()
-{
-    FileProvider = new PhysicalFileProvider(reactAppPath),
-    RequestPath = "",
-    EnableDefaultFiles = true,
-});
+app.BuildReactApp();
+app.ServeReactApp();
 
 app.Run();
