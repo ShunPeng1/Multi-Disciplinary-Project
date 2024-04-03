@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using YoloHomeAPI.Services.Interfaces;
 
 namespace YoloHomeAPI.Controllers;
 
@@ -6,15 +7,16 @@ namespace YoloHomeAPI.Controllers;
 [ApiController]
 public class ManualControlApiController : ControllerBase
 {
-    private readonly IAdafruitMqttService _adafruitMqttService;
+    private readonly IManualControlService _manualControlService;
     
-    public ManualControlApiController(IAdafruitMqttService adafruitMqttService)
+    public ManualControlApiController(IManualControlService manualControlService)
     {
-        _adafruitMqttService = adafruitMqttService;
+        _manualControlService = manualControlService;
     }
     
     public class ManualControlRequest
     {
+        public string Id { get; set; } = null!;
         public string Command { get; set; } = null!;
     }
     
@@ -23,11 +25,11 @@ public class ManualControlApiController : ControllerBase
         public string Response { get; set; } = null!;
     }
     
-    [Route("api/ManualControlApi/Execute")]
+    [Route("Control")]
     [HttpPost]
-    public ActionResult<ManualControlResponse> Execute(ManualControlRequest manualControlRequest)
+    public ActionResult<ManualControlResponse> Control(ManualControlRequest manualControlRequest)
     {
-        var result = _adafruitMqttService.Execute(manualControlRequest.Command);
+        var result = _manualControlService.Execute(manualControlRequest.Id, manualControlRequest.Command);
         if (result.IsSuccess)
         {
             return Ok(result.Response);
