@@ -43,6 +43,8 @@ public static class ReactAppBuilderExtension
     
     public static void ServeReactApp(this IApplicationBuilder app)
     {
+        
+        
         // Serve the React app
         string reactAppPath = Path.Combine(Directory.GetCurrentDirectory(), @"..\yolohome-client\build");
         app.UseFileServer(new FileServerOptions()
@@ -52,11 +54,15 @@ public static class ReactAppBuilderExtension
             EnableDefaultFiles = true,
         });
 
-        // Fallback to index.html for all other routes
-        app.Run(async (context) =>
+        // Serve the React app index.html for all non-API routes
+        app.UseWhen(context => !context.Request.Path.StartsWithSegments("/api"), builder =>
         {
-            context.Response.ContentType = "text/html";
-            await context.Response.SendFileAsync(Path.Combine(reactAppPath, "index.html"));
+            builder.Run(async (context) =>
+            {
+                context.Response.ContentType = "text/html";
+                await context.Response.SendFileAsync(Path.Combine(reactAppPath, "index.html"));
+            });
         });
+        
     }
 }
