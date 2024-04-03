@@ -51,5 +51,12 @@ public static class ReactAppBuilderExtension
             RequestPath = "",
             EnableDefaultFiles = true,
         });
+
+        // Fallback to index.html for all other routes
+        app.Run(async (context) =>
+        {
+            context.Response.ContentType = "text/html";
+            await context.Response.SendFileAsync(Path.Combine(reactAppPath, "index.html"));
+        });
     }
 }
