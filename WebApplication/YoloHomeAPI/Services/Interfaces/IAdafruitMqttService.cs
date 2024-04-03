@@ -1,10 +1,10 @@
 ﻿namespace YoloHomeAPI.Controllers;
 
-public interface IManualControlService
+public interface IAdafruitMqttService
 {
-    public class ManualControlResult
+    public class AdafruitMqttResult
     {
-        public ManualControlResult(bool isSuccess , string response)
+        public AdafruitMqttResult(bool isSuccess , string response)
         {
             IsSuccess = isSuccess;
             Response = response;
@@ -14,5 +14,5 @@ public interface IManualControlService
         public string Response { get; set; }
     }
     
-    public ManualControlResult Execute(string command);
+    public AdafruitMqttResult Execute(string command);
 }
