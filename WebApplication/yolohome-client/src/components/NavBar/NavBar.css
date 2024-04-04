@@ -1,18 +1,5 @@
-/* 
+/*Thêm nội dung design cái navbar nha, ô sửa bên kia thì nó kh hiện lên đc, phải có css mới biết đẹp kh :v*/
 
-
-
-
-
-
-
-
-Thêm nội dung design cái navbar nha, ô sửa bên kia thì nó kh hiện lên đc, phải có css mới biết đẹp kh :v
-
-
-
-
- */
  * {
     box-sizing: border-box;
     margin: 0;
@@ -24,7 +11,8 @@ Thêm nội dung design cái navbar nha, ô sửa bên kia thì nó kh hiện l�
     align-items: center;
     min-height: 100vh;
     max-height: 100%;
-    width: 20vw;
+    width: 15vw;
+    background-color: #092393;
   }
   
   .logo {
@@ -33,7 +21,7 @@ Thêm nội dung design cái navbar nha, ô sửa bên kia thì nó kh hiện l�
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #ffffff;
+    background-color: transparent;
     margin-bottom: 8vh;
   }
   
@@ -41,11 +29,11 @@ Thêm nội dung design cái navbar nha, ô sửa bên kia thì nó kh hiện l�
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: #fff;
+    background-color: transparent;
   }
   
   .navbar-content p {
-    color: #7F56D9;
+    color: white;
     font-size: 1em;
   }
   
@@ -72,7 +60,7 @@ Thêm nội dung design cái navbar nha, ô sửa bên kia thì nó kh hiện l�
   }
   
   .current-page {
-    background-color: #F4EBFF;
+    background-color: white;
   }
   
   .navbar-logout-section {
@@ -84,7 +72,7 @@ Thêm nội dung design cái navbar nha, ô sửa bên kia thì nó kh hiện l�
   }
   
   #logout p {
-    color: #B42318;
+    color: white;
   }
   
   /* F4EBFF */
