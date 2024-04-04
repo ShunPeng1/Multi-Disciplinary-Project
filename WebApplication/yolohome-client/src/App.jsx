@@ -14,7 +14,7 @@ const MaybeShowNavbar = ({children}) => {
   const [showNavbar, setShowNavbar] = useState(false);
 
   useEffect(() => {
-    if (location.pathname === '/' || location.pathname === '/Print' || location.pathname === '/PrintConfig') {
+    if (location.pathname === '/' || location.pathname === '/register' || location.pathname === '/PrintConfig') {
       setShowNavbar(false);
     }
     else {
