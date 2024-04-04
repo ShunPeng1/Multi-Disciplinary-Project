@@ -17,28 +17,28 @@ const NavBar = () => {
         <Logo width={160} />
       </div>
       <div className="navbar-content">
-        <Link to="/Print" className={getNavItemClass("/Dashboard")} id="mainFunction">
-          <img src="./Images/addIcon.png" alt="Add Icon" />
+        <Link to="/Dashboard" className={getNavItemClass("/Dashboard")} id="mainFunction">
+          <img src="./Images/home.png" alt="Home Icon" />
           <p>Home</p>
         </Link>
 
-        <Link to="/Home" className={getNavItemClass("/History")}>
-          <img src="./Images/home.png" alt="Home Icon" />
+        <Link to="/history" className={getNavItemClass("/history")}>
+          <img src="./Images/file.png" alt="File Icon" />
           <p>History</p>
         </Link>
 
-        <Link to="/BuyPaper" className={getNavItemClass("/Help")}>
-          <img src="./Images/shopping-cart.png" alt="Shopping Cart Icon" />
+        <Link to="/help" className={getNavItemClass("/help")}>
+          <img src="./Images/question_icon.png" alt="Question Mark Icon" />
           <p>Help</p>
         </Link>
 
-        <Link to="/History" className={getNavItemClass("/Profile")}>
-          <img src="./Images/history.png" alt="History Icon" />
+        <Link to="/profile" className={getNavItemClass("/profile")}>
+          <img src="./Images/profile_icon.png" alt="Profile Icon" />
           <p>Profile</p>
         </Link>
 
         <Link to="/" className={getNavItemClass("/")} id="logout">
-          <img src="./Images/logout.png" alt="Logout Icon" />
+          <img src="./Images/log_out.png" alt="Logout Icon" />
           <p>Log out</p>
         </Link>
       </div>
