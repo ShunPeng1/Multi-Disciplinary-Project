@@ -36,22 +36,22 @@ namespace YoloHomeAPI.Services
                 return new(false, "Username or password cannot be empty.", "");
             }
             
-            if (CheckIllegalCharacterInUserName(username))
+            if (!CheckLegalCharacterInUserName(username))
             {
                 return new(false, "Username contains illegal characters.", "");
             }
             
-            if (CheckCharacterInPassword(password))
+            if (!CheckLegalCharacterInPassword(password))
             {
                 return new(false, "Password must contain at least one uppercase letter, one lowercase letter, one number, one special character and be at least 8 characters long.", "");
             }
             
-            if (CheckLength(username, 3, 20))
+            if (!CheckLength(username, 3, 20))
             {
                 return new(false, "Username must be between 3 and 20 characters long.", "");
             }
             
-            if (CheckLength(password, 8, 20))
+            if (!CheckLength(password, 8, 20))
             {
                 return new(false, "Password must be between 8 and 20 characters long.", "");
             }
@@ -86,22 +86,22 @@ namespace YoloHomeAPI.Services
                 return new(false, "Username or password cannot be empty.", "");
             }
             
-            if (CheckIllegalCharacterInUserName(username))
+            if (!CheckLegalCharacterInUserName(username))
             {
                 return new(false, "Username contains illegal characters.", "");
             }
             
-            if (CheckCharacterInPassword(password))
+            if (!CheckLegalCharacterInPassword(password))
             {
                 return new(false, "Password must contain at least one uppercase letter, one lowercase letter, one number, one special character and be at least 8 characters long.", "");
             }
             
-            if (CheckLength(username, 3, 20))
+            if (!CheckLength(username, 3, 20))
             {
                 return new(false, "Username must be between 3 and 20 characters long.", "");
             }
             
-            if (CheckLength(password, 8, 20))
+            if (!CheckLength(password, 8, 20))
             {
                 return new(false, "Password must be between 8 and 20 characters long.", "");
             }
@@ -125,41 +125,24 @@ namespace YoloHomeAPI.Services
         
         private bool CheckNull(string input)
         {
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                return true;
-            }
-            return false;
+            return string.IsNullOrWhiteSpace(input);
         }
 
-        private bool CheckIllegalCharacterInUserName(string userName)
+        private bool CheckLegalCharacterInUserName(string userName)
         {
-            Regex rgx = new Regex("[^a-zA-Z0-9 -]");
-            if (rgx.IsMatch(userName))
-            {
-                return true;
-            }
-            return false;
-            
+            Regex rgx = new Regex("[a-zA-Z0-9 -]");
+            return rgx.IsMatch(userName);
         }
         
-        private bool CheckCharacterInPassword(string password)
+        private bool CheckLegalCharacterInPassword(string password)
         {
-            Regex rgx = new Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
-            if (rgx.IsMatch(password))
-            {
-                return true;
-            }
-            return false;
+            Regex rgx = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
+            return rgx.IsMatch(password);
         }
         
         private bool CheckLength(string input, int min, int max)
         {
-            if (input.Length < min || input.Length > max)
-            {
-                return true;
-            }
-            return false;
+            return input.Length >= min || input.Length <= max;
         }
         
         
