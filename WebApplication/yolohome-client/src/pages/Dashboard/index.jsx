@@ -1,18 +1,7 @@
+import "./Dashboard.css";
 import React from 'react';
-
-// 
-// 
-// 
-// 
-// 
-// 
-// Xoá cái nội dung ở đây viết lại, nó là code cũ
-// 
-// 
-// 
-// 
-// 
-// 
+// import {Header, Footer} from "../../Components";
+// import PrintingLog from "../../Components/PrintingLog/PrintingLog";
 
 const Dashboard = (props) => {
   const { numberOfPages, updatePage } = props;

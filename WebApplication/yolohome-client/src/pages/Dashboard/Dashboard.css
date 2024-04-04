@@ -1,91 +1,90 @@
 .home {
-    display: flex;
-    width: 100%;
-    min-height: 100vh;
-    max-height: 100%;
-    flex-direction: column;
-  }
-  
-  
-  .home   .contentSection {
-    flex-grow: 1;
-    width: 100%;
-    padding: 2.5% 2.5% 0 2.5%;
-    background-color: #F2F4F7;
-  }
-  
-  .home   .specialWelcome {
-    color: #42307D;
-    font-size: 2em;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .home .goodluck {
-    color: #6941C6;
-    margin-bottom: 15px;
-  }
-  
-  .home  .importantView {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .home  .viewItem {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: white;
-    padding: 20px;
-    width: 40%;
-    margin-right: 20px;
-    border-radius: 10px;
-    box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .home  .viewItem:last-child {
-    margin-right: 0;
-  }
-  
-  .home  .viewImg {
-    background-color: #F4EBFF;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .home   .data {
-    margin-left: auto;
-  }
-  
-  .home   .value {
-    color: #6941C6;
-    font-weight: bold;
-    font-size: 2em;
-    margin-bottom: 5px;
-    text-align: right;
-  }
-  
-  .home  .description {
-    color: #6941C6;
-  }
-  
-  .home  .waitingLog {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .home  .waitP {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  
-  
-  
-  
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  max-height: 100%;
+  flex-direction: column;
+}
+
+
+.contentSection {
+  flex-grow: 1;
+  width: 100%;
+  padding: 2.5% 2.5% 0 2.5%;
+  background-color: #F2F4F7;
+}
+
+.specialWelcome {
+  color: #42307D;
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.goodluck {
+  color: #6941C6;
+  margin-bottom: 15px;
+}
+
+.importantView {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+  width: 40%;
+  margin-right: 20px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.1);
+}
+
+.viewItem:last-child {
+  margin-right: 0;
+}
+
+.viewImg {
+  background-color: #F4EBFF;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.data {
+  margin-left: auto;
+}
+
+.value {
+  color: #6941C6;
+  font-weight: bold;
+  font-size: 2em;
+  margin-bottom: 5px;
+  text-align: right;
+}
+
+.description {
+  color: #6941C6;
+}
+
+.waitingLog {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.waitP {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+
+
+
