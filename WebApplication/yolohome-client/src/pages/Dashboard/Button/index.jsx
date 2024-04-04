@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
+import './ToggleButton.css'; // Make sure to create a CSS file with the styles provided above
 
-function Button() {
-  // State to keep track of how many times the button has been clicked
-  const [clickCount, setClickCount] = useState(0);
+const ToggleButton = () => {
+  const [isOn, setIsOn] = useState(false);
 
-  // Function to handle button click
-  const handleClick = () => {
-    // Update state to increment click count
-    setClickCount(clickCount + 1);
+  const toggle = () => {
+    setIsOn(!isOn);
   };
 
   return (
-    <div>
-      {/* Display the button and the current click count */}
-      <button onClick={handleClick}>Click me!</button>
-      <p>You have clicked the button {clickCount} times.</p>
+    <div class = "button-container">
+      <div className={`toggle-button ${isOn ? 'on' : ''}`} onClick={toggle}>
+        <div className="toggle-circle"></div>
+      </div>
+      <div class = "state">
+        
+      </div>
     </div>
   );
-}
+};
 
-export default Button;
+export default ToggleButton;
