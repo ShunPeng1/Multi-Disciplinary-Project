@@ -14,7 +14,7 @@ const NavBar = () => {
   return (
     <nav className="navbar">
       <div className="logo">
-        <Logo width={160} />
+        <Logo width={200} />
       </div>
       <div className="navbar-content">
         <Link to="/dashboard" className={getNavItemClass("/dashboard")} id="mainFunction">
