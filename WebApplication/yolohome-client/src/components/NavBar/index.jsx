@@ -17,7 +17,7 @@ const NavBar = () => {
         <Logo width={200} />
       </div>
       <div className="navbar-content">
-        <Link to="/dashboard" className={getNavItemClass("/dashboard")} id="mainFunction">
+        <Link to="/dashboard" className={getNavItemClass("/dashboard")}>
           <img src="./Images/home.png" alt="Home Icon" />
           <p>Home</p>
         </Link>
