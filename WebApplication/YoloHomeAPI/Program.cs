@@ -28,7 +28,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.BuildReactApp();
-app.ServeReactApp();
+// app.BuildReactApp();
+// app.ServeReactApp();
 
 app.Run();

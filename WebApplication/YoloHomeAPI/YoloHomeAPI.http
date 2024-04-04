@@ -1,6 +1,37 @@
 @YoloHomeAPI_HostAddress = http://localhost:5221
 
-GET {{YoloHomeAPI_HostAddress}}/weatherforecast/
+GET {{YoloHomeAPI_HostAddress}}/api/ActivityLogApi/GetAll?username=thuanphan1234&start=2024-02-02
 Accept: application/json
 
 ###
+GET {{YoloHomeAPI_HostAddress}}/api/ActivityLogApi/GetAll?username=thuanphan1234&start=2024-01-01
+Accept: application/json
+
+###
+
+POST {{YoloHomeAPI_HostAddress}}/api/ActivityLogApi/Delete
+Content-Type: application/json
+
+{
+  "username": "thuanphan1234",
+  "start": "2024-01-01 01:00:00",
+}
+
+###
+POST {{YoloHomeAPI_HostAddress}}/api/AuthenticationApi/Register
+Content-Type: application/json
+
+{
+  "username": "thuanphan1234",
+  "password": "Thuan@phan123"
+}
+
+
+###
+POST {{YoloHomeAPI_HostAddress}}/api/AuthenticationApi/Login
+Content-Type: application/json
+
+{
+  "username": "thuanphan1234",
+  "password": "Thuan@phan123"
+}

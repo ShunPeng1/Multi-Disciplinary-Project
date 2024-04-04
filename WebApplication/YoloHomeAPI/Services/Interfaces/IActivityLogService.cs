@@ -17,8 +17,8 @@ public interface IActivityLogService
         
     }
     
-    public ActivityLogResult GetAll(string username, DateTime start, DateTime end);
-    public ActivityLogResult Add(string username, string activity, DateTime timestamp);
-    public ActivityLogResult Delete(string username, DateTime timestamp);
+    public Task<ActivityLogResult> GetAll(string username, DateTime start, DateTime end);
+    public Task<ActivityLogResult> Add(string username, string activity, DateTime timestamp);
+    public Task<ActivityLogResult> Delete(string username, DateTime timestamp);
     
 }

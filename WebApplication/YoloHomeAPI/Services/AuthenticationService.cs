@@ -11,6 +11,8 @@ using YoloHomeAPI.Contexts;
 using YoloHomeAPI.Data;
 using YoloHomeAPI.Services.Interfaces;
 using YoloHomeAPI.Settings;
+using YoloHomeAPI.Repositories;
+using YoloHomeAPI.Repositories.Interfaces;
 
 namespace YoloHomeAPI.Services
 {
@@ -18,18 +20,19 @@ namespace YoloHomeAPI.Services
     public class AuthenticationService : IAuthenticationService
     {
         private readonly AuthenticationSettings _authenticationSettings;
+
+        private IUserRepo _userRepo;
         
-        // In-memory data store TODO replace with database
-        private readonly List<User> _users = new List<User>();
 
         //public AuthenticationService(YoloHomeDbContext context, AuthenticationSettings authenticationSettings)
         public AuthenticationService(AuthenticationSettings authenticationSettings)
         {
             _authenticationSettings = authenticationSettings;
+            _userRepo = new UserRepo();
         }
 
         
-        public IAuthenticationService.AuthenticationResult Register(string username, string password)
+        public async Task<IAuthenticationService.AuthenticationResult> Register(string username, string password)
         {
             if (CheckNull(username) || CheckNull(password))
             {
@@ -56,30 +59,31 @@ namespace YoloHomeAPI.Services
                 return new(false, "Password must be between 8 and 20 characters long.", "");
             }
 
-            // TODO: Check if username already exists in database
-            if (_users.Any(x => x.UserName == username))
+            // Check if username already exists in database
+            User? user = await _userRepo.GetByUsernameAsync(username);
+            if (user != null)
             {
                 return new(false, "Username already exists.", "");
             }
 
             var (hashedPassword, salt) = HashPassword(password);
 
-            var user = new User
+            var newUser = new User
             {
                 UserName = username,
                 PasswordHash = hashedPassword,
                 PasswordSalt = salt
             };
             
-            // TODO: Save user to database
-            _users.Add(user);
+            // Save user to database
+            await _userRepo.AddAsync(newUser);
             
             
-            return new(true, "User created successfully.", GenerateJwtToken(user.UserId.ToString()));
+            return new(true, "User created successfully.", GenerateJwtToken(newUser.UserName));
         }
 
 
-        public IAuthenticationService.AuthenticationResult Login(string username, string password)
+        public async Task<IAuthenticationService.AuthenticationResult> Login(string username, string password)
         {
             if (CheckNull(username) || CheckNull(password))
             {
@@ -106,8 +110,8 @@ namespace YoloHomeAPI.Services
                 return new(false, "Password must be between 8 and 20 characters long.", "");
             }
 
-            // TODO: Check if username already exists in database
-            var user = _users.SingleOrDefault(x => x.UserName == username);
+            // Check if username already exists in database
+            User? user = await _userRepo.GetByUsernameAsync(username);
             
             if (user == null)
             {
@@ -118,7 +122,7 @@ namespace YoloHomeAPI.Services
             {
                 return new(false, "Username or password is incorrect.", "");
             }
-            return new(true, "Login successful.", GenerateJwtToken(user.UserId.ToString()));
+            return new(true, "Login successful.", GenerateJwtToken(user.UserName));
             
             
         }

@@ -29,9 +29,9 @@ public class AuthenticationApiController : ControllerBase
     
     [Route("Login")]
     [HttpPost]
-    public ActionResult<AuthenticationResponse> Login(AuthenticationRequest authenticationRequest)
+    public async Task<ActionResult<AuthenticationResponse>> Login(AuthenticationRequest authenticationRequest)
     {
-        var result = _authenticationService.Login(authenticationRequest.UserName, authenticationRequest.Password);
+        var result = await _authenticationService.Login(authenticationRequest.UserName, authenticationRequest.Password);
         if (result.IsSuccess)
         {
             return Ok(result.Token);
@@ -45,12 +45,12 @@ public class AuthenticationApiController : ControllerBase
     
     [Route("Register")]
     [HttpPost]
-    public ActionResult<AuthenticationResponse> Register(AuthenticationRequest authenticationRequest)
+    public async Task<ActionResult<AuthenticationResponse>> Register(AuthenticationRequest authenticationRequest)
     {
-        var result = _authenticationService.Register(authenticationRequest.UserName, authenticationRequest.Password);
+        var result = await _authenticationService.Register(authenticationRequest.UserName, authenticationRequest.Password);
         if (result.IsSuccess)
         {
-            return Login(authenticationRequest);
+            return await Login(authenticationRequest);
         }
         else
         {

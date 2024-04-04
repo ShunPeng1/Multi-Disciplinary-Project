@@ -1,16 +1,21 @@
 ﻿using YoloHomeAPI.Data;
+using YoloHomeAPI.Repositories;
+using YoloHomeAPI.Repositories.Interfaces;
 using YoloHomeAPI.Services.Interfaces;
 
 namespace YoloHomeAPI.Services;
 
 public class ActivityLogService : IActivityLogService
 {
-    // In-memory data store TODO replace with database
-    private readonly List<ActivityLogData> _activityLogData = new List<ActivityLogData>(); 
-    
-    public IActivityLogService.ActivityLogResult GetAll(string username, DateTime start, DateTime end)
+    private IActivityLogRepo _activityLogRepo;
+    public ActivityLogService()
     {
-        var activityLogs = _activityLogData.FindAll(x => x.UserName == username);
+        _activityLogRepo = new ActivityLogRepo();
+    }
+    public async Task<IActivityLogService.ActivityLogResult> GetAll(string username, DateTime start, DateTime end)
+    {
+        List<ActivityLogData> activityLogs;
+        activityLogs = (await _activityLogRepo.GetAllAsync(username, start, end)).ToList();
         
         if (activityLogs.Count == 0)
         {
@@ -21,7 +26,7 @@ public class ActivityLogService : IActivityLogService
     }
     
 
-    public IActivityLogService.ActivityLogResult Add(string username, string activity, DateTime timestamp)
+    public async Task<IActivityLogService.ActivityLogResult> Add(string username, string activity, DateTime timestamp)
     {
         var activityLog = new ActivityLogData()
         {
@@ -29,12 +34,13 @@ public class ActivityLogService : IActivityLogService
             Activity = activity,
             TimeStamp = timestamp
         };
-        _activityLogData.Add(activityLog);
+        await _activityLogRepo.AddAsync(activityLog);
         return new IActivityLogService.ActivityLogResult(true, new List<ActivityLogData>(){activityLog} );
     }
 
-    public IActivityLogService.ActivityLogResult Delete(string username, DateTime timestamp)
+    public async Task<IActivityLogService.ActivityLogResult> Delete(string username, DateTime timestamp)
     {
+        await _activityLogRepo.DeleteAsync(username, timestamp);
         return new IActivityLogService.ActivityLogResult(true, null!);
     }
 

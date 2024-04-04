@@ -16,8 +16,8 @@ public interface IAuthenticationService
         public string Token { get; set; }
     }
     
-    public AuthenticationResult Register(string username, string password);
-    public AuthenticationResult Login(string username, string password);
+    public Task<AuthenticationResult> Register(string username, string password);
+    public Task<AuthenticationResult> Login(string username, string password);
 
 
 }

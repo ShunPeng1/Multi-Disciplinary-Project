@@ -30,10 +30,10 @@ public class ActivityLogApiController : ControllerBase
     
     [Route("GetAll")]
     [HttpGet]
-    public ActionResult<IEnumerable<ActivityLogData>> GetAll([FromQuery] ActionLogRequest actionLogRequest)
+    public async Task<ActionResult<IEnumerable<ActivityLogData>>> GetAll([FromQuery] ActionLogRequest actionLogRequest)
     {
         
-        var result = _activityLogService.GetAll(actionLogRequest.Username, actionLogRequest.Start, actionLogRequest.End);
+        var result = await _activityLogService.GetAll(actionLogRequest.Username, actionLogRequest.Start, actionLogRequest.End);
         
         if (result.IsSuccess)
         {
@@ -48,9 +48,9 @@ public class ActivityLogApiController : ControllerBase
     
     [Route("Delete")]
     [HttpPost]
-    public ActionResult<ActionLogResponse> Delete(ActionLogRequest actionLogRequest)
+    public async Task<ActionResult<ActionLogResponse>> Delete(ActionLogRequest actionLogRequest)
     {
-        var result = _activityLogService.Delete(actionLogRequest.Username, actionLogRequest.Start);
+        var result = await _activityLogService.Delete(actionLogRequest.Username, actionLogRequest.Start);
         
         if (result.IsSuccess)
         {
