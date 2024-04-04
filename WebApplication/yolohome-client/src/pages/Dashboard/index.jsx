@@ -1,7 +1,8 @@
 import "./Dashboard.css";
 import React from 'react';
-// import {Header, Footer} from "../../Components";
-// import PrintingLog from "../../Components/PrintingLog/PrintingLog";
+//import {Header, Footer} from "../../Components";
+//import PrintingLog from "../../Components/PrintingLog/PrintingLog";
+import Button from "./Button"
 
 const Dashboard = (props) => {
   const { numberOfPages, updatePage } = props;
@@ -55,9 +56,10 @@ const Dashboard = (props) => {
               ))} */}
             
           </div>
-
-        
-        </div>  
+          <div class = "myButton">
+              <Button />
+          </div>
+        </div>
 
         {/* <Footer/> */}
      
