@@ -41,10 +41,7 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            {/* <Route path="/BuyPaper" element={<BuyPaper paperHistoryItems = {paperHistoryItems} updatePaperHistoryItems = {updatePaperHistoryItems} pageNumber = {page} updatePageNumber = {updatePage} />} /> */}
             <Route path="/history" element={<History/>} />
-            {/* <Route path="/Print" element={<Print />} /> */}
-            {/* <Route path="/Profile" element={<Profile image={image} handleImageChange={handleImageChange} printTimes={printTimes} page={page} waiting={countPrintStatusWait}/>} /> */}
             <Route path="/register" element={<Register/>} />
           </Routes>
         </div>
