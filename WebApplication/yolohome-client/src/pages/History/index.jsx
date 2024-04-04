@@ -63,30 +63,24 @@ const History = (props) => {
       {/* <Header/> */}
         <div className="contentSection">
             <div className="titleContainer">
-              <span className="welcome">
-                <p className="specialWelcome">Mua giấy</p>
-              </span>
-              <div className="paperLeft buyLog">
-                <span className="paperTitle">Số giấy của bạn:</span>
-                <span className="paperNumber">{pageNumber}</span>
+              <div className="viewItem">
+                {/* a big word say welcome, center it */}
+                <p className="specialWelcome">Welcome</p>
+                <p className="controlSentence">Control your home from here!</p>
               </div>
             </div>
           <div className="buyLog">
             <div className="title">
-              <span className="boxTitle">Lịch sử mua</span>
-                <button className=" addButton" id="main" onClick={() => setAddModal(true)}>
-                  <img src="./Images/plus.circle.svg" className="addItem" alt="Add Icon" />
-                  <p className="addItem">Mua thêm</p>
-                </button>
+              <span className="boxTitle">History</span>
             </div>
             <table className="table">
               <thead>
                 <tr className="buyHeader">
-                  <th>STT</th>
-                  <th>Số lượng</th>
-                  <th>Số tiền</th>
-                  <th>Trạng thái</th>
-                  <th>Thời gian</th>
+                  <th>No.</th>
+                  <th>Device</th>
+                  <th>Room</th>
+                  <th>Description</th>
+                  <th>Time</th>
                 </tr>
               </thead>
               {/* <tbody>
