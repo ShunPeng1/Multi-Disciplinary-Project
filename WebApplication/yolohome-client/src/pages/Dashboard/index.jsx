@@ -1,5 +1,19 @@
 import React from 'react';
 
+// 
+// 
+// 
+// 
+// 
+// 
+// Xoá cái nội dung ở đây viết lại, nó là code cũ
+// 
+// 
+// 
+// 
+// 
+// 
+
 const Dashboard = (props) => {
   const { numberOfPages, updatePage } = props;
   const {printTimes, updatePrintTimes} = props;
