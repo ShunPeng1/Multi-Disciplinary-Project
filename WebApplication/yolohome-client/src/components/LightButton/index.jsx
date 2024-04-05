@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './ToggleButton.css'; // Make sure to create a CSS file with the styles provided above
+import './LightButton.css'; 
 
-const ToggleButton = () => {
+const OnOffButton = () => {
   const [isOn, setIsOn] = useState(false);
 
   const toggle = () => {
@@ -10,7 +10,7 @@ const ToggleButton = () => {
   
   //send data
   
-  return (  
+  return (
     <div class = "button-container">
       <div className={`toggle-button ${isOn ? 'on' : ''}`} onClick={toggle}>
         <div className="toggle-circle"></div>
@@ -22,4 +22,4 @@ const ToggleButton = () => {
   );
 };
 
-export default ToggleButton;
+export default OnOffButton;
