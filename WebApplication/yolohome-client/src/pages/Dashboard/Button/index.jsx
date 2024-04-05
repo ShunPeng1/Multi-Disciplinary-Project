@@ -6,8 +6,10 @@ const ToggleButton = () => {
 
   const toggle = () => {
     setIsOn(!isOn);
-  };
-
+  };  
+  
+  //send data
+  
   return (
     <div class = "button-container">
       <div className={`toggle-button ${isOn ? 'on' : ''}`} onClick={toggle}>
