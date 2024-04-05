@@ -10,10 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 public class AuthenticationApiController : ControllerBase
 {
     private readonly IAuthenticationService _authenticationService;
+    private readonly IUserService _userService;
     
-    public AuthenticationApiController(IAuthenticationService authenticationService)
+    public AuthenticationApiController(IAuthenticationService authenticationService, IUserService userService)
     {
         _authenticationService = authenticationService;
+        _userService = userService;
     }
     
     public class AuthenticationLoginRequest
@@ -65,6 +67,7 @@ public class AuthenticationApiController : ControllerBase
         var result = await _authenticationService.Register(authenticationLoginRequest.UserName, authenticationLoginRequest.Password);
         if (result.IsSuccess)
         {
+            var updateInformationResult = await _userService.UpdateUserInformation(authenticationLoginRequest.UserName, authenticationLoginRequest.FirstName, authenticationLoginRequest.LastName, authenticationLoginRequest.Email);
             return await Login(authenticationLoginRequest);
         }
         else
