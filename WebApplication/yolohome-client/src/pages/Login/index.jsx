@@ -22,6 +22,7 @@ function Login() {
   const successCallback = (data) => {
     console.log('Success:', data);
     localStorage.setItem('token', data);
+    window.location.href = '/dashboard';
   }
   
   const errorCallback = (error) => {

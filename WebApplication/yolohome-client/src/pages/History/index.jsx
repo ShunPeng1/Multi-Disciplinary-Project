@@ -64,50 +64,54 @@ const History = (props) => {
         <div className="contentSection">
             <div className="titleContainer">
               <div className="viewItem">
-                {/* a big word say welcome, center it */}
                 <p className="specialWelcome">Welcome</p>
                 <p className="controlSentence">Control your home from here!</p>
               </div>
+                {/* <img src="./Images/background_new.png" alt="background_new" className="viewImg2"></img> */}
+              <div className="viewImg2">
+              <img src="./Images/background_new.png" alt="background_new" ></img>
+              </div>
             </div>
-          <div className="buyLog">
-            <div className="title">
-              <span className="boxTitle">History</span>
-            </div>
-            <table className="table">
-              <thead>
-                <tr className="buyHeader">
-                  <th>No.</th>
-                  <th>Device</th>
-                  <th>Room</th>
-                  <th>Description</th>
-                  <th>Time</th>
-                </tr>
-              </thead>
-              {/* <tbody>
-                {currentItems.map((buyPaperInfo, i) => (
-                  <PaperLog key={i} id={i + indexOfFirstItem} buyInfo={buyPaperInfo} />
-                ))}
-              </tbody> */}
-            </table>
 
-            {/* Pagination controls */}
-            <div className="pagination">
-              <button
-                onClick={() => setCurrentPage(currentPage - 1)}
-                disabled={currentPage === 1}
-              >
-                &#9665;
-              </button>
-              <span>{currentPage}</span>
-              <button
-                onClick={() => setCurrentPage(currentPage + 1)}
-                // disabled={indexOfLastItem >= paperHistoryItems.length}
-              >
-                &#9655;
-              </button>
-            </div>
-            
+        <div className="buyLog">
+          <div className="title">
+            <span className="boxTitle">History</span>
           </div>
+          <table className="table">
+            <thead>
+              <tr className="buyHeader">
+                <th>No.</th>
+                <th>Device</th>
+                <th>Room</th>
+                <th>Description</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            {/* <tbody>
+              {currentItems.map((buyPaperInfo, i) => (
+                <PaperLog key={i} id={i + indexOfFirstItem} buyInfo={buyPaperInfo} />
+              ))}
+            </tbody> */}
+          </table>
+
+          {/* Pagination controls */}
+          <div className="pagination">
+            <button
+              onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              &#9665;
+            </button>
+            <span>{currentPage}</span>
+            <button
+              onClick={() => setCurrentPage(currentPage + 1)}
+              // disabled={indexOfLastItem >= paperHistoryItems.length}
+            >
+              &#9655;
+            </button>
+          </div>
+          
+        </div>
           {/* {addModal && 
           <AddPaperModal onConfirm={handleConfirmModal} onClose={handleCloseModal}/>}
 
