@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './OnOffButton.css'; 
+import './LightButton.css'; 
 
 const OnOffButton = () => {
   const [isOn, setIsOn] = useState(false);
