@@ -15,7 +15,7 @@ const LightButton = () => {
       <div className={`toggle-button ${isOn ? 'on' : ''}`} onClick={toggle}>
         <div className="toggle-circle"></div>
       </div>
-      <div class = "state">
+      <div class = "stateLight">
         {isOn ? 'On' : 'Off'}
       </div>
     </div>
