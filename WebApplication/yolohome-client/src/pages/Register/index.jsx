@@ -18,8 +18,12 @@ function Register() {
     const handleSubmit = (event) => {
         event.preventDefault();
         FetchRequest('api/AuthenticationApi/Register', 'POST', {
+            Email: email,
+            FirstName: firstname,
+            LastName: lastname,
             UserName: username,
-            Password: password
+            Password: password,
+            
         }, successCallback, errorCallback);
     };
 

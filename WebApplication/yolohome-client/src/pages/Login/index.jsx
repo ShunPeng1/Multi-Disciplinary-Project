@@ -39,7 +39,7 @@ function Login() {
               <h2>Login</h2>
               <div className='inputbox'>
                 <input type = 'text' onChange={(e) => setUsername(e.target.value)} required/>
-                <label>Email</label>
+                <label>User Name</label>
               </div>
               <div className='inputbox'>
                 <input type = 'password' onChange={(e) => setPassword(e.target.value)} required/>
