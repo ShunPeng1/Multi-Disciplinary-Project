@@ -10,13 +10,13 @@ const ToggleButton = () => {
   
   //send data
   
-  return (
+  return (  
     <div class = "button-container">
       <div className={`toggle-button ${isOn ? 'on' : ''}`} onClick={toggle}>
         <div className="toggle-circle"></div>
       </div>
       <div class = "state">
-        
+        {isOn ? 'On' : 'Off'}
       </div>
     </div>
   );
