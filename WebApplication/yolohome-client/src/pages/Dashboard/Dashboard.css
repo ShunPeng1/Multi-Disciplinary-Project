@@ -85,6 +85,14 @@
   margin-bottom: 10px;
 }
 
-.myButton {
+.myLightButton {
+  margin-top: 1vh;
+}
+
+.myFanButton {
+  margin-top: 1vh;
+}
+
+.myDoorButton {
   margin-top: 1vh;
 }
