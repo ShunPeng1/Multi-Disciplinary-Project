@@ -57,7 +57,7 @@ const Dashboard = (props) => {
             
           </div>
           <div class = "myButton">
-              <OnOffButton />
+              <LightButton />
           </div>
         </div>
 

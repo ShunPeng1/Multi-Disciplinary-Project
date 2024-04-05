@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './LightButton.css'; 
 
-const OnOffButton = () => {
+const LightButton = () => {
   const [isOn, setIsOn] = useState(false);
 
   const toggle = () => {
@@ -22,4 +22,4 @@ const OnOffButton = () => {
   );
 };
 
-export default OnOffButton;
+export default LightButton;
