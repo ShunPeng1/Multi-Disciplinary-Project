@@ -16,7 +16,7 @@ public static class ReactAppBuilderExtension
         string currentHash = CalculateHash(Path.Combine(Directory.GetCurrentDirectory(), @"..\yolohome-client\src"));
 
         // Read the hash of the previous build
-        string previousHash = File.Exists(hashFilePath) ? File.ReadAllText(hashFilePath) : null;
+        string? previousHash = File.Exists(hashFilePath) ? File.ReadAllText(hashFilePath) : null;
 
         // If the hashes are different, rebuild the app
         if (currentHash != previousHash)
@@ -81,7 +81,7 @@ public static class ReactAppBuilderExtension
 
         // Generate and return the final hash
         sha256.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
-        return BitConverter.ToString(sha256.Hash).Replace("-", "").ToLowerInvariant();
+        return BitConverter.ToString(sha256.Hash ?? Array.Empty<byte>()).Replace("-", "").ToLowerInvariant();
     }
 
     public static void ServeReactApp(this IApplicationBuilder app)
