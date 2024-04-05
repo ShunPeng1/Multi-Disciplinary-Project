@@ -1,6 +1,7 @@
 import "./History.css";
 // import {Header, Footer, PaperLog, AddPaperModal, Modal} from "../../components";
 import { useState, useEffect  } from "react";
+import Login from "../Login";
 
 const History = (props) => {
   const { paperHistoryItems , updatePaperHistoryItems, pageNumber, updatePageNumber } = props; 
@@ -64,6 +65,7 @@ const History = (props) => {
         <div className="contentSection">
             <div className="titleContainer">
               <div className="viewItem">
+                {/* a sentence Welcome, username, username is imported from Login */}
                 <p className="specialWelcome">Welcome</p>
                 <p className="controlSentence">Control your home from here!</p>
               </div>
