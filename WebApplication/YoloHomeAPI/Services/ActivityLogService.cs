@@ -7,11 +7,12 @@ namespace YoloHomeAPI.Services;
 
 public class ActivityLogService : IActivityLogService
 {
-    private IActivityLogRepo _activityLogRepo;
-    public ActivityLogService()
+    private readonly IActivityLogRepo _activityLogRepo;
+    public ActivityLogService(IActivityLogRepo activityLogRepo)
     {
-        _activityLogRepo = new ActivityLogRepo();
+        _activityLogRepo = activityLogRepo;
     }
+    
     public async Task<IActivityLogService.ActivityLogResult> GetAll(string username, DateTime start, DateTime end)
     {
         List<ActivityLogData> activityLogs;

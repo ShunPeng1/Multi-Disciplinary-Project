@@ -1,20 +1,19 @@
 ﻿using YoloHomeAPI.Data;
 using YoloHomeAPI.Repositories.Interfaces;
 using Npgsql;
+using YoloHomeAPI.Settings;
 
 namespace YoloHomeAPI.Repositories;
 
 public class UserRepo : IUserRepo
 {
+    private readonly DatabaseSettings _settings;
     private readonly string _connectionString;
 
-    public UserRepo()
+    public UserRepo(DatabaseSettings settings)
     {
-        var builder = new ConfigurationBuilder()
-                        .SetBasePath(Directory.GetCurrentDirectory())
-                        .AddJsonFile("appsettings.json");
-        var configuration = builder.Build();
-        _connectionString = configuration.GetConnectionString("DefaultConnection")!;
+        _settings = settings;
+        _connectionString = settings.ConnectionString;
     }
 
     public async Task<List<User>> GetAllAsync()

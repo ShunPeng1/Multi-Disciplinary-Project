@@ -9,6 +9,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add services to the container.
+builder.AddPostgreSqlServices();
 builder.AddAdafruitServices();
 builder.AddAuthenticationServices();
 

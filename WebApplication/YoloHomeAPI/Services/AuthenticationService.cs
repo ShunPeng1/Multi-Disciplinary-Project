@@ -21,14 +21,14 @@ namespace YoloHomeAPI.Services
     {
         private readonly AuthenticationSettings _authenticationSettings;
 
-        private IUserRepo _userRepo;
+        private readonly IUserRepo _userRepo;
         
 
         //public AuthenticationService(YoloHomeDbContext context, AuthenticationSettings authenticationSettings)
-        public AuthenticationService(AuthenticationSettings authenticationSettings)
+        public AuthenticationService(AuthenticationSettings authenticationSettings, IUserRepo userRepo)
         {
             _authenticationSettings = authenticationSettings;
-            _userRepo = new UserRepo();
+            _userRepo = userRepo;
         }
 
         

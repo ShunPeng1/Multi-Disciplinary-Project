@@ -24,10 +24,11 @@ public static class AdafruitServiceBuilderExtension
         });
 
         builder.Services.AddSingleton<IAdafruitMqttService, AdafruitMqttService>();
-        
-        builder.Services.AddSingleton<IManualControlService, ManualControlService>();
-        builder.Services.AddSingleton<IIotDeviceService, IotDeviceService>();
-        builder.Services.AddSingleton<IActivityLogService, ActivityLogService>();
+
+        builder.Services.AddScoped<IIotDeviceService, IotDeviceService>();
+        builder.Services.AddScoped<IActivityLogService, ActivityLogService>();
+
+        builder.Services.AddScoped<IManualControlService, ManualControlService>();
         
     }
     

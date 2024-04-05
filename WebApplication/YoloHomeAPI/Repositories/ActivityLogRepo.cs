@@ -1,20 +1,24 @@
 ﻿using YoloHomeAPI.Data;
 using YoloHomeAPI.Repositories.Interfaces;
 using Npgsql;
+using YoloHomeAPI.Settings;
 
 namespace YoloHomeAPI.Repositories;
 
 public class ActivityLogRepo : IActivityLogRepo
 {
+    
+   
+    private readonly DatabaseSettings _settings;
     private readonly string _connectionString;
-    public ActivityLogRepo()
+
+    public ActivityLogRepo(DatabaseSettings settings)
     {
-        var builder = new ConfigurationBuilder()
-                        .SetBasePath(Directory.GetCurrentDirectory())
-                        .AddJsonFile("appsettings.json");
-        var configuration = builder.Build();
-        _connectionString = configuration.GetConnectionString("DefaultConnection")!;
+        _settings = settings;
+        _connectionString = settings.ConnectionString;
     }
+
+    
     public async Task<IEnumerable<ActivityLogData>> GetAllAsync(string username, DateTime start, DateTime end)
     {
         var query = "SELECT * FROM log_record WHERE l_username_fk = @username AND l_timestmp >= @start AND l_timestmp <= @end";
