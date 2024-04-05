@@ -8,6 +8,8 @@ const LightButton = () => {
     setIsOn(!isOn);
   };
 
+  // data handling here
+
   return (
     <div className="light-button-container">
       <div className="icon-and-toggle">
