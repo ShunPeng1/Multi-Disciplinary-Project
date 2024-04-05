@@ -1,70 +1,33 @@
 import "./Dashboard.css";
 import React from 'react';
-//import {Header, Footer} from "../../Components";
-//import PrintingLog from "../../Components/PrintingLog/PrintingLog";
 import LightCard from "../../components/Cards/LightCard";
 
 const Dashboard = (props) => {
-  const { numberOfPages, updatePage } = props;
-  const {printTimes, updatePrintTimes} = props;
-  const { printInfoItems } = props;
-  const { updatePrintInfoItems } = props; 
-  // const pendingPrints = printInfoItems.filter(item => item.printStatus === "Đang chờ");
+
   return (
     <div className="home">
-      
-      {/* <Header/> */}
         <div className="contentSection">
-          <div className="welcome">
-            <p className="specialWelcome">Chào mừng trở lại, Khoa</p>
-            <p className="goodluck">Chúc bạn một ngày tốt lành</p>
-          </div>
-
           <div className="importantView">
             <div className="viewItem">
-              <img src="./Images/impPrinter.png" alt="impPrinter" className="viewImg"></img>
-              <div className="data">
-                <p className="value">{printTimes}</p>
-                <p className="description">Số lần in</p>
-              </div>
+              <p className="specialWelcome">Welcome</p>
+              <p className="controlSentence">Control your home from here!</p>
             </div>
 
-            <div className="viewItem">
-              <img src="./Images/file.png" alt="file" className="viewImg"></img>
-              <div className="data">
-                <p className="value">{numberOfPages}</p>
-                <p className="description">Số giấy còn lại</p>
-              </div>
+            <div className="viewImg2">
+              <img src="./Images/background_new.png" alt="background_new" ></img>
             </div>
             
           </div>
 
           <div className="waitingLog">
-            <p className="waitP">Đang chờ</p>
-            
-            {/* {pendingPrints.map((printInfo, i) => (
-                <PrintingLog
-                  key={i}
-                  printItems={printInfoItems}
-                  printTimes={printTimes}
-                  numberOfPages={numberOfPages}
-                  updatePage={updatePage}
-                  updatePrintTimes={updatePrintTimes}
-                  printingInfo={printInfo}
-                  updatePrintInfoItems={updatePrintInfoItems}
-                />
-              ))} */}
-            
+            <p className="waitP">Đang chờ</p>         
           </div>
           
           {/* Light, Fan, Door */}
           <div className="lightCard">
             <LightCard />
           </div>
-        </div>
-
-        {/* <Footer/> */}
-     
+        </div>     
     </div>
   );
 };
