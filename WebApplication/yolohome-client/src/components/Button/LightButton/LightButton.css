@@ -1,40 +1,53 @@
-.toggle-button {
-  width: 100px; /* adjust as necessary */
-  height: 50px; /* adjust as necessary */
-  background-color: black; /* adjust to match your button's color */
-  border-radius: 50px;
-  position: relative;
-  cursor: pointer;
-}
-
-.toggle-circle {
-  width: 40px; /* adjust as necessary */
-  height: 40px; /* adjust as necessary */
-  background-color: white; /* circle color */
-  border-radius: 50%;
-  position: absolute;
-  top: 5px; /* adjust as necessary */
-  left: 5px; /* adjust to start position */
-  transition: left 0.3s ease-in-out;
-}
-
-.toggle-button.on .toggle-circle {
-  left: 55px; /* adjust to end position */
-}
-
-.toggle-button.on {
-  background-color: #4B77BE;
-}
-
-.buton-container {
+.light-button-container {
   display: flex;
   flex-direction: column;
+  
+}
+
+.icon-and-toggle {
+  display: flex;
   align-items: center;
 }
 
-.stateLight {
-  margin-left: 35px;
-  margin-top: 10px;
-  font-size: 20px;
+.icon-light img {
+  width: 60px; /* Adjust as needed */
+  margin-right: 30px; /* Space between the icon and the toggle button */
+}
+
+.toggle-button {
+  position: relative;
+  margin-bottom: 20px;
+  width: 78px; /* Width of the toggle button */
+  height: 35px; /* Height of the toggle button */
+  border-radius: 30px; /* Make it round */
+  background-color: #6C6979; /* Background color when off */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-button.on {
+  background-color: #593EFF; /* Background color when on */
+}
+
+.toggle-circle {
+  position: absolute;
+  top: 5px; /* Adjust as needed */
+  left: 5px; /* Adjust based on the toggle state */
+  width: 25px; /* Circle size */
+  height: 25px; /* Circle size */
+  background-color: #fff; /* Circle color */
+  border-radius: 100%;
+  transition: left 0.3s ease;
+}
+
+.toggle-button.on .toggle-circle {
+  left: 48px; /* Move circle to the right when on */
+}
+
+.state-light {
+  margin-top: -20px;
+  margin-left: 118px;
+  font-size: 15px;
+  color: #333;
   font-weight: bold;
 }

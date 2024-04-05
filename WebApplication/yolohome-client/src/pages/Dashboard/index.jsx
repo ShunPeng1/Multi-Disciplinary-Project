@@ -2,9 +2,6 @@ import "./Dashboard.css";
 import React from 'react';
 //import {Header, Footer} from "../../Components";
 //import PrintingLog from "../../Components/PrintingLog/PrintingLog";
-import LightButton from "../../components/Button/LightButton";
-import FanButton from "../../components/Button/FanButton";
-import DoorButton from "../../components/Button/DoorButton";
 import LightCard from "../../components/Cards/LightCard";
 
 const Dashboard = (props) => {
