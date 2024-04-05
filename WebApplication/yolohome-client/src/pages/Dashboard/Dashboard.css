@@ -85,18 +85,6 @@
   margin-bottom: 10px;
 }
 
-.myLightButton {
-  margin-top: 1vh;
-}
-
-.myFanButton {
-  margin-top: 1vh;
-}
-
-.myDoorButton {
-  margin-top: 1vh;
-}
-
 .home .viewItem {
   display: flex;
   flex-direction: column;
@@ -117,5 +105,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  
+}
+
+.lightCard {
+  margin-bottom: 30px;
+}
+
+.doorCard {
+  margin-bottom: 30px;
+}
+
+.fanCard {
+  margin-bottom: 30px;
 }

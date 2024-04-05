@@ -1,5 +1,4 @@
 import React from "react";
-import {Link, useLocation} from "react-router-dom"
 import "./LightCard.css"
 import LightButton from "../../Button/LightButton"
 

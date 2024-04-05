@@ -1,0 +1,18 @@
+.door-button-container {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.icon-door img {
+    width: 60px; /* Adjust as needed */
+    margin-right: 30px; /* Space between the icon and the toggle button */
+}
+
+.state-door {
+    margin-top: -20px;
+    margin-left: 100px;
+    font-size: 15px;
+    color: #333;
+    font-weight: bold;
+}

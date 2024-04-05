@@ -1,6 +1,8 @@
 import "./Dashboard.css";
 import React from 'react';
 import LightCard from "../../components/Cards/LightCard";
+import FanCard from "../../components/Cards/FanCard";
+import DoorCard from "../../components/Cards/DoorCard"
 
 const Dashboard = (props) => {
 
@@ -26,6 +28,12 @@ const Dashboard = (props) => {
           {/* Light, Fan, Door */}
           <div className="lightCard">
             <LightCard />
+          </div>
+          <div className="doorCard">
+            <DoorCard />
+          </div>
+          <div className="fanCard">
+            <FanCard />
           </div>
         </div>     
     </div>
