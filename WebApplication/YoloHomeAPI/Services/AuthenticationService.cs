@@ -60,7 +60,7 @@ namespace YoloHomeAPI.Services
             }
 
             // Check if username already exists in database
-            User? user = await _userRepo.GetByUsernameAsync(username);
+            User? user = await _userRepo.GetByUserAsync(username);
             if (user != null)
             {
                 return new(false, "Username already exists.", "");
@@ -111,7 +111,7 @@ namespace YoloHomeAPI.Services
             }
 
             // Check if username already exists in database
-            User? user = await _userRepo.GetByUsernameAsync(username);
+            User? user = await _userRepo.GetByUserAsync(username);
             
             if (user == null)
             {

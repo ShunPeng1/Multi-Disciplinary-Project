@@ -34,8 +34,8 @@ public class UserRepo : IUserRepo
         }
         return users;
     }
-
-    public async Task<User?> GetByUsernameAsync(string username)
+    
+    public async Task<User?> GetByUserAsync(string username)
     {
         var query = "SELECT * FROM users WHERE username = @username";
         await using var dataSource = NpgsqlDataSource.Create(_connectionString);
@@ -44,11 +44,31 @@ public class UserRepo : IUserRepo
         await using var reader = await cmd.ExecuteReaderAsync();
         if (await reader.ReadAsync())
         {
-            return new User 
+            return new User() 
             { 
-                UserName = reader.GetString(0), 
+                UserName = reader.GetString(0),
                 PasswordHash = reader.GetString(1),
                 PasswordSalt = reader.GetString(2)
+            };
+        }
+        return null;
+    }
+
+    public async Task<UserInformation?> GetByUserInformationAsync(string username)
+    {
+        var query = "SELECT * FROM users WHERE username = @username";
+        await using var dataSource = NpgsqlDataSource.Create(_connectionString);
+        await using var cmd = dataSource.CreateCommand(query);
+        cmd.Parameters.AddWithValue("username", username);
+        await using var reader = await cmd.ExecuteReaderAsync();
+        if (await reader.ReadAsync())
+        {
+            return new UserInformation() 
+            { 
+                UserName = reader.GetString(0),
+                Email = reader.GetString(3), 
+                FirstName = reader.GetString(4),
+                LastName = reader.GetString(5),
             };
         }
         return null;
@@ -74,7 +94,7 @@ public class UserRepo : IUserRepo
         await cmd.ExecuteNonQueryAsync();
     }
 
-    public async Task UpdateAsync(User user)
+    public async Task UpdateUserPasswordAsync(User user)
     {
         var query = "UPDATE users SET u_password = @password, u_salt = @salt WHERE u_username = @username";
         await using var dataSource = NpgsqlDataSource.Create(_connectionString);
@@ -82,6 +102,18 @@ public class UserRepo : IUserRepo
         cmd.Parameters.AddWithValue("username", user.UserName);
         cmd.Parameters.AddWithValue("password", user.PasswordHash);
         cmd.Parameters.AddWithValue("salt", user.PasswordSalt);
+        await cmd.ExecuteNonQueryAsync();
+    }
+    
+    public async Task UpdateUserInformationAsync(UserInformation userInformation)
+    {
+        var query = "UPDATE users SET fname = @firstname, lname = @lastname, email = @email WHERE username = @username";
+        await using var dataSource = NpgsqlDataSource.Create(_connectionString);
+        await using var cmd = dataSource.CreateCommand(query);
+        cmd.Parameters.AddWithValue("username", userInformation.UserName);
+        cmd.Parameters.AddWithValue("firstname", userInformation.FirstName);
+        cmd.Parameters.AddWithValue("lastname", userInformation.LastName);
+        cmd.Parameters.AddWithValue("email", userInformation.Email);
         await cmd.ExecuteNonQueryAsync();
     }
 }

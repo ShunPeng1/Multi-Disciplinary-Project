@@ -16,25 +16,40 @@ public class AuthenticationApiController : ControllerBase
         _authenticationService = authenticationService;
     }
     
-    public class AuthenticationRequest
+    public class AuthenticationLoginRequest
     {
         public string UserName { get; set; } = null!;
         public string Password { get; set; } = null!;
     }
+
+    public class AuthenticationRegisterRequest : AuthenticationLoginRequest
+    {
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        
+    }
     
     public class AuthenticationResponse
     {
+        public string UserName { get; set; } = null!;
         public string Token { get; set; } = null!;
     }
     
     [Route("Login")]
     [HttpPost]
-    public async Task<ActionResult<AuthenticationResponse>> Login(AuthenticationRequest authenticationRequest)
+    public async Task<ActionResult<AuthenticationResponse>> Login(AuthenticationLoginRequest authenticationLoginRequest)
     {
-        var result = await _authenticationService.Login(authenticationRequest.UserName, authenticationRequest.Password);
+        var result = await _authenticationService.Login(authenticationLoginRequest.UserName, authenticationLoginRequest.Password);
         if (result.IsSuccess)
         {
-            return Ok(result.Token);
+            var response = new AuthenticationResponse()
+            {
+                UserName = authenticationLoginRequest.UserName,
+                Token = result.Token
+            };
+            
+            return Ok(response);
         }
         else
         {
@@ -45,12 +60,12 @@ public class AuthenticationApiController : ControllerBase
     
     [Route("Register")]
     [HttpPost]
-    public async Task<ActionResult<AuthenticationResponse>> Register(AuthenticationRequest authenticationRequest)
+    public async Task<ActionResult<AuthenticationResponse>> Register(AuthenticationRegisterRequest authenticationLoginRequest)
     {
-        var result = await _authenticationService.Register(authenticationRequest.UserName, authenticationRequest.Password);
+        var result = await _authenticationService.Register(authenticationLoginRequest.UserName, authenticationLoginRequest.Password);
         if (result.IsSuccess)
         {
-            return await Login(authenticationRequest);
+            return await Login(authenticationLoginRequest);
         }
         else
         {
