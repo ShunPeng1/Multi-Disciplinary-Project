@@ -2,7 +2,7 @@ import "./Dashboard.css";
 import React from 'react';
 //import {Header, Footer} from "../../Components";
 //import PrintingLog from "../../Components/PrintingLog/PrintingLog";
-import ToggleButton from "./Button"
+import OnOffButton from "../../components/Button"
 
 const Dashboard = (props) => {
   const { numberOfPages, updatePage } = props;
@@ -57,7 +57,7 @@ const Dashboard = (props) => {
             
           </div>
           <div class = "myButton">
-              <ToggleButton />
+              <OnOffButton />
           </div>
         </div>
 

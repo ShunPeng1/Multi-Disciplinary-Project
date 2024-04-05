@@ -36,7 +36,9 @@ const NavBar = () => {
           <img src="./Images/profile_icon.png" alt="Profile Icon" />
           <p>Profile</p>
         </Link>
-
+        <div class = "blank">
+          {''}
+        </div>
         <Link to="/" className={getNavItemClass("/")} id="logout">
           <img src="./Images/log_out.png" alt="Logout Icon" />
           <p>Log out</p>
