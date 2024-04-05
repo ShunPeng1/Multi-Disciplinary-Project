@@ -2,7 +2,7 @@ import "./Dashboard.css";
 import React from 'react';
 //import {Header, Footer} from "../../Components";
 //import PrintingLog from "../../Components/PrintingLog/PrintingLog";
-import OnOffButton from "../../components/Button"
+import OnOffButton from "../../components/LightButton"
 
 const Dashboard = (props) => {
   const { numberOfPages, updatePage } = props;
