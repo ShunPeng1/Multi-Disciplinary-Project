@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './DoorButton.css';
 import FetchRequest from "../../api/api"; // make sure your CSS file is properly linked
 
 const DoorButton = () => {
-  const [isOn, setIsOn] = useState(false);
+  const storedDoorState = localStorage.getItem('isDoorOn');
+  const [isOn, setIsOn] = useState(storedDoorState ? JSON.parse(storedDoorState) : false);
   const [isHandling, setIsHandling] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('isDoorOn', JSON.stringify(isOn));
+  }, [isOn]);
+
   const toggle = () => {
     if (!isHandling) {
       setIsHandling(true);

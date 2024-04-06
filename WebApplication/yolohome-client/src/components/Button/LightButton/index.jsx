@@ -3,12 +3,12 @@ import './LightButton.css';
 import FetchRequest from "../../api/api";
 
 const LightButton = () => {
-  const storedLightState = localStorage.getItem('isOn');
-  const [isOn, setIsOn] = useState(storedState ? JSON.parse(storedState) : false);
+  const storedLightState = localStorage.getItem('isLightOn');
+  const [isOn, setIsOn] = useState(storedLightState ? JSON.parse(storedLightState) : false);
   const [isHandling, setIsHandling] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('isOn', JSON.stringify(isOn));
+    localStorage.setItem('isLightOn', JSON.stringify(isOn));
   }, [isOn]);
 
   const toggle = () => {

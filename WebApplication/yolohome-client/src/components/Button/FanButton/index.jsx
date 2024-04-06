@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './FanButton.css';
 import FetchRequest from "../../api/api";
 
 const FanButton = () => {
-  const [isOn, setIsOn] = useState(false);
+  const storedFanState = localStorage.getItem('isFanOn');
+  const [isOn, setIsOn] = useState(storedFanState ? JSON.parse(storedFanState) : false);
   const [isHandling, setIsHandling] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('isFanOn', JSON.stringify(isOn));
+  }, [isOn]);
 
   const toggle = () => {
     if (!isHandling) {
