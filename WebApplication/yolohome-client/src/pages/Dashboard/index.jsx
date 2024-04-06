@@ -22,19 +22,24 @@ const Dashboard = (props) => {
             
           </div>
           
-          {/* {CardButton and Information part} */}
+          
+          {/* Light, Fan, Door */}
           <div className="lightCard">
             <LightCard />
           </div>
+
           <div className="doorCard">
             <DoorCard />
           </div>
+          
           <div className="fanCard">
             <FanCard />
           </div>
+          
           <div className="temperatureCard">
             <TemperatureCard />
           </div>
+          
           <div className="humidityCard">
             <HumidityCard />
           </div>

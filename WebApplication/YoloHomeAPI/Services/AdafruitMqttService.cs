@@ -12,8 +12,6 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
 {
     private const float SEND_DATA_BACK_TIMER = 120f;
 
-    public event Action<string> AnnounceMessageArrived; 
-
     private readonly AdafruitSettings _adafruitSetting;
     
     private readonly IServiceScopeFactory _serviceScopeFactory;
@@ -53,13 +51,11 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
         await _mqttClient.ConnectAsync(_mqttClientOptions, CancellationToken.None);
 
         var mqttSubscribeOptions = mqttFactory.CreateSubscribeOptionsBuilder()
-            .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.AnnounceTopicPath); })
-            //.WithTopicFilter(f => { f.WithTopic(_adafruitSetting.SensorTopicPath); })
+            .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.HumidityTopicPath); })
+            .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.TemperatureTopicPath); })
             .Build();
 
         await _mqttClient.SubscribeAsync(mqttSubscribeOptions, CancellationToken.None);
-
-        AnnounceMessageArrived += InitializeMessageReceivedHandler;
         
         Console.WriteLine("AdafruitMqttService initialized successfully.");
     }
@@ -71,7 +67,6 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
         await base.StopAsync(cancellationToken);
         await _mqttClient.DisconnectAsync();
         
-        AnnounceMessageArrived -= InitializeMessageReceivedHandler;
         
         Console.WriteLine("AdafruitMqttService stopped successfully.");
     }
@@ -98,11 +93,11 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
 
             PublishMessage(_helperService.LightTopicPath, averagedLightValue.ToString("0.00"));
             PublishMessage(_helperService.TemperatureTopicPath, averagedTemperatureValue.ToString("0.00"));
-            PublishMessage(_helperService.MoistureTopicPath, averagedMoistureValue.ToString("0.00"));
+            PublishMessage(_helperService.HumidityTopicPath, averagedMoistureValue.ToString("0.00"));
 
             foreach (var accumulatedPlantDataLog in _accumulatedPlantDataLogs)
             {
-                var ownerPlant = dbContext.PlantInformations.FirstOrDefault(info => info.Id == accumulatedPlantDataLog.PlantId);
+                var ownerPlant = dbContext.PlantInformations.FirstOrDefault(info => info.Kind == accumulatedPlantDataLog.PlantId);
                 if (ownerPlant == null) continue;
 
                 dbContext.PlantDataLogs.Add(new PlantDataLog()
@@ -151,83 +146,41 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
     private Task ApplicationMessageReceivedHandler(MqttApplicationMessageReceivedEventArgs args)
     {
         var decodedMessage = DecodeMqttPayload(args.ApplicationMessage.Payload);
+        var topic = args.ApplicationMessage.Topic;
         Console.WriteLine("From topic: " + args.ApplicationMessage.Topic);
 
-        if (args.ApplicationMessage.Topic.Contains(_adafruitSetting.AdafruitAnnounceFeedName))
-            OnAnnounceMessageReceived(decodedMessage);
-        else if (args.ApplicationMessage.Topic.Contains(_adafruitSetting.AdafruitSensorFeedName))
-            OnSensorMessageReceived(decodedMessage);
+        if (args.ApplicationMessage.Topic.Contains(_adafruitSetting.HumidityTopicPath))
+            OnHumidityMessageReceived(topic, decodedMessage);
+        else if (args.ApplicationMessage.Topic.Contains(_adafruitSetting.TemperatureTopicPath))
+            OnTemperatureMessageReceived(topic, decodedMessage);
+        else
 
         Console.WriteLine("Message received: " + decodedMessage);
         return Task.CompletedTask;
     }
-
-    private void OnAnnounceMessageReceived(string content)
-    {
-        AnnounceMessageArrived?.Invoke(content);
-    }
-
-    private void InitializeMessageReceivedHandler(string content)
-    {
-        if (content == "0;I")
-        {
-            using var scope = _serviceScopeFactory.CreateScope();
-            //var dbContext = scope.ServiceProvider.GetRequiredService<DbContext>();
-            //int plantCount = dbContext.PlantInformations.Count();
-            //PublishMessage(_adafruitSetting.AnnounceTopicPath, plantCount + ";ID");
-        }
-    }
-
     
-    private void OnSensorMessageReceived(string content)
+    
+    private void OnHumidityMessageReceived(string topic, string content)
     {
-        //AccumulateNewValues(content);
+        AccumulateNewValues(content);
     }
     
-
-    /*
+    private void OnTemperatureMessageReceived(string topic, string content)
+    {
+        AccumulateNewValues(content);
+    }
+    
     private void AccumulateNewValues(string content)
     {
         var values = content[2..].Split(';').Select(float.Parse).ToList();
-
-        if (values.Count > _accumulatedPlantDataLogs.Count)
+        
+        foreach (var value in values)
         {
-            using (var scope = _serviceScopeFactory.CreateScope())
-            {
-                var dbContext = scope.ServiceProvider.GetRequiredService<DbContext>();
-
-                for (int i = _accumulatedPlantDataLogs.Count; i < values.Count; i++)
-                {
-                    _accumulatedPlantDataLogs.Add(new AccumulatedPlantDataLog()
-                    {
-                        PlantId = dbContext.PlantInformations.ToList()[i].Id,
-                    });
-                }
-            }
-        }
-
-        for (var i = 0; i < values.Count; i++)
-        {
-            switch (content[0])
-            {
-                case 'L':
-                    _accumulatedPlantDataLogs[i].AccumulatedLightValue += values[i];
-                    _accumulatedPlantDataLogs[i].LightValueCount++;
-                    break;
-                case 'T':
-                    _accumulatedPlantDataLogs[i].AccumulatedTemperatureValue += values[i];
-                    _accumulatedPlantDataLogs[i].TemperatureValueCount++;
-                    break;
-                case 'M':
-                    _accumulatedPlantDataLogs[i].AccumulatedMoistureValue += values[i];
-                    _accumulatedPlantDataLogs[i].MoistureValueCount++;
-                    break;
-            }
+            Console.WriteLine("Accumulating value: "+ + value);
         }
         
     }
     
-    */
     
     private string DecodeMqttPayload(byte[] encodedData)
     {
