@@ -5,8 +5,8 @@ import FanCard from "../../components/Cards/FanCard";
 import DoorCard from "../../components/Cards/DoorCard";
 import HumidityCard from "../../components/Cards/HumidityCard";
 import TemperatureCard from "../../components/Cards/TemperatureCard";
-
 const Dashboard = (props) => {
+
   return (
     <div className="home">
         <div className="contentSection">
@@ -22,25 +22,29 @@ const Dashboard = (props) => {
             
           </div>
           
-          {/* {CardButton and Information part} */}
+          
+          {/* Light, Fan, Door */}
           <div className="lightCard">
             <LightCard />
           </div>
+
           <div className="doorCard">
             <DoorCard />
           </div>
+          
           <div className="fanCard">
             <FanCard />
           </div>
+          
           <div className="temperatureCard">
             <TemperatureCard />
           </div>
+          
           <div className="humidityCard">
             <HumidityCard />
           </div>
-
-        </div>
-      </div>
+          
+        </div>     
     </div>
   );
 };
