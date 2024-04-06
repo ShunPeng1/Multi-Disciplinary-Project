@@ -26,23 +26,9 @@ const Dashboard = (props) => {
             <p className="waitP">Đang chờ</p>         
           </div>
           
-          {/* Light, Fan, Door */}
-          <div className="lightCard">
-            <LightCard />
-          </div>
-          <div className="doorCard">
-            <DoorCard />
-          </div>
-          <div className="fanCard">
-            <FanCard />
-          </div>
-
-          {/* {Humidit, Temperature} */}
-          <div className="humidityCard">
-            <HumidityCard />
-          </div>
-          <div className="tempCard">
-            <TemperatureCard />
+          {/* {CardButton and Information part} */}
+          <div className="">
+            
           </div>
         </div>     
     </div>
