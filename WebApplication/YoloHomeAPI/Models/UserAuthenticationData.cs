@@ -1,6 +1,6 @@
 ﻿namespace YoloHomeAPI.Data;
 
-public class User
+public class UserAuthenticationData
 {
     public int UserId { get; set; }
     public string UserName { get; set; } = null!;

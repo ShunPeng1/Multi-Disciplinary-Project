@@ -50,7 +50,7 @@ public class UserService : IUserService
     {
         try
         {
-            var user = new User()
+            var user = new UserAuthenticationData()
             {
                 UserName = username,
                 PasswordHash = password,
@@ -71,7 +71,7 @@ public class UserService : IUserService
     {
         try
         {
-            var userInformation = new UserInformation()
+            var userInformation = new UserData()
             {
                 UserName = username,
                 FirstName = firstName,

@@ -3,15 +3,15 @@ namespace YoloHomeAPI.Repositories.Interfaces;
 
 public interface IUserRepo
 {
-    public Task<List<User>> GetAllAsync();
-    public Task<User?> GetByUserAsync(string username);
+    public Task<List<UserAuthenticationData>> GetAllAsync();
+    public Task<UserAuthenticationData?> GetByUserAsync(string username);
     
-    public Task<UserInformation?> GetByUserInformationAsync(string username);
+    public Task<UserData?> GetByUserInformationAsync(string username);
     
-    public Task AddAsync(User user);
+    public Task AddAsync(UserAuthenticationData userAuthenticationData);
     public Task DeleteAsync(string username);
-    public Task UpdateUserPasswordAsync(User user);
+    public Task UpdateUserPasswordAsync(UserAuthenticationData userAuthenticationData);
     
-    public Task UpdateUserInformationAsync(UserInformation userInformation);
+    public Task UpdateUserInformationAsync(UserData userData);
 
 }

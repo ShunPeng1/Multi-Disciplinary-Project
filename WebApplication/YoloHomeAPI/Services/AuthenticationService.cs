@@ -6,8 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.IdentityModel.Tokens;
-using YoloHomeAPI;
-using YoloHomeAPI.Contexts;
+
 using YoloHomeAPI.Data;
 using YoloHomeAPI.Services.Interfaces;
 using YoloHomeAPI.Settings;
@@ -60,7 +59,7 @@ namespace YoloHomeAPI.Services
             }
 
             // Check if username already exists in database
-            User? user = await _userRepo.GetByUserAsync(username);
+            UserAuthenticationData? user = await _userRepo.GetByUserAsync(username);
             if (user != null)
             {
                 return new(false, "Username already exists.", "");
@@ -68,7 +67,7 @@ namespace YoloHomeAPI.Services
 
             var (hashedPassword, salt) = HashPassword(password);
 
-            var newUser = new User
+            var newUser = new UserAuthenticationData
             {
                 UserName = username,
                 PasswordHash = hashedPassword,
@@ -79,7 +78,7 @@ namespace YoloHomeAPI.Services
             await _userRepo.AddAsync(newUser);
             
             
-            return new(true, "User created successfully.", GenerateJwtToken(newUser.UserName));
+            return new(true, "UserAuthenticationData created successfully.", GenerateJwtToken(newUser.UserName));
         }
 
 
@@ -111,7 +110,7 @@ namespace YoloHomeAPI.Services
             }
 
             // Check if username already exists in database
-            User? user = await _userRepo.GetByUserAsync(username);
+            UserAuthenticationData? user = await _userRepo.GetByUserAsync(username);
             
             if (user == null)
             {

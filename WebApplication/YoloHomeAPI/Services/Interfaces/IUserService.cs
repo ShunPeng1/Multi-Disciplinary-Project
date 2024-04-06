@@ -6,14 +6,14 @@ public interface IUserService
 {
     public class UserResult
     {
-        public UserResult(bool isSuccess , UserInformation response)
+        public UserResult(bool isSuccess , UserData response)
         {
             IsSuccess = isSuccess;
             Response = response;
         }
 
         public bool IsSuccess { get; set; }
-        public UserInformation Response { get; set; }
+        public UserData Response { get; set; }
     }
     
     public Task<UserResult> GetUserInformation(string username);
