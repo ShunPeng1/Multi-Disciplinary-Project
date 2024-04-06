@@ -1,0 +1,21 @@
+.temperature-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.icon-and-temp {
+    display: flex;
+}
+
+.temperature-text {
+    margin-top: 15px;
+    margin-left: 2px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.temperature-info {
+    margin-left: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}

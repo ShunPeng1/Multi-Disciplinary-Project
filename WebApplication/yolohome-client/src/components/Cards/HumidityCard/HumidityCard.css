@@ -1,0 +1,16 @@
+.icon-and-humid {
+    display: flex;
+}
+
+.humidity-text {
+    margin-top: 15px;
+    margin-left: 2px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.humidity-info {
+    margin-left: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}

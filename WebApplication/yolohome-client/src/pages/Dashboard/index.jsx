@@ -2,8 +2,9 @@ import "./Dashboard.css";
 import React from 'react';
 import LightCard from "../../components/Cards/LightCard";
 import FanCard from "../../components/Cards/FanCard";
-import DoorCard from "../../components/Cards/DoorCard"
-
+import DoorCard from "../../components/Cards/DoorCard";
+import HumidityCard from "../../components/Cards/HumidityCard";
+import TemperatureCard from "../../components/Cards/TemperatureCard";
 const Dashboard = (props) => {
 
   return (
@@ -34,6 +35,14 @@ const Dashboard = (props) => {
           </div>
           <div className="fanCard">
             <FanCard />
+          </div>
+
+          {/* {Humidit, Temperature} */}
+          <div className="humidityCard">
+            <HumidityCard />
+          </div>
+          <div className="tempCard">
+            <TemperatureCard />
           </div>
         </div>     
     </div>
