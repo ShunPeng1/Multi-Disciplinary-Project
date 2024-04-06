@@ -37,6 +37,7 @@ const LightButton = () => {
     setIsHandling(false);
   }
 
+  // data display
   return (
     <div className="light-button-container">
       <div className="icon-and-toggle">
