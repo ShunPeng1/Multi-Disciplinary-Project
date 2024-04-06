@@ -11,7 +11,7 @@
   flex-grow: 1;
   width: 100%;
   padding: 2.5% 2.5% 0 2.5%;
-  background-color: #F2F4F7;
+  background-color: #0C153B;
 }
 
 .specialWelcome {
@@ -24,13 +24,6 @@
 .goodluck {
   color: #6941C6;
   margin-bottom: 15px;
-}
-
-.importantView {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
 }
 
 .viewItem {
@@ -107,24 +100,9 @@
   justify-content: center;
 }
 
-.lightCard {
+.lightCard, .doorCard, .fanCard, .humidityCard, .temperatureCard {
   margin-bottom: 20px;
-}
-
-.doorCard {
-  margin-bottom: 20px;
-}
-
-.fanCard {
-  margin-bottom: 20px;
-}
-
-.humidityCard {
-  margin-bottom: 20px;
-}
-
-.temperatureCard {
-  margin-bottom: 20px;
+  background-color: white;
 }
 
 /* Add these styles to the end of your existing CSS file */
