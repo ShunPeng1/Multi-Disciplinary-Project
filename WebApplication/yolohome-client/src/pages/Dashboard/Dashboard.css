@@ -108,13 +108,21 @@
 }
 
 .lightCard {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .doorCard {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .fanCard {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+}
+
+.humidityCard {
+  margin-bottom: 20px;
+}
+
+.temperatureCard {
+  margin-bottom: 20px;
 }

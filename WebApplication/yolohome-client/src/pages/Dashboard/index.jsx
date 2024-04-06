@@ -21,14 +21,22 @@ const Dashboard = (props) => {
             </div>
             
           </div>
-
-          <div className="waitingLog">
-            <p className="waitP">Đang chờ</p>         
-          </div>
           
           {/* {CardButton and Information part} */}
-          <div className="">
-            
+          <div className="lightCard">
+            <LightCard />
+          </div>
+          <div className="doorCard">
+            <DoorCard />
+          </div>
+          <div className="fanCard">
+            <FanCard />
+          </div>
+          <div className="humidityCard">
+            <HumidityCard />
+          </div>
+          <div className="temperatureCard">
+            <TemperatureCard />
           </div>
         </div>     
     </div>
