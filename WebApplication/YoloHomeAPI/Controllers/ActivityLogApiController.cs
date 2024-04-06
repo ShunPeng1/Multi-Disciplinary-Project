@@ -28,7 +28,7 @@ public class ActivityLogApiController : ControllerBase
         public string Response { get; set; } = null!;
     }
     
-    [Route("GetAll")]
+    [Route("GetAllDevices")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ActivityLogData>>> GetAll([FromQuery] ActionLogRequest actionLogRequest)
     {

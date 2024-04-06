@@ -19,16 +19,23 @@ public class IotDeviceApiController : ControllerBase
         
     }
     
+    public class SensorDataRequest
+    {
+        public Guid DeviceId { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+    }
+    
     public class IotDeviceResponse
     {
         public string Response { get; set; } = null!;
     }
     
-    [Route("GetAll")]
+    [Route("GetAllDevices")]
     [HttpGet]
-    public ActionResult<IotDeviceResponse> GetAll(IotDeviceRequest iotDeviceRequest)
+    public async Task<ActionResult<IotDeviceResponse>> GetAllDevices([FromQuery] IotDeviceRequest iotDeviceRequest)
     {
-        var result = _iotDeviceService.GetAll(iotDeviceRequest.Username);
+        var result = await _iotDeviceService.GetAllDevices(iotDeviceRequest.Username);
         if (result.IsSuccess)
         {
             return Ok(result.Response);
@@ -39,11 +46,11 @@ public class IotDeviceApiController : ControllerBase
         }
     }
     
-    [Route("Get")]
+    [Route("GetAllSensorData")]
     [HttpGet]
-    public ActionResult<IotDeviceResponse> Get(IotDeviceRequest iotDeviceRequest)
+    public async Task<ActionResult<IotDeviceResponse>> GetAllSensorData([FromQuery] SensorDataRequest iotDeviceRequest)
     {
-        var result = _iotDeviceService.Get(iotDeviceRequest.Username);
+        var result = await _iotDeviceService.GetAllSensorData(iotDeviceRequest.DeviceId, iotDeviceRequest.Start, iotDeviceRequest.End);
         if (result.IsSuccess)
         {
             return Ok(result.Response);

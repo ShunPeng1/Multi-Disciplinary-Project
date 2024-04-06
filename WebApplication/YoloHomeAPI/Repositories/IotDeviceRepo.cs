@@ -19,7 +19,7 @@ public class IotDeviceRepo : IIotDeviceRepo
     
     public async Task<IEnumerable<IotDeviceData>> GetAllAsync()
     {
-        var query = "SELECT * FROM devices";
+        var query = "SELECT * FROM device";
         await using var dataSource = NpgsqlDataSource.Create(_connectionString);
         await using var cmd = dataSource.CreateCommand(query);
         await using var reader = await cmd.ExecuteReaderAsync();
@@ -38,9 +38,9 @@ public class IotDeviceRepo : IIotDeviceRepo
         return devices;
     }
 
-    public async Task<IEnumerable<IotDeviceData>> GetAllAsync(string username)
+    public async Task<IEnumerable<IotDeviceData>> GetAllByUserNameAsync(string username)
     {
-        var query = "SELECT * FROM devices WHERE d_username = @username";
+        var query = "SELECT d.* FROM device d JOIN controls c ON d.device_id = c.c_did WHERE c.c_username = @username";
         await using var dataSource = NpgsqlDataSource.Create(_connectionString);
         await using var cmd = dataSource.CreateCommand(query);
         cmd.Parameters.AddWithValue("username", username);
@@ -60,31 +60,10 @@ public class IotDeviceRepo : IIotDeviceRepo
         return devices;
     }
 
-    public async Task<IotDeviceData> GetAsync(string username, string type)
-    {
-        var query = "SELECT * FROM devices WHERE d_username = @username AND d_type = @type";
-        await using var dataSource = NpgsqlDataSource.Create(_connectionString);
-        await using var cmd = dataSource.CreateCommand(query);
-        cmd.Parameters.AddWithValue("username", username);
-        cmd.Parameters.AddWithValue("type", type);
-        await using var reader = await cmd.ExecuteReaderAsync();
-        if (await reader.ReadAsync())
-        {
-            return new IotDeviceData
-            {
-                DeviceId = reader.GetGuid(0),
-                DeviceName = reader.GetString(1),
-                DeviceLocation = reader.GetString(2),
-                DeviceType = reader.GetString(3),
-                DeviceState = reader.GetString(4)
-            };
-        }
-        return null!;
-    }
-
+    
     public async Task AddAsync(IotDeviceData iotDeviceData)
     {
-        var query = "INSERT INTO devices (device_id, d_name, d_location, d_type, d_state) VALUES (@deviceId, @name, @location, @type, @state)";
+        var query = "INSERT INTO device (device_id, d_name, d_location, d_type, d_state) VALUES (@deviceId, @name, @location, @type, @state)";
         await using var dataSource = NpgsqlDataSource.Create(_connectionString);
         await using var cmd = dataSource.CreateCommand(query);
         cmd.Parameters.AddWithValue("deviceId", iotDeviceData.DeviceId);
@@ -95,12 +74,12 @@ public class IotDeviceRepo : IIotDeviceRepo
         await cmd.ExecuteNonQueryAsync();
     }
 
-    public async Task DeleteAsync(string username, Guid deviceId)
+    public async Task DeleteAsync(Guid deviceId)
     {
-        var query = "DELETE FROM devices WHERE d_username = @username AND device_id = @deviceId";
+        var query = "DELETE FROM device WHERE device_id = @deviceId";
         await using var dataSource = NpgsqlDataSource.Create(_connectionString);
         await using var cmd = dataSource.CreateCommand(query);
-        cmd.Parameters.AddWithValue("username", username);
+        
         cmd.Parameters.AddWithValue("deviceId", deviceId);
         await cmd.ExecuteNonQueryAsync();
     }

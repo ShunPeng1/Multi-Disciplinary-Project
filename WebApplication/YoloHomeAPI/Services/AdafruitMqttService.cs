@@ -2,6 +2,7 @@
 using MQTTnet;
 using MQTTnet.Client;
 using YoloHomeAPI.Controllers;
+using YoloHomeAPI.Data;
 using YoloHomeAPI.Settings;
 
 namespace YoloHomeAPI.Services;
@@ -13,8 +14,6 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
     private const float SEND_DATA_BACK_TIMER = 120f;
 
     private readonly AdafruitSettings _adafruitSetting;
-    
-    private readonly IServiceScopeFactory _serviceScopeFactory;
 
     private IMqttClient _mqttClient;
 
@@ -22,11 +21,18 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
     private MqttClientOptions _mqttClientOptions;
 
 
-    public AdafruitMqttService(AdafruitSettings adafruitSetting, IServiceScopeFactory serviceScopeFactory, IMqttClient mqttClient)
+    public Action<AdafruitDataReceiveData> OnDoorMessageReceived { get; set; }
+    public Action<AdafruitDataReceiveData> OnFanReceived { get; set; }
+    public Action<AdafruitDataReceiveData> OnLightMessageReceived { get; set; }
+    public Action<AdafruitDataReceiveData> OnHumidityMessageReceived { get; set; } = delegate { };
+    public Action<AdafruitDataReceiveData> OnTemperatureMessageReceived { get; set; } = delegate { };
+    
+    public AdafruitMqttService(AdafruitSettings adafruitSetting, IMqttClient mqttClient)
     {
         _adafruitSetting = adafruitSetting;
-        _serviceScopeFactory = serviceScopeFactory;
+        
         _mqttClient = mqttClient;
+        
         _mqttClientOptions = new MqttClientOptionsBuilder()
             .WithTcpServer("io.adafruit.com", 8883)
             .WithCredentials(_adafruitSetting.AdafruitUsername, _adafruitSetting.AdafruitKey)
@@ -51,6 +57,9 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
         await _mqttClient.ConnectAsync(_mqttClientOptions, CancellationToken.None);
 
         var mqttSubscribeOptions = mqttFactory.CreateSubscribeOptionsBuilder()
+            .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.LightTopicPath); })
+            .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.FanTopicPath); })
+            .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.DoorTopicPath); })
             .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.HumidityTopicPath); })
             .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.TemperatureTopicPath); })
             .Build();
@@ -100,7 +109,7 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
                 var ownerPlant = dbContext.PlantInformations.FirstOrDefault(info => info.Kind == accumulatedPlantDataLog.PlantId);
                 if (ownerPlant == null) continue;
 
-                dbContext.PlantDataLogs.Add(new PlantDataLog()
+                dbContext.PlantDataLogs.AddOwner(new PlantDataLog()
                 {
                     Timestamp = DateTime.UtcNow,
                     LightValue = accumulatedPlantDataLog.AveragedLightValue,
@@ -147,40 +156,29 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
     {
         var decodedMessage = DecodeMqttPayload(args.ApplicationMessage.Payload);
         var topic = args.ApplicationMessage.Topic;
-        Console.WriteLine("From topic: " + args.ApplicationMessage.Topic);
-
+        
+        AdafruitDataReceiveData adafruitDataReceiveData = new()
+        {
+            Topic = topic,
+            RawMessage = decodedMessage,
+            Values = decodedMessage[2..].Split(';').Select(float.Parse).ToList()
+        };
+        
+        
         if (args.ApplicationMessage.Topic.Contains(_adafruitSetting.HumidityTopicPath))
-            OnHumidityMessageReceived(topic, decodedMessage);
+            OnHumidityMessageReceived.Invoke(adafruitDataReceiveData);
         else if (args.ApplicationMessage.Topic.Contains(_adafruitSetting.TemperatureTopicPath))
-            OnTemperatureMessageReceived(topic, decodedMessage);
-        else
+            OnTemperatureMessageReceived.Invoke(adafruitDataReceiveData);
+        else if (args.ApplicationMessage.Topic.Contains(_adafruitSetting.LightTopicPath))
+            OnLightMessageReceived.Invoke(adafruitDataReceiveData);
+        else if (args.ApplicationMessage.Topic.Contains(_adafruitSetting.FanTopicPath))
+            OnFanReceived.Invoke(adafruitDataReceiveData);
+        else if (args.ApplicationMessage.Topic.Contains(_adafruitSetting.DoorTopicPath))
+            OnDoorMessageReceived.Invoke(adafruitDataReceiveData);
 
         Console.WriteLine("Message received: " + decodedMessage);
         return Task.CompletedTask;
     }
-    
-    
-    private void OnHumidityMessageReceived(string topic, string content)
-    {
-        AccumulateNewValues(content);
-    }
-    
-    private void OnTemperatureMessageReceived(string topic, string content)
-    {
-        AccumulateNewValues(content);
-    }
-    
-    private void AccumulateNewValues(string content)
-    {
-        var values = content[2..].Split(';').Select(float.Parse).ToList();
-        
-        foreach (var value in values)
-        {
-            Console.WriteLine("Accumulating value: "+ + value);
-        }
-        
-    }
-    
     
     private string DecodeMqttPayload(byte[] encodedData)
     {

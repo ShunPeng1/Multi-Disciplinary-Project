@@ -35,13 +35,13 @@ public class SensorDataRepo : ISensorDataRepo
         }
         return null!;
     }
-
-    public async Task<IEnumerable<SensorData>> GetAllAsync(string deviceId, DateTime start, DateTime end)
+    
+    public async Task<IEnumerable<SensorData>> GetAllAsync(Guid deviceId, DateTime start, DateTime end)
     {
         var query = "SELECT * FROM sensor_data WHERE s_did_fk = @deviceId AND s_timestmp BETWEEN @start AND @end";
         await using var dataSource = NpgsqlDataSource.Create(_connectionString);
         await using var cmd = dataSource.CreateCommand(query);
-        cmd.Parameters.AddWithValue("deviceId", Guid.Parse(deviceId));
+        cmd.Parameters.AddWithValue("deviceId", deviceId);
         cmd.Parameters.AddWithValue("start", start);
         cmd.Parameters.AddWithValue("end", end);
         await using var reader = await cmd.ExecuteReaderAsync();
