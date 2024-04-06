@@ -126,3 +126,32 @@
 .temperatureCard {
   margin-bottom: 20px;
 }
+
+/* Add these styles to the end of your existing CSS file */
+.container {
+  display: flex;
+  justify-content: center; /* Center the columns horizontally */
+  gap: 20px; /* Add some space between the columns */
+}
+
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  /* display: inline-block; */
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  /* display: inline-block; */
+}
+
+.lightCard, .doorCard, .fanCard {
+  margin-bottom: 20px;
+}
+
+.humidityCard, .temperatureCard {
+  margin-bottom: 20px;
+}
