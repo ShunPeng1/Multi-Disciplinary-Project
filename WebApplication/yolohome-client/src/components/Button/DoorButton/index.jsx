@@ -39,9 +39,7 @@ const DoorButton = () => {
     setIsHandling(false);
   }
 
-
-    // data handling here
-
+  // Data display
   return (
     <div className="door-button-container">
       <div className="icon-and-toggle">

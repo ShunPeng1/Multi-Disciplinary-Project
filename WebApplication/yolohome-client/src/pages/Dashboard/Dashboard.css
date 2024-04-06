@@ -148,10 +148,14 @@
   /* display: inline-block; */
 }
 
-.lightCard, .doorCard, .fanCard {
-  margin-bottom: 20px;
+.light-and-humid, .door-and-temp {
+  display: flex;
+}
+
+.lightCard, .doorCard {
+  margin-right: 50px;
 }
 
 .humidityCard, .temperatureCard {
-  margin-bottom: 20px;
+  margin-top: -20px;
 }

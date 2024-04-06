@@ -38,6 +38,7 @@ const FanButton = () => {
     setIsHandling(false);
   }
 
+  // Data display
   return (
     <div className="fan-button-container">
       <div className="icon-and-toggle">
