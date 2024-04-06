@@ -6,17 +6,17 @@
         public string AdafruitKey { get; set; } = null!;
         
         public string AdafruitGroupName { get; set; } = null!;
-        public string AdafruitAnnounceFeedName { get; set; } = null!;
-        public string AdafruitSensorFeedName { get; set; } = null!;
+        public string AdafruitFanFeedName { get; set; } = null!;
+        public string AdafruitDoorFeedName { get; set; } = null!;
         public string AdafruitLightFeedName { get; set; } = null!;
         public string AdafruitTemperatureFeedName { get; set; } = null!;
-        public string AdafruitMoistureFeedName { get; set; } = null!;
-        
-        public string AnnounceTopicPath => AdafruitUsername + "/feeds/" + AdafruitGroupName + "." + AdafruitAnnounceFeedName;
-        public string SensorTopicPath => AdafruitUsername + "/feeds/" + AdafruitGroupName + "." + AdafruitSensorFeedName;
+        public string AdafruitHumidityFeedName { get; set; } = null!;
+
+        public string FanTopicPath => AdafruitUsername + "/feeds/" + AdafruitGroupName + "." + AdafruitFanFeedName;
+        public string DoorTopicPath => AdafruitUsername + "/feeds/" + AdafruitGroupName + "." + AdafruitDoorFeedName;
         public string LightTopicPath => AdafruitUsername + "/feeds/" + AdafruitGroupName + "." + AdafruitLightFeedName;
         public string TemperatureTopicPath => AdafruitUsername + "/feeds/" + AdafruitGroupName + "." + AdafruitTemperatureFeedName;
-        public string MoistureTopicPath => AdafruitUsername + "/feeds/" + AdafruitGroupName + "." + AdafruitMoistureFeedName;
+        public string HumidityTopicPath => AdafruitUsername + "/feeds/" + AdafruitGroupName + "." + AdafruitHumidityFeedName;
 
 
     }

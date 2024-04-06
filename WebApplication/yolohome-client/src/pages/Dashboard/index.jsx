@@ -9,37 +9,34 @@ import TemperatureCard from "../../components/Cards/TemperatureCard";
 const Dashboard = (props) => {
   return (
     <div className="home">
-      <div className="contentSection">
-        <div className="importantView">
-          <div className="viewItem">
-            <p className="specialWelcome">Welcome</p>
-            <p className="controlSentence">Control your home from here!</p>
+        <div className="contentSection">
+          <div className="importantView">
+            <div className="viewItem">
+              <p className="specialWelcome">Welcome</p>
+              <p className="controlSentence">Control your home from here!</p>
+            </div>
+
+            <div className="viewImg2">
+              <img src="./Images/background_new.png" alt="background_new" ></img>
+            </div>
+            
           </div>
-          <div className="viewImg2">
-            <img src="./Images/background_new.png" alt="background_new" ></img>
+          
+          {/* {CardButton and Information part} */}
+          <div className="lightCard">
+            <LightCard />
           </div>
-        </div>
-        {/* Left Column */}
-        <div class = "container">
-          <div className="leftColumn">
-            <div className="lightCard">
-              <LightCard />
-            </div>
-            <div className="doorCard">
-              <DoorCard />
-            </div>
-            <div className="fanCard">
-              <FanCard />
-            </div>
+          <div className="doorCard">
+            <DoorCard />
           </div>
-          {/* Right Column */}
-          <div className="rightColumn">
-            <div className="humidityCard">
-              <HumidityCard />
-            </div>
-            <div className="temperatureCard">
-              <TemperatureCard />
-            </div>
+          <div className="fanCard">
+            <FanCard />
+          </div>
+          <div className="temperatureCard">
+            <TemperatureCard />
+          </div>
+          <div className="humidityCard">
+            <HumidityCard />
           </div>
 
         </div>

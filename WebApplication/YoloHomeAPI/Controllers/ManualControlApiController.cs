@@ -16,8 +16,8 @@ public class ManualControlApiController : ControllerBase
     
     public class ManualControlRequest
     {
-        public string Username { get; set; } = null!;
-        public string Id { get; set; } = null!;
+        public string UserName { get; set; } = null!;
+        public string Kind { get; set; } = null!;
         public string Command { get; set; } = null!;
     }
     
@@ -30,7 +30,7 @@ public class ManualControlApiController : ControllerBase
     [HttpPost]
     public ActionResult<ManualControlResponse> Control(ManualControlRequest manualControlRequest)
     {
-        var result = _manualControlService.Execute(manualControlRequest.Username ,manualControlRequest.Id, manualControlRequest.Command);
+        var result = _manualControlService.Execute(manualControlRequest.UserName ,manualControlRequest.Kind, manualControlRequest.Command);
         if (result.IsSuccess)
         {
             return Ok(result.Response);
