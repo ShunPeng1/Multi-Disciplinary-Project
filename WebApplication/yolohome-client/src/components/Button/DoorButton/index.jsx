@@ -7,6 +7,8 @@ const DoorButton = () => {
   const [isOn, setIsOn] = useState(storedDoorState ? JSON.parse(storedDoorState) : false);
   const [isHandling, setIsHandling] = useState(false);
 
+  const username = localStorage.getItem('username');
+  
   useEffect(() => {
     localStorage.setItem('isDoorOn', JSON.stringify(isOn));
   }, [isOn]);
@@ -20,7 +22,7 @@ const DoorButton = () => {
 
   const handleSubmit = () => {
       FetchRequest('api/ManualControlApi/Control', 'POST', {
-          UserName : 'TODO',
+          UserName : username,
           Kind : 'Door',
           Command : isOn ? 'Open' : 'Close'
       }, successCallback, errorCallback);

@@ -18,10 +18,11 @@ function Login() {
         Password: password
         }, successCallback, errorCallback);
   };
-  
+
   const successCallback = (data) => {
     console.log('Success:', data);
-    localStorage.setItem('token', data);
+    localStorage.setItem('token', data.Token);
+    localStorage.setItem('username', data.UserName); // Store the username
     window.location.href = '/dashboard';
   }
   
