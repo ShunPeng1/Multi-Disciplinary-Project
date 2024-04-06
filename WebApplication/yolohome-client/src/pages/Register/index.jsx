@@ -28,8 +28,10 @@ function Register() {
     };
 
     const successCallback = (data) => {
-        console.log('Success:', data);
-        localStorage.setItem('token', data);
+      console.log('Success:', data);
+      localStorage.setItem('token', data.Token);
+      localStorage.setItem('username', data.UserName); // Store the username
+      window.location.href = '/dashboard';
     }
 
     const errorCallback = (error) => {

@@ -6,6 +6,7 @@ const FanButton = () => {
   const storedFanState = localStorage.getItem('isFanOn');
   const [isOn, setIsOn] = useState(storedFanState ? JSON.parse(storedFanState) : false);
   const [isHandling, setIsHandling] = useState(false);
+  const username = localStorage.getItem('username');
 
   useEffect(() => {
     localStorage.setItem('isFanOn', JSON.stringify(isOn));
@@ -20,7 +21,7 @@ const FanButton = () => {
 
   const handleSubmit = () => {
     FetchRequest('api/ManualControlApi/Control', 'POST', {
-      UserName : 'TODO',
+      UserName : username,
       Kind : 'Fan',
       Command : isOn ? 'On' : 'Off'
     }, successCallback, errorCallback);

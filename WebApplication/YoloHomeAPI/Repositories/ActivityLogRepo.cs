@@ -42,13 +42,13 @@ public class ActivityLogRepo : IActivityLogRepo
     }
     public async Task AddAsync(ActivityLogData activityLogData)
     {
-        var query = "INSERT INTO log_record (l_timestmp, l_username_fk, l_activity) VALUES (@timestamp, @username, @activity)";
+        var query = "INSERT INTO log_record (l_timestmp, activity, l_username_fk) VALUES (@timestamp, @activity, @username)";
         await using var dataSource = NpgsqlDataSource.Create(_connectionString);
         await using var cmd = dataSource.CreateCommand(query);
         cmd.Parameters.AddWithValue("timestamp", activityLogData.TimeStamp);
         cmd.Parameters.AddWithValue("username", activityLogData.UserName);
         cmd.Parameters.AddWithValue("activity", activityLogData.Activity);
-        await cmd.ExecuteNonQueryAsync();
+        var rowsAffected = await cmd.ExecuteNonQueryAsync();
     }
 
     public async Task DeleteAsync(string username, DateTime timestamp)

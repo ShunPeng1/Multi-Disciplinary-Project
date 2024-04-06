@@ -6,6 +6,7 @@ const LightButton = () => {
   const storedLightState = localStorage.getItem('isLightOn');
   const [isOn, setIsOn] = useState(storedLightState ? JSON.parse(storedLightState) : false);
   const [isHandling, setIsHandling] = useState(false);
+  const username = localStorage.getItem('username');
 
   useEffect(() => {
     localStorage.setItem('isLightOn', JSON.stringify(isOn));
@@ -20,7 +21,7 @@ const LightButton = () => {
 
   const handleSubmit = () => {
     FetchRequest('api/ManualControlApi/Control', 'POST', {
-      UserName : 'TODO',
+      UserName : username,
       Kind : 'Light',
       Command : isOn ? 'On' : 'Off'
     }, successCallback, errorCallback);
