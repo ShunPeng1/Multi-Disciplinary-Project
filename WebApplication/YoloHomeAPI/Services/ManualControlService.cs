@@ -31,13 +31,12 @@ public class ManualControlService : IManualControlService
                     _activityLogService.Add(userName, "Light is turned "+command, DateTime.Now);
                     return new IManualControlService.ManualControlResult(true, "Success");
                 }
-                catch (Exception e)
+                catch (Exception _)
                 {
                     return new IManualControlService.ManualControlResult(false, "Invalid command");
 
                 }
-                break;
-            
+                
             case "Fan":
                 try
                 {
@@ -45,12 +44,11 @@ public class ManualControlService : IManualControlService
                     _activityLogService.Add(userName, "Fan is turned "+command, DateTime.Now);
                     return new IManualControlService.ManualControlResult(true, "Success");
                 }
-                catch (Exception e)
+                catch (Exception _)
                 {
                     return new IManualControlService.ManualControlResult(false, "Invalid command");
 
                 }
-                break;
             
             case "Door":
                 try
@@ -59,21 +57,16 @@ public class ManualControlService : IManualControlService
                     _activityLogService.Add(userName, "Door is "+command+"ed", DateTime.Now);
                     return new IManualControlService.ManualControlResult(true, "Success");
                 }
-                catch (Exception e)
+                catch (Exception _)
                 {
                     return new IManualControlService.ManualControlResult(false, "Invalid command");
 
                 }
-                break;
             
             default:
                 return new IManualControlService.ManualControlResult(false, "Invalid kind");
             
         }
-        
-        
-        
-        return new IManualControlService.ManualControlResult(true, "Success");
         
     }
 }
