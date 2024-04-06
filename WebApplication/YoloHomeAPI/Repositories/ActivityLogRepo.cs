@@ -7,8 +7,6 @@ namespace YoloHomeAPI.Repositories;
 
 public class ActivityLogRepo : IActivityLogRepo
 {
-    
-   
     private readonly DatabaseSettings _settings;
     private readonly string _connectionString;
 
