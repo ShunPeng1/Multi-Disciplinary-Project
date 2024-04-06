@@ -11,11 +11,13 @@ public class AuthenticationApiController : ControllerBase
 {
     private readonly IAuthenticationService _authenticationService;
     private readonly IUserService _userService;
+    private readonly IIotDeviceService _iotDeviceService;
     
-    public AuthenticationApiController(IAuthenticationService authenticationService, IUserService userService)
+    public AuthenticationApiController(IAuthenticationService authenticationService, IUserService userService, IIotDeviceService iotDeviceService)
     {
         _authenticationService = authenticationService;
         _userService = userService;
+        _iotDeviceService = iotDeviceService;
     }
     
     public class AuthenticationLoginRequest
@@ -68,6 +70,7 @@ public class AuthenticationApiController : ControllerBase
         if (result.IsSuccess)
         {
             var updateInformationResult = await _userService.UpdateUserInformation(authenticationLoginRequest.UserName, authenticationLoginRequest.FirstName, authenticationLoginRequest.LastName, authenticationLoginRequest.Email);
+            var addDeviceResult = await _iotDeviceService.AddOwner(authenticationLoginRequest.UserName);
             return await Login(authenticationLoginRequest);
         }
         else

@@ -45,7 +45,7 @@ public class IotDeviceService : IIotDeviceService
         {
             DeviceId = Guid.NewGuid(),
             DeviceName = "Door Sensor",
-            DeviceType = "Temperature",
+            DeviceType = "Door",
             DeviceLocation = "Living Room",
             DeviceState = "Running"
         };
@@ -56,7 +56,7 @@ public class IotDeviceService : IIotDeviceService
         {
             DeviceId = Guid.NewGuid(),
             DeviceName = "Temperature Sensor",
-            DeviceType = "Temperature",
+            DeviceType = "Temper",
             DeviceLocation = "Living Room",
             DeviceState = "Running"
         };
@@ -182,7 +182,7 @@ public class IotDeviceService : IIotDeviceService
 
     private void TemperatureMessageReceivedHandler(AdafruitDataReceiveData obj)
     {
-        IotDeviceData deviceId = _devices.Find(device => device.DeviceType == "Temperature") ?? throw new Exception("Device not found");
+        IotDeviceData deviceId = _devices.Find(device => device.DeviceType == "Temper") ?? throw new Exception("Device not found");
         var values = obj.Values;
 
         foreach (var value in values)
