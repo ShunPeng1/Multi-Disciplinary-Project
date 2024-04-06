@@ -1,52 +1,68 @@
-import React, { useState, useEffect } from "react";
-import './TemperatureCard.css';
+    import React, { useState, useEffect } from "react";
+    import './TemperatureCard.css';
 
-const TemperatureCard = () => {
-    const [temperature, setTemperature] = useState(null);
-    const [showPopup, setShowPopup] = useState(false);
+    const TemperatureCard = () => {
+        const [temperature, setTemperature] = useState(null);
+        const [errorMessage, setErrorMessage] = useState(null);
+        const [showPopup, setShowPopup] = useState(false);
 
-    // Simulate fetching temperature data from the server
-    useEffect(() => {
-        // Simulated API call
-        const fetchTemperature = async () => {
-            // Assuming fetchTemperatureData is a function to fetch temperature data from the server
-            const temperatureData = await fetchTemperatureData();
-            setTemperature(temperatureData);
-            // Check if temperature is too high
-            if (temperatureData > 35) {
-                setShowPopup(true);
-            } else {
-                setShowPopup(false);
-            }
+        useEffect(() => {
+            const fetchTemperature = async () => {
+                const temperatureData = await fetchTemperatureData();
+                setTemperature(temperatureData.temperature);
+                if (temperatureData.temperature > 35) {
+                    setErrorMessage(temperatureData.message);
+                    setShowPopup(true);
+                } else {
+                    setShowPopup(false);
+                }
+            };
+            fetchTemperature();
+        }, []);
+
+        // const fetchTemperatureData = async () => {
+        //     try {
+        //         const response = await fetch('your_api_endpoint');
+        //         if (!response.ok) {
+        //             throw new Error('Failed to fetch temperature data');
+        //         }
+        //         const data = await response.json();
+        //         return data;
+        //     } catch (error) {
+        //         console.error('Error fetching temperature data:', error);
+        //         return { temperature: null, message: 'Error fetching temperature data' };
+        //     }
+        // };
+
+        // example fetchTemperatureData function, replace by the above function or recreate one
+        const fetchTemperatureData = async () => {
+            return { temperature: 45, message: "Temperature is too high!" };
         };
-        fetchTemperature();
-    }, []);
 
-    // Simulated function to fetch temperature data
-    const fetchTemperatureData = async () => {
-        // You can replace this with actual API call to fetch temperature data
-        return 50; // Simulated temperature data
-    };
+        const handleDismiss = () => {
+            setShowPopup(false);
+        };
 
-    return (
-        <div className="temperature-container">
-            {showPopup && (
-                <div className="popup">
-                    <p>Error!</p>
-                    <p>The temperature is too high</p>
+        return (
+            <div className="temperature-container">
+                {showPopup && (
+                    <div className="popup">
+                        <p>🛈 Temperature Alert!</p>
+                        <p>{errorMessage}</p>
+                        <button onClick={handleDismiss}>I know</button>
+                    </div>
+                )}
+                <div className="icon-and-temp">
+                    <img src="./Images/temperature.png" alt="Temperature Icon" />
+                    <div className="temperature-info">
+                        {temperature !== null ? `${temperature}°C` : 'Loading...'}
+                    </div>
                 </div>
-            )}
-            <div className="icon-and-temp">
-                <img src="./Images/temperature.png" alt="Temperature Icon" />
-                <div className="temperature-info">
-                    {temperature !== null ? `${temperature}°C` : 'Loading...'}
+                <div className="temperature-text">
+                    {'Temperature'}
                 </div>
             </div>
-            <div className="temperature-text">
-                {'Temperature'}
-            </div>
-        </div>
-    );
-}
+        );
+    }
 
-export default TemperatureCard;
+    export default TemperatureCard;

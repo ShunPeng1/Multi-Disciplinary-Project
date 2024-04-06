@@ -32,12 +32,13 @@ const Dashboard = (props) => {
           <div className="fanCard">
             <FanCard />
           </div>
-          <div className="humidityCard">
-            <HumidityCard />
-          </div>
           <div className="temperatureCard">
             <TemperatureCard />
           </div>
+          <div className="humidityCard">
+            <HumidityCard />
+          </div>
+          
         </div>     
     </div>
   );
