@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './LightButton.css';
 import FetchRequest from "../../api/api";
 
 const LightButton = () => {
-  const [isOn, setIsOn] = useState(false);
+  const storedLightState = localStorage.getItem('isOn');
+  const [isOn, setIsOn] = useState(storedState ? JSON.parse(storedState) : false);
   const [isHandling, setIsHandling] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('isOn', JSON.stringify(isOn));
+  }, [isOn]);
 
   const toggle = () => {
     if (!isHandling) {
