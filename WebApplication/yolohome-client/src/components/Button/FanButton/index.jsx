@@ -11,6 +11,14 @@ const FanButton = () => {
   useEffect(() => {
     localStorage.setItem('isFanOn', JSON.stringify(isOn));
   }, [isOn]);
+  useEffect(() => {
+    fetchData();
+    const intervalId = setInterval(fetchData, 5000); // Fetch data every 5 seconds
+
+    return () => {
+      clearInterval(intervalId); // Clear interval on component unmount
+    };
+  }, []);
 
   const toggle = () => {
     if (!isHandling) {
@@ -23,13 +31,20 @@ const FanButton = () => {
     FetchRequest('api/ManualControlApi/Control', 'POST', {
       UserName : username,
       Kind : 'Fan',
-      Command : isOn ? 'On' : 'Off'
+      Command : isOn ? 'Off' : 'On' // Toggle the command
+    }, successCallback, errorCallback);
+  };
+
+  const fetchData = () => {
+    setIsHandling(true);
+    FetchRequest('api/IotDeviceApi/GetLatestSensorData', 'GET', {
+      DeviceType: 'Fan'
     }, successCallback, errorCallback);
   };
 
   const successCallback = (data) => {
     console.log('Success:', data);
-    setIsOn(!isOn);
+    setIsOn(data.Response === '1');
     setIsHandling(false);
   }
 

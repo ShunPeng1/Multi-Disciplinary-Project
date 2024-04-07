@@ -27,9 +27,10 @@ public class ManualControlService : IManualControlService
             case "Light":
                 try
                 {
-                    _adafruitMqttService.PublishMessage(_adafruitSettings.LightTopicPath, command == "On" ? "1" : "0" );
-                    _activityLogService.Add(userName, "Light is turned "+command, DateTime.Now);
-                    return new IManualControlService.ManualControlResult(true, "Success");
+                    var result = command == "On" ? "1" : "0"; 
+                    _adafruitMqttService.PublishMessage(_adafruitSettings.LightTopicPath, result);
+                    _activityLogService.Add(userName, userName + " turns " + command + " the light.", DateTime.Now);
+                    return new IManualControlService.ManualControlResult(true, result);
                 }
                 catch (Exception _)
                 {
@@ -40,9 +41,10 @@ public class ManualControlService : IManualControlService
             case "Fan":
                 try
                 {
-                    _adafruitMqttService.PublishMessage(_adafruitSettings.FanTopicPath, command == "On" ? "1" : "0" );
-                    _activityLogService.Add(userName, "Fan is turned "+command, DateTime.Now);
-                    return new IManualControlService.ManualControlResult(true, "Success");
+                    var result = command == "On" ? "1" : "0"; 
+                    _adafruitMqttService.PublishMessage(_adafruitSettings.FanTopicPath, result );
+                    _activityLogService.Add(userName, userName + " turns " + command + " the fan.", DateTime.Now);
+                    return new IManualControlService.ManualControlResult(true, result);
                 }
                 catch (Exception _)
                 {
@@ -53,9 +55,10 @@ public class ManualControlService : IManualControlService
             case "Door":
                 try
                 {
-                    _adafruitMqttService.PublishMessage(_adafruitSettings.DoorTopicPath, command == "Open" ? "1" : "0" );
-                    _activityLogService.Add(userName, "Door is "+command+"ed", DateTime.Now);
-                    return new IManualControlService.ManualControlResult(true, "Success");
+                    var result = command == "Open" ? "1" : "0"; 
+                    _adafruitMqttService.PublishMessage(_adafruitSettings.DoorTopicPath, result);
+                    _activityLogService.Add(userName, userName+" " + command + " the door.", DateTime.Now);
+                    return new IManualControlService.ManualControlResult(true, result);
                 }
                 catch (Exception _)
                 {

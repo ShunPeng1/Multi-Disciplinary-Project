@@ -13,24 +13,40 @@ const DoorButton = () => {
     localStorage.setItem('isDoorOn', JSON.stringify(isOn));
   }, [isOn]);
 
+  useEffect(() => {
+    fetchData();
+    const intervalId = setInterval(fetchData, 5000); // Fetch data every 5 seconds
+
+    return () => {
+      clearInterval(intervalId); // Clear interval on component unmount
+    };
+  }, []);
+  
   const toggle = () => {
     if (!isHandling) {
       setIsHandling(true);
-      handleSubmit();
+      sendControlSubmit();
     }
   };
 
-  const handleSubmit = () => {
+  const sendControlSubmit = () => {
       FetchRequest('api/ManualControlApi/Control', 'POST', {
           UserName : username,
           Kind : 'Door',
-          Command : isOn ? 'Open' : 'Close'
+          Command : isOn ? 'Close' : 'Open' // Toggle the command
       }, successCallback, errorCallback);
+  };
+
+  const fetchData = () => {
+    setIsHandling(true);
+    FetchRequest('api/IotDeviceApi/GetLatestSensorData', 'GET', {
+      DeviceType: 'Door'
+    }, successCallback, errorCallback);
   };
   
   const successCallback = (data) => {
     console.log('Success:', data);
-    setIsOn(!isOn);
+    setIsOn(data.Response === '1');
     setIsHandling(false);
   }
   

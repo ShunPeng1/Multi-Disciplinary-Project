@@ -33,6 +33,11 @@ public class IotDeviceApiController : ControllerBase
         public string Response { get; set; } = null!;
     }
     
+    public class SensorDataResponse
+    {
+        public string Response { get; set; } = null!;
+    }
+     
     [Route("GetAllDevices")]
     [HttpGet]
     public async Task<ActionResult<IotDeviceResponse>> GetAllDevices([FromQuery] IotDeviceRequest iotDeviceRequest)
@@ -50,12 +55,13 @@ public class IotDeviceApiController : ControllerBase
     
     [Route("GetAllSensorData")]
     [HttpGet]
-    public async Task<ActionResult<IotDeviceResponse>> GetAllSensorData([FromQuery] SensorDataRequest sensorDataRequest)
+    public async Task<ActionResult<List<SensorDataResponse>>> GetAllSensorData([FromQuery] SensorDataRequest sensorDataRequest)
     {
         var result = await _iotDeviceService.GetAllSensorData(sensorDataRequest.DeviceId, sensorDataRequest.Start, sensorDataRequest.End);
         if (result.IsSuccess)
         {
-            return Ok(result.Response);
+            var sensorDataResponses = result.Response.Select(sensorData => new SensorDataResponse() { Response = sensorData.Value }).ToList();
+            return Ok(sensorDataResponses);
         }
         else
         {
@@ -66,12 +72,13 @@ public class IotDeviceApiController : ControllerBase
     
     [Route("GetLatestSensorData")]
     [HttpGet]
-    public async Task<ActionResult<IotDeviceResponse>> GetLatestSensorData([FromQuery] SensorDataRequest sensorDataRequest)
+    public async Task<ActionResult<SensorDataResponse>> GetLatestSensorData([FromQuery] SensorDataRequest sensorDataRequest)
     {
         var result = await _iotDeviceService.GetLatestSensorData(sensorDataRequest.DeviceType);
         if (result.IsSuccess)
         {
-            return Ok(result.Response);
+            var sensorDataResponses = result.Response.Select(sensorData => new SensorDataResponse() { Response = sensorData.Value }).ToList();
+            return Ok(sensorDataResponses.Count > 0 ? sensorDataResponses[0] : new SensorDataResponse() { Response = "No data found" });
         }
         else
         {

@@ -12,6 +12,15 @@ const LightButton = () => {
     localStorage.setItem('isLightOn', JSON.stringify(isOn));
   }, [isOn]);
 
+  useEffect(() => {
+    fetchData();
+    const intervalId = setInterval(fetchData, 5000); // Fetch data every 5 seconds
+
+    return () => {
+      clearInterval(intervalId); // Clear interval on component unmount
+    };
+  }, []);
+
   const toggle = () => {
     if (!isHandling) {
       setIsHandling(true);
@@ -23,18 +32,20 @@ const LightButton = () => {
     FetchRequest('api/ManualControlApi/Control', 'POST', {
       UserName : username,
       Kind : 'Light',
-      Command : isOn ? 'On' : 'Off'
+      Command : isOn ? 'Off' : 'On' // Toggle the command
+    }, successCallback, errorCallback);
+  };
+
+  const fetchData = () => {
+    setIsHandling(true);
+    FetchRequest('api/IotDeviceApi/GetLatestSensorData', 'GET', {
+      DeviceType: 'Light'
     }, successCallback, errorCallback);
   };
 
   const successCallback = (data) => {
     console.log('Success:', data);
-    setIsOn(!isOn);
-    setIsHandling(false);
-  }
-
-  const errorCallback = (error) => {
-    console.error('Error:', error);
+    setIsOn(data.Response === '1');
     setIsHandling(false);
   }
 
