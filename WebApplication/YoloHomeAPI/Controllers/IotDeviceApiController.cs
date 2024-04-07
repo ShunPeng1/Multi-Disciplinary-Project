@@ -21,7 +21,9 @@ public class IotDeviceApiController : ControllerBase
     
     public class SensorDataRequest
     {
-        public Guid DeviceId { get; set; }
+        public Guid DeviceId { get; set; } = Guid.Empty;
+        
+        public string DeviceType { get; set; } = null!;
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
     }
@@ -48,9 +50,9 @@ public class IotDeviceApiController : ControllerBase
     
     [Route("GetAllSensorData")]
     [HttpGet]
-    public async Task<ActionResult<IotDeviceResponse>> GetAllSensorData([FromQuery] SensorDataRequest iotDeviceRequest)
+    public async Task<ActionResult<IotDeviceResponse>> GetAllSensorData([FromQuery] SensorDataRequest sensorDataRequest)
     {
-        var result = await _iotDeviceService.GetAllSensorData(iotDeviceRequest.DeviceId, iotDeviceRequest.Start, iotDeviceRequest.End);
+        var result = await _iotDeviceService.GetAllSensorData(sensorDataRequest.DeviceId, sensorDataRequest.Start, sensorDataRequest.End);
         if (result.IsSuccess)
         {
             return Ok(result.Response);
@@ -62,5 +64,19 @@ public class IotDeviceApiController : ControllerBase
     }
     
     
+    [Route("GetLatestSensorData")]
+    [HttpGet]
+    public async Task<ActionResult<IotDeviceResponse>> GetLatestSensorData([FromQuery] SensorDataRequest sensorDataRequest)
+    {
+        var result = await _iotDeviceService.GetLatestSensorData(sensorDataRequest.DeviceType);
+        if (result.IsSuccess)
+        {
+            return Ok(result.Response);
+        }
+        else
+        {
+            return BadRequest(result.Response);
+        }
+    }
     
 }

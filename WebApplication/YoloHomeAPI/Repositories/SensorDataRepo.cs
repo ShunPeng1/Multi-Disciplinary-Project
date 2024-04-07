@@ -16,12 +16,12 @@ public class SensorDataRepo : ISensorDataRepo
         _connectionString = settings.ConnectionString;
     }
 
-    public async Task<SensorData> GetAsync(string deviceId, DateTime timestamp)
+    public async Task<SensorData> GetAsync(Guid deviceId, DateTime timestamp)
     {
         var query = "SELECT * FROM sensor_data WHERE s_did_fk = @deviceId AND s_timestmp = @timestamp";
         await using var dataSource = NpgsqlDataSource.Create(_connectionString);
         await using var cmd = dataSource.CreateCommand(query);
-        cmd.Parameters.AddWithValue("deviceId", Guid.Parse(deviceId));
+        cmd.Parameters.AddWithValue("deviceId", deviceId);
         cmd.Parameters.AddWithValue("timestamp", timestamp);
         await using var reader = await cmd.ExecuteReaderAsync();
         if (await reader.ReadAsync())
@@ -69,12 +69,12 @@ public class SensorDataRepo : ISensorDataRepo
         await cmd.ExecuteNonQueryAsync();
     }
 
-    public async Task DeleteAsync(string deviceId, DateTime timestamp)
+    public async Task DeleteAsync(Guid deviceId, DateTime timestamp)
     {
         var query = "DELETE FROM sensor_data WHERE s_did_fk = @deviceId AND s_timestmp = @timestamp";
         await using var dataSource = NpgsqlDataSource.Create(_connectionString);
         await using var cmd = dataSource.CreateCommand(query);
-        cmd.Parameters.AddWithValue("deviceId", Guid.Parse(deviceId));
+        cmd.Parameters.AddWithValue("deviceId", deviceId);
         cmd.Parameters.AddWithValue("timestamp", timestamp);
         await cmd.ExecuteNonQueryAsync();
     }
