@@ -9,6 +9,8 @@ function Login() {
   // State variables for username and password
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
 
   // Function to handle form submission
   const handleSubmit = (event) => {
@@ -23,11 +25,20 @@ function Login() {
     console.log('Success:', data);
     localStorage.setItem('token', data.Token);
     localStorage.setItem('username', data.UserName); // Store the username
-    window.location.href = '/dashboard';
+    setPopupMessage('Login successful');
+    setShowPopup(true);
+    // wait for 1 second before redirecting to dashboard
+    setTimeout(() => {
+      window.location.href = '/dashboard';
+    }, 1000);
+    
+    
   }
   
   const errorCallback = (error) => {
     console.error('Error:', error);
+    setPopupMessage('Login failed. Wrong password or username.');
+    setShowPopup(true);
   }
 
   return (
@@ -56,6 +67,12 @@ function Login() {
           </div>
         </div>
       </section>
+      {showPopup && (
+        <div className="popup">
+          <p>{popupMessage}</p>
+          <button onClick={() => setShowPopup(false)}>Close</button>
+        </div>
+      )}
     </div>
   );
 }
