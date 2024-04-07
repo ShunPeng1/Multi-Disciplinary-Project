@@ -28,12 +28,12 @@ public class ActivityLogApiController : ControllerBase
         public string Response { get; set; } = null!;
     }
     
-    [Route("GetAllDevices")]
+    [Route("GetAll")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ActivityLogData>>> GetAll([FromQuery] ActionLogRequest actionLogRequest)
     {
-        
-        var result = await _activityLogService.GetAll(actionLogRequest.Username, actionLogRequest.Start, actionLogRequest.End);
+
+        var result = await _activityLogService.GetAll(actionLogRequest.Username, DateTime.MinValue, DateTime.MaxValue);
         
         if (result.IsSuccess)
         {

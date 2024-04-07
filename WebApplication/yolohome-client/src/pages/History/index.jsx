@@ -1,6 +1,7 @@
   import "./History.css";
   import { useState, useEffect } from "react";
   import Header from "../../components/Header/Header";
+  import FetchRequest from "../../components/api/api";
 
   const History = (props) => {
     const [addModal, setAddModal] = useState(false);
@@ -13,6 +14,8 @@
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
+    const username = localStorage.getItem("username");
+    
     // useEffect(() => {
     //   // Fetch data from your database here
     //   // Example fetch:
@@ -39,6 +42,31 @@
       ];
       setHistoryData(mockHistoryData);
     }, []);
+
+    useEffect(() => {
+      fetchData();
+      const intervalId = setInterval(fetchData, 5000); // Fetch data every 5 seconds
+
+      return () => {
+        clearInterval(intervalId); // Clear interval on component unmount
+      };
+    }, []);
+
+    const fetchData = () => {
+      FetchRequest('api/ActivityLogApi/GetAll', 'GET', {
+        Username: username,
+       
+      }, successCallback, errorCallback);
+    };
+
+    const successCallback = (data) => {
+      console.log('Success:', data);
+      setHistoryData(data.Response);
+    }
+
+    const errorCallback = (error) => {
+      console.error('Error:', error);
+    }
     
 
     return (
@@ -61,15 +89,15 @@
                 </tr>
               </thead>
               <tbody>
-                {historyData
-                  .slice(indexOfFirstItem, indexOfLastItem)
-                  .map((item, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{item.description}</td>
-                      <td>{item.time}</td>
-                    </tr>
-                  ))}
+              {historyData
+                .slice(indexOfFirstItem, indexOfLastItem)
+                .map((item, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{item.Activity}</td> {/* Change to item.Activity */}
+                    <td>{item.TimeStamp}</td> {/* Change to item.TimeStamp */}
+                  </tr>
+                ))}
               </tbody>
             </table>
 
