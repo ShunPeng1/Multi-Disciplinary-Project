@@ -122,9 +122,21 @@ public class IotDeviceService : IIotDeviceService
 
     public async Task<IIotDeviceService.SensorDataResult> GetAllSensorData(Guid deviceId, DateTime start, DateTime end)
     {
-        var sensorData = await _sensorDataRepo.GetAllAsync(deviceId, start, end);
-        var stringData = sensorData.Select(data => data.Value).ToList();
-        return new IIotDeviceService.SensorDataResult(true, stringData);
+        var sensorData = (await _sensorDataRepo.GetAllAsync(deviceId, start, end)).ToList();
+        
+        return new IIotDeviceService.SensorDataResult(true, sensorData);
+    }
+
+    public async Task<IIotDeviceService.SensorDataResult> GetLatestSensorData(string type)
+    {
+        var deviceId =  _devices.Find(device => device.DeviceType == type)?.DeviceId ?? throw new Exception("Device not found");
+        
+        var sensorData= await _sensorDataRepo.GetAllAsync(deviceId, DateTime.MinValue, DateTime.Now);
+        
+        var listData = (sensorData.OrderByDescending(data => data.TimeStamp)).ToList()[0]; // Get the latest data
+        
+        return new IIotDeviceService.SensorDataResult(true, new List<SensorData>(){listData});
+        
     }
 
     public Task<IIotDeviceService.IotDeviceResult> AddSensorDataAsync(AdafruitDataReceiveData data)
@@ -149,6 +161,9 @@ public class IotDeviceService : IIotDeviceService
         return Task.FromResult(new IIotDeviceService.IotDeviceResult(true, null!));
     }
 
+    
+    
+    
     private void LightMessageReceivedHandler(AdafruitDataReceiveData obj)
     {
         IotDeviceData deviceId = _devices.Find(device => device.DeviceType == "Light") ?? throw new Exception("Device not found");
