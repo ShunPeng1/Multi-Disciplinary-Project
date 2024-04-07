@@ -56,8 +56,6 @@
               <thead>
                 <tr className="buyHeader">
                   <th>No.</th>
-                  <th>Device</th>
-                  <th>Room</th>
                   <th>Description</th>
                   <th>Time</th>
                 </tr>
@@ -68,8 +66,6 @@
                   .map((item, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
-                      <td>{item.device}</td>
-                      <td>{item.room}</td>
                       <td>{item.description}</td>
                       <td>{item.time}</td>
                     </tr>
