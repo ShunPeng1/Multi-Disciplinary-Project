@@ -1,5 +1,6 @@
   import "./History.css";
   import { useState, useEffect } from "react";
+  import Header from "../../components/Header/Header";
 
   const History = (props) => {
     const [addModal, setAddModal] = useState(false);
@@ -43,15 +44,8 @@
     return (
       <div className="buypaper">
         <div className="contentSection">
-          <div className="titleContainer">
-            <div className="viewItem">
-              <p className="specialWelcome">Welcome</p>
-              <p className="controlSentence">Control your home from here!</p>
-            </div>
-
-            <div className="viewImg2">
-              <img src="./Images/background_new.png" alt="background_new" />
-            </div>
+          <div className="import-header">
+            <Header />
           </div>
 
           <div className="buyLog">
