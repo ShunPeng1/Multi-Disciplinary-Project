@@ -6,12 +6,12 @@
 
 .icon-fan img {
     width: 60px; /* Adjust as needed */
-    margin-right: 30px; /* Space between the icon and the toggle button */
+    margin-right: 20px; /* Space between the icon and the toggle button */
 }
 
 .state-fan {
     margin-top: -20px;
-    margin-left: 100px;
+    margin-left: 108px;
     font-size: 15px;
     color: #333;
     font-weight: bold;

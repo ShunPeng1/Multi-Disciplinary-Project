@@ -24,6 +24,10 @@ const Dashboard = (props) => {
           <div className="humidityCard">
             <HumidityCard />
           </div>
+          {/* Humidity Chart */}
+          <div className="humidityChart">
+            <img src="./Images/humidity_chart.png" alt ="Humidity Chart"/>
+          </div>
         </div>
         
         <div className="door-and-temp">
@@ -32,6 +36,10 @@ const Dashboard = (props) => {
           </div>
           <div className="temperatureCard">
             <TemperatureCard />
+          </div>
+          {/* Temperature Chart */}
+          <div className="tempChart">
+            <img src="./Images/temp_chart.png" alt="Temperature Chart" />
           </div>
         </div>
         <div className="fanCard">

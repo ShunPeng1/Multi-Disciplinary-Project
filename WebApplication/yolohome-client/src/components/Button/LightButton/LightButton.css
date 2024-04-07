@@ -11,7 +11,7 @@
 
 .icon-light img {
   width: 60px; /* Adjust as needed */
-  margin-right: 30px; /* Space between the icon and the toggle button */
+  margin-right: 20px; /* Space between the icon and the toggle button */
 }
 
 .toggle-button {
@@ -46,7 +46,7 @@
 
 .state-light {
   margin-top: -20px;
-  margin-left: 118px;
+  margin-left: 108px;
   font-size: 15px;
   color: #333;
   font-weight: bold;

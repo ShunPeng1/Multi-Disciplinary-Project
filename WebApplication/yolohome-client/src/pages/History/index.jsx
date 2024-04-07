@@ -47,7 +47,6 @@
           <div className="import-header">
             <Header />
           </div>
-
           <div className="buyLog">
             <div className="title">
               <span className="boxTitle">History</span>
