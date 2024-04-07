@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import History from './pages/History';
 import Register from "./pages/Register";
+import Help from "./pages/Help";
+import Profile from "./pages/Profile";
 
 const MaybeShowNavbar = ({children}) => {
   const location = useLocation();
@@ -43,6 +45,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/history" element={<History/>} />
             <Route path="/register" element={<Register/>} />
+            <Route path="/help" element={<Help/>} />
           </Routes>
         </div>
       </div>

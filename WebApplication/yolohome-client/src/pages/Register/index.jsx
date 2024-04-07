@@ -31,7 +31,7 @@ function Register() {
       console.log('Success:', data);
       localStorage.setItem('token', data.Token);
       localStorage.setItem('username', data.UserName); // Store the username
-      window.location.href = '/dashboard';
+      window.location.href = '/';
     }
 
     const errorCallback = (error) => {
