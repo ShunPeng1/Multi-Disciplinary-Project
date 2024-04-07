@@ -48,6 +48,11 @@ const LightButton = () => {
     setIsOn(data.Response === '1');
     setIsHandling(false);
   }
+  
+  const errorCallback = (error) => {
+    console.error('Error:', error);
+    setIsHandling(false);
+  }
 
   // data display
   return (
