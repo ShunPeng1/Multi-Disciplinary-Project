@@ -33,7 +33,10 @@ public class ManualControlApiController : ControllerBase
         var result = _manualControlService.Execute(manualControlRequest.UserName ,manualControlRequest.Kind, manualControlRequest.Command);
         if (result.IsSuccess)
         {
-            return Ok(result.Response);
+            return Ok(new ManualControlResponse()
+            {
+                Response = result.Response
+            });
         }
         else
         {
