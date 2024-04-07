@@ -29,13 +29,11 @@
       const mockHistoryData = [
         {
           device: "Light",
-          room: "House",
           description: "On",
           time: "2024-04-06 13:00:00"
         },
         {
           device: "Door",
-          room: "House",
           description: "Close",
           time: "2024-04-06 13:30:00"
         },
@@ -43,30 +41,33 @@
       setHistoryData(mockHistoryData);
     }, []);
 
-    useEffect(() => {
-      fetchData();
-      const intervalId = setInterval(fetchData, 5000); // Fetch data every 5 seconds
+    // useEffect(() => {
+    //   fetchData();
+    //   const intervalId = setInterval(fetchData, 5000); // Fetch data every 5 seconds
 
-      return () => {
-        clearInterval(intervalId); // Clear interval on component unmount
-      };
-    }, []);
+    //   return () => {
+    //     clearInterval(intervalId); // Clear interval on component unmount
+    //   };
+    // }, []);
 
-    const fetchData = () => {
-      FetchRequest('api/ActivityLogApi/GetAll', 'GET', {
-        Username: username,
+    // const fetchData = () => {
+    //   FetchRequest('api/ActivityLogApi/GetAll', 'GET', {
+    //     Username: username,
        
-      }, successCallback, errorCallback);
-    };
+    //   }, successCallback, errorCallback);
+    // };
 
-    const successCallback = (data) => {
-      console.log('Success:', data);
-      setHistoryData(data.Response);
-    }
+    // const a = "";
 
-    const errorCallback = (error) => {
-      console.error('Error:', error);
-    }
+    // const successCallback = (data) => {
+    //   console.log('Success:', data);
+    //   setHistoryData(data.Response);
+    //   a = data.Response;
+    // }   
+
+    // const errorCallback = (error) => {
+    //   console.error('Error:', error);
+    // }
     
 
     return (
@@ -84,6 +85,7 @@
               <thead>
                 <tr className="buyHeader">
                   <th>No.</th>
+                  <th>Device</th>
                   <th>Description</th>
                   <th>Time</th>
                 </tr>
@@ -94,8 +96,9 @@
                 .map((item, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{item.Activity}</td> {/* Change to item.Activity */}
-                    <td>{item.TimeStamp}</td> {/* Change to item.TimeStamp */}
+                    <td>{item.device}</td> {/* Change to item.UserName */}
+                    <td>{item.description}</td> {/* Change to item.Activity */}
+                    <td>{item.time}</td> {/* Change to item.TimeStamp */}
                   </tr>
                 ))}
               </tbody>

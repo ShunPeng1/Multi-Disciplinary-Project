@@ -10,6 +10,7 @@ const Profile = () => {
                 <div className = "import-header2">
                     <Header />
                 </div>
+                
             </div>
         </div>
     );

@@ -46,6 +46,8 @@ function App() {
             <Route path="/history" element={<History/>} />
             <Route path="/register" element={<Register/>} />
             <Route path="/help" element={<Help/>} />
+            <Route path="/profile" element={<Profile/>} />
+
           </Routes>
         </div>
       </div>

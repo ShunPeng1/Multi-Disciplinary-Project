@@ -11,8 +11,13 @@ const Help = (props) => {
         <div className="import-header">
           <Header />
         </div>
-        </div>
-        </div>  
+        <a href="https://forms.gle/sZ3vMUUJJxgo1QLc8" target="_blank" rel="noopener noreferrer"> {/* Add this line */}
+          <button className="helpButton">Need help</button>
+        </a> {/* Add this line */}
+      </div>
+
+
+    </div>  
    
   );
 };
