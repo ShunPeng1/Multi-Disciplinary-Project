@@ -12,11 +12,11 @@ public static class PostgreSQLServiceBuilderExtension
         builder.Configuration.Bind("DatabaseSettings", settings);
         builder.Services.AddSingleton(settings);
 
-        builder.Services.AddScoped<IIotDeviceRepo, IotDeviceRepo>();
-        builder.Services.AddScoped<ISensorDataRepo, SensorDataRepo>();
-        builder.Services.AddScoped<IOwnerRepo, OwnerRepo>();
-        builder.Services.AddScoped<IUserRepo, UserRepo>();
-        builder.Services.AddScoped<IActivityLogRepo, ActivityLogRepo>();
+        builder.Services.AddSingleton<IIotDeviceRepo, IotDeviceRepo>();
+        builder.Services.AddSingleton<ISensorDataRepo, SensorDataRepo>();
+        builder.Services.AddSingleton<IOwnerRepo, OwnerRepo>();
+        builder.Services.AddSingleton<IUserRepo, UserRepo>();
+        builder.Services.AddSingleton<IActivityLogRepo, ActivityLogRepo>();
 
     }
     

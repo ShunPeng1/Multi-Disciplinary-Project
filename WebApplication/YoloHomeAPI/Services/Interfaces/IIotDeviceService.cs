@@ -33,4 +33,6 @@ public interface IIotDeviceService
     public Task<IotDeviceResult> GetAllDevices(string username);
     public Task<SensorDataResult> GetAllSensorData(Guid deviceId, DateTime start, DateTime end);
     
+    public Task<IotDeviceResult> AddSensorDataAsync(AdafruitDataReceiveData data);
+    
 }

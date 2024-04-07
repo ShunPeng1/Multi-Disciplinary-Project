@@ -2,32 +2,30 @@
 using YoloHomeAPI.Controllers;
 using YoloHomeAPI.Data;
 using YoloHomeAPI.Repositories.Interfaces;
+using YoloHomeAPI.Settings;
 
 namespace YoloHomeAPI.Services.Interfaces;
 
 public class IotDeviceService : IIotDeviceService
 {
-    private readonly IAdafruitMqttService _adafruitMqttService;
+    private readonly AdafruitSettings _adafruitSettings;
+    
     private readonly IIotDeviceRepo _iotDeviceRepo;
     private readonly ISensorDataRepo _sensorDataRepo;
     private readonly IOwnerRepo _ownerRepo;
     
     private List<IotDeviceData> _devices = new();
     
-    public IotDeviceService(IAdafruitMqttService adafruitMqttService, IIotDeviceRepo iotDeviceRepo, ISensorDataRepo sensorDataRepo, IOwnerRepo ownerRepo)
+    public IotDeviceService(AdafruitSettings adafruitSettings , IIotDeviceRepo iotDeviceRepo, ISensorDataRepo sensorDataRepo, IOwnerRepo ownerRepo)
     {
-        _adafruitMqttService = adafruitMqttService;
+        _adafruitSettings = adafruitSettings;
+        
         _iotDeviceRepo = iotDeviceRepo;
         _sensorDataRepo = sensorDataRepo;
         _ownerRepo = ownerRepo;
 
         MockDeviceCreation();
-
-        _adafruitMqttService.OnHumidityMessageReceived += HumidityMessageReceivedHandler;
-        _adafruitMqttService.OnTemperatureMessageReceived += TemperatureMessageReceivedHandler;
-        _adafruitMqttService.OnDoorMessageReceived += DoorMessageReceivedHandler;
-        _adafruitMqttService.OnFanReceived += FanReceivedHandler;
-        _adafruitMqttService.OnLightMessageReceived += LightMessageReceivedHandler;
+        
         
     }
     
@@ -127,6 +125,28 @@ public class IotDeviceService : IIotDeviceService
         var sensorData = await _sensorDataRepo.GetAllAsync(deviceId, start, end);
         var stringData = sensorData.Select(data => data.Value).ToList();
         return new IIotDeviceService.SensorDataResult(true, stringData);
+    }
+
+    public Task<IIotDeviceService.IotDeviceResult> AddSensorDataAsync(AdafruitDataReceiveData data)
+    {
+        var topic = data.Topic;
+        if (topic.Contains(_adafruitSettings.HumidityTopicPath))   
+            HumidityMessageReceivedHandler(data);
+        else if (topic.Contains(_adafruitSettings.TemperatureTopicPath))
+            TemperatureMessageReceivedHandler(data);
+        else if (topic.Contains(_adafruitSettings.LightTopicPath))
+            LightMessageReceivedHandler(data);
+        else if (topic.Contains(_adafruitSettings.FanTopicPath))
+            FanReceivedHandler(data);
+        else if (topic.Contains(_adafruitSettings.DoorTopicPath))
+            DoorMessageReceivedHandler(data);
+        else
+        {
+            Console.WriteLine("Invalid topic");
+            return Task.FromResult(new IIotDeviceService.IotDeviceResult(false, null!));
+        }
+        
+        return Task.FromResult(new IIotDeviceService.IotDeviceResult(true, null!));
     }
 
     private void LightMessageReceivedHandler(AdafruitDataReceiveData obj)

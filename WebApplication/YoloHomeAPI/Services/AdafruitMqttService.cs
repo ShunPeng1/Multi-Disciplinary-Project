@@ -3,6 +3,7 @@ using MQTTnet;
 using MQTTnet.Client;
 using YoloHomeAPI.Controllers;
 using YoloHomeAPI.Data;
+using YoloHomeAPI.Services.Interfaces;
 using YoloHomeAPI.Settings;
 
 namespace YoloHomeAPI.Services;
@@ -17,22 +18,24 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
 
     private IMqttClient _mqttClient;
 
-    private string _accumulatorStartTimeString = DateTime.UtcNow.ToString();
     private MqttClientOptions _mqttClientOptions;
+    
+    private IIotDeviceService _iotDeviceService;
 
 
-    public Action<AdafruitDataReceiveData> OnDoorMessageReceived { get; set; }
-    public Action<AdafruitDataReceiveData> OnFanReceived { get; set; }
-    public Action<AdafruitDataReceiveData> OnLightMessageReceived { get; set; }
+    public Action<AdafruitDataReceiveData> OnDoorMessageReceived { get; set; } = delegate{ };
+    public Action<AdafruitDataReceiveData> OnFanReceived { get; set; } = delegate{ };
+    public Action<AdafruitDataReceiveData> OnLightMessageReceived { get; set; } = delegate{ };
     public Action<AdafruitDataReceiveData> OnHumidityMessageReceived { get; set; } = delegate { };
     public Action<AdafruitDataReceiveData> OnTemperatureMessageReceived { get; set; } = delegate { };
     
-    public AdafruitMqttService(AdafruitSettings adafruitSetting, IMqttClient mqttClient)
+    public AdafruitMqttService(AdafruitSettings adafruitSetting, IMqttClient mqttClient, IIotDeviceService iotDeviceService)
     {
         _adafruitSetting = adafruitSetting;
         
         _mqttClient = mqttClient;
-        
+        _iotDeviceService = iotDeviceService;
+
         _mqttClientOptions = new MqttClientOptionsBuilder()
             .WithTcpServer("io.adafruit.com", 8883)
             .WithCredentials(_adafruitSetting.AdafruitUsername, _adafruitSetting.AdafruitKey)
@@ -161,21 +164,13 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
         {
             Topic = topic,
             RawMessage = decodedMessage,
-            Values = decodedMessage[2..].Split(';').Select(float.Parse).ToList()
+            Values = decodedMessage.Split(';').Select(float.Parse).ToList() 
         };
-        
-        
-        if (args.ApplicationMessage.Topic.Contains(_adafruitSetting.HumidityTopicPath))
-            OnHumidityMessageReceived.Invoke(adafruitDataReceiveData);
-        else if (args.ApplicationMessage.Topic.Contains(_adafruitSetting.TemperatureTopicPath))
-            OnTemperatureMessageReceived.Invoke(adafruitDataReceiveData);
-        else if (args.ApplicationMessage.Topic.Contains(_adafruitSetting.LightTopicPath))
-            OnLightMessageReceived.Invoke(adafruitDataReceiveData);
-        else if (args.ApplicationMessage.Topic.Contains(_adafruitSetting.FanTopicPath))
-            OnFanReceived.Invoke(adafruitDataReceiveData);
-        else if (args.ApplicationMessage.Topic.Contains(_adafruitSetting.DoorTopicPath))
-            OnDoorMessageReceived.Invoke(adafruitDataReceiveData);
 
+
+        _iotDeviceService.AddSensorDataAsync(adafruitDataReceiveData);
+
+        
         Console.WriteLine("Message received: " + decodedMessage);
         return Task.CompletedTask;
     }

@@ -25,7 +25,7 @@ public static class AdafruitServiceBuilderExtension
 
         builder.Services.AddSingleton<IAdafruitMqttService, AdafruitMqttService>();
 
-        builder.Services.AddScoped<IIotDeviceService, IotDeviceService>();
+        builder.Services.AddSingleton<IIotDeviceService, IotDeviceService>();
 
         builder.Services.AddScoped<IActivityLogService, ActivityLogService>();
 
