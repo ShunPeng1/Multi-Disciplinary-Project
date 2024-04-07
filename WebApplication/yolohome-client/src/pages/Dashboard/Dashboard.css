@@ -101,7 +101,7 @@
 }
 
 .lightCard, .doorCard, .fanCard, .humidityCard, .temperatureCard {
-  margin-bottom: 20px;
+  
   background-color: white;
 }
 
@@ -132,8 +132,32 @@
 
 .lightCard, .doorCard {
   margin-right: 50px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  width: 200px;
+  height: 100px;
 }
 
-.humidityCard, .temperatureCard {
-  margin-top: -20px;
+.fanCard {
+  margin-right: 50px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  width: 200px;
+  height: 100px;
+}
+
+.humidityCard {
+  margin-right: 50px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  width: 130px;
+  height: 120px;
+}
+
+.temperatureCard {
+  margin-right: 50px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  width: 130px;
+  height: 120px;
 }
