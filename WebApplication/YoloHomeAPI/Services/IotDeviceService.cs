@@ -133,9 +133,10 @@ public class IotDeviceService : IIotDeviceService
         
         var sensorData= await _sensorDataRepo.GetAllAsync(deviceId, DateTime.MinValue, DateTime.Now);
         
-        var listData = (sensorData.OrderByDescending(data => data.TimeStamp)).ToList()[0]; // Get the latest data
+        var listData = (sensorData.OrderByDescending(data => data.TimeStamp)).ToList(); 
+        var latestData = listData.Count > 0 ? listData[0] : null!;
         
-        return new IIotDeviceService.SensorDataResult(true, new List<SensorData>(){listData});
+        return new IIotDeviceService.SensorDataResult(true, new List<SensorData>(){latestData});
         
     }
 
