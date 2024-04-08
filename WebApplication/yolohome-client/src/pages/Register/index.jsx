@@ -46,7 +46,8 @@ function Register() {
         <div className='form-box'>
           <div className='form-value'>
             <form onSubmit={handleSubmit}>
-              <h2>Sign up</h2>
+              <div className='signupTitle'>Sign Up</div>
+              <div className='signupDesc'>Enter your information to create a new account.</div>
               <div className='box-name'>
                 <div className='inputbox'>
                   <input type='text' onChange={(e) => setFirstname(e.target.value)} required/>

@@ -1,6 +1,6 @@
 // Login.js
 import React, { useState } from 'react';
-import './Login.css'; // Import CSS file for styling
+import './Login.css';
 import LeftImage1 from './LeftImage1';
 import LeftImage2 from './LeftImage2';
 
@@ -49,7 +49,8 @@ function Login() {
         <div className='form-loginbox'>
           <div className='form-value'>
             <form onSubmit={handleSubmit}>
-              <h2>Login</h2>
+              <div className='loginTitle'>Login</div>
+              <div className='loginDesc'>Enter given account information that you <br/>created.</div>
               <div className='inputbox'>
                 <input type = 'text' onChange={(e) => setUsername(e.target.value)} required/>
                 <label>User Name</label>

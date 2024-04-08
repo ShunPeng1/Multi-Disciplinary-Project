@@ -103,3 +103,16 @@
 .login .register-block p a:hover{
     text-decoration: underline;
 }
+
+.loginTitle {
+  margin-top: -20px;
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.loginDesc {
+  margin-top: 10px;
+  margin-bottom: 60px;
+  font-style: italic;
+}
