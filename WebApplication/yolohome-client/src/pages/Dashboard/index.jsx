@@ -6,6 +6,8 @@ import DoorCard from "../../components/Cards/DoorCard";
 import HumidityCard from "../../components/Cards/HumidityCard";
 import TemperatureCard from "../../components/Cards/TemperatureCard";
 import Header from "../../components/Header/Header";
+import FanSpeedSlider from "../../components/FanSlider";
+
 const Dashboard = (props) => {
 
   return (
@@ -42,8 +44,13 @@ const Dashboard = (props) => {
             <img src="./Images/temp_chart.png" alt="Temperature Chart" />
           </div>
         </div>
-        <div className="fanCard">
-          <FanCard />
+        <div className="fan-container">
+          <div className="fanCard">
+            <FanCard />
+          </div>
+          <div className="sliderBar">
+            <FanSpeedSlider />
+          </div>
         </div>
         
       </div>     
