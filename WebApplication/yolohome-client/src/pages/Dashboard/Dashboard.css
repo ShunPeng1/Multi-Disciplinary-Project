@@ -119,3 +119,7 @@
 .doorCard, .temperatureCard {
   margin-top: -70px;
 }
+
+.fan-and-slider {
+  display: flex;
+}
