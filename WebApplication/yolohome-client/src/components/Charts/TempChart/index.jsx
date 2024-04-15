@@ -31,7 +31,7 @@ const TemperatureChart = ({ data }) => {
   // Chart configuration
   const options = {
     responsive: true, // Make sure responsiveness is enabled
-    maintainAspectRatio: true, // Maintain aspect ratio or set to false to fill container
+    maintainAspectRatio: false, // Maintain aspect ratio or set to false to fill container
     scales: {
       x: {
         beginAtZero: true,
@@ -76,7 +76,11 @@ const TemperatureChart = ({ data }) => {
     responsiveAnimationDuration: 0 // Animation duration after a resize
   };
 
-  return <Line data={chartData} options={options} />;
+  return (
+    <div style={{ height: '125%', width: '100%' }}>
+      <Line data={chartData} options={options} />
+    </div>
+  );
 };
 
 export default TemperatureChart;
