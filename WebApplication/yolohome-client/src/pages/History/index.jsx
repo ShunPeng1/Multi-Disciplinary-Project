@@ -15,31 +15,6 @@
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
     const username = localStorage.getItem("username");
-    
-    // useEffect(() => {
-    //   // Fetch data from your database here
-    //   // Example fetch:
-    //   fetch("your_database_endpoint")
-    //     .then((response) => response.json())
-    //     .then((data) => setHistoryData(data))
-    //     .catch((error) => console.error("Error fetching data:", error));
-    // }, []);
-
-    // useEffect(() => {
-    //   const mockHistoryData = [
-    //     {
-    //       device: "Light",
-    //       description: "On",
-    //       time: "2024-04-06 13:00:00"
-    //     },
-    //     {
-    //       device: "Door",
-    //       description: "Close",
-    //       time: "2024-04-06 13:30:00"
-    //     },
-    //   ];
-    //   setHistoryData(mockHistoryData);
-    // }, []);
 
     useEffect(() => {
       fetchData();
@@ -62,19 +37,11 @@
       setHistoryData(data);
     }   
 
-    
-
-
-
-
     const errorCallback = (error) => {
       console.error('Error:', error);
     }
     
-
     return (
-          // Inside the return statement, add a console log to check the historyData state
-    // console.log("History data:", historyData),
       <div className="buypaper">
         <div className="contentSection">
           <div className="import-header">
@@ -94,11 +61,13 @@
                 </tr>
               </thead>
               <tbody>
-                {historyData && historyData.map((item, index) => (
+                {historyData && [...historyData].reverse().slice(indexOfFirstItem, indexOfLastItem).map((item, index) => (
                   <tr key={index}>
                     <td>{item.Activity}</td>
                     <td>{item.UserName}</td>
-                    <td>{item.TimeStamp}</td>
+                    <td>
+                      {new Date(item.TimeStamp).toLocaleDateString()} {new Date(item.TimeStamp).toLocaleTimeString()}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -112,7 +81,8 @@
                 &#9665;
               </button>
               <span>{currentPage}</span>
-              <button onClick={() => setCurrentPage(currentPage + 1)}>
+              <button onClick={() => setCurrentPage(currentPage + 1)}
+              disabled={currentPage >= Math.ceil(historyData.length / itemsPerPage)}>
                 &#9655;
               </button>
             </div>
