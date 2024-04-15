@@ -25,52 +25,56 @@
     //     .catch((error) => console.error("Error fetching data:", error));
     // }, []);
 
-    useEffect(() => {
-      const mockHistoryData = [
-        {
-          device: "Light",
-          description: "On",
-          time: "2024-04-06 13:00:00"
-        },
-        {
-          device: "Door",
-          description: "Close",
-          time: "2024-04-06 13:30:00"
-        },
-      ];
-      setHistoryData(mockHistoryData);
-    }, []);
-
     // useEffect(() => {
-    //   fetchData();
-    //   const intervalId = setInterval(fetchData, 5000); // Fetch data every 5 seconds
-
-    //   return () => {
-    //     clearInterval(intervalId); // Clear interval on component unmount
-    //   };
+    //   const mockHistoryData = [
+    //     {
+    //       device: "Light",
+    //       description: "On",
+    //       time: "2024-04-06 13:00:00"
+    //     },
+    //     {
+    //       device: "Door",
+    //       description: "Close",
+    //       time: "2024-04-06 13:30:00"
+    //     },
+    //   ];
+    //   setHistoryData(mockHistoryData);
     // }, []);
 
-    // const fetchData = () => {
-    //   FetchRequest('api/ActivityLogApi/GetAll', 'GET', {
-    //     Username: username,
+    useEffect(() => {
+      fetchData();
+      const intervalId = setInterval(fetchData, 5000); // Fetch data every 5 seconds
+
+      return () => {
+        clearInterval(intervalId); // Clear interval on component unmount
+      };
+    }, []);
+
+    const fetchData = () => {
+      FetchRequest('api/ActivityLogApi/GetAll', 'GET', {
+        Username: username,
        
-    //   }, successCallback, errorCallback);
-    // };
+      }, successCallback, errorCallback);
+    };
 
-    // const a = "";
+    const successCallback = (data) => {
+      console.log('Success:', data);
+      setHistoryData(data);
+    }   
 
-    // const successCallback = (data) => {
-    //   console.log('Success:', data);
-    //   setHistoryData(data.Response);
-    //   a = data.Response;
-    // }   
+    
 
-    // const errorCallback = (error) => {
-    //   console.error('Error:', error);
-    // }
+
+
+
+    const errorCallback = (error) => {
+      console.error('Error:', error);
+    }
     
 
     return (
+          // Inside the return statement, add a console log to check the historyData state
+    // console.log("History data:", historyData),
       <div className="buypaper">
         <div className="contentSection">
           <div className="import-header">
@@ -83,22 +87,18 @@
 
             <table className="table">
               <thead>
-                <tr className="buyHeader">
-                  <th>No.</th>
-                  <th>Device</th>
-                  <th>Description</th>
+                <tr>
+                  <th>Username</th>
+                  <th>Activity</th>
                   <th>Time</th>
                 </tr>
               </thead>
               <tbody>
-              {historyData
-                .slice(indexOfFirstItem, indexOfLastItem)
-                .map((item, index) => (
+                {historyData && historyData.map((item, index) => (
                   <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{item.device}</td> {/* Change to item.UserName */}
-                    <td>{item.description}</td> {/* Change to item.Activity */}
-                    <td>{item.time}</td> {/* Change to item.TimeStamp */}
+                    <td>{item.Activity}</td>
+                    <td>{item.UserName}</td>
+                    <td>{item.TimeStamp}</td>
                   </tr>
                 ))}
               </tbody>
