@@ -123,3 +123,19 @@
 .fan-and-slider {
   display: flex;
 }
+
+.tempChart {
+  height: 250px;
+  width: 800px;
+  background-color: #454067;
+  border-radius: 56px;
+  padding: 50px;
+}
+
+.humidityChart {
+  height: 250px;
+  width: 800px;
+  background-color: #454067;
+  border-radius: 56px;
+  padding: 50px;
+}
