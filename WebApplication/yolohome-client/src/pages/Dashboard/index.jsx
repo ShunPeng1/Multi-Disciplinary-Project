@@ -74,7 +74,7 @@ const Dashboard = (props) => {
 
   const successCallback = (data, setFunction) => {
     console.log('Success:', data);
-    const formattedData = data.Response.map(item => {
+    const formattedData = data.map(item => {
       const date = new Date(item.TimeStamp);
       const hours = date.getHours();
       const minutes = date.getMinutes();
@@ -112,7 +112,7 @@ const Dashboard = (props) => {
           {/* Humidity Chart */}
           <div className="humidityChart">
             {/* <img src="./Images/humidity_chart.png" alt ="Humidity Chart"/> */}
-            <HumidityChart data={humidityData} />
+            <HumidityChart data={[...humidityData].reverse()} />
           </div>
         </div>
         
@@ -126,7 +126,7 @@ const Dashboard = (props) => {
           {/* Temperature Chart */}
           <div className="tempChart">
             {/* <img src="./Images/temp_chart.png" alt="Temperature Chart" /> */}
-            <TemperatureChart data={temperatureData} />
+            <TemperatureChart data={[...temperatureData].reverse()} />
           </div>
         </div>
         <div className="fan-and-slider">
