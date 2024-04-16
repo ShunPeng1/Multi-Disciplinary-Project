@@ -31,7 +31,7 @@ public interface IIotDeviceService
     public Task<IotDeviceResult> AddOwner(string username);
     
     public Task<IotDeviceResult> GetAllDevices(string username);
-    public Task<SensorDataResult> GetAllSensorData(Guid deviceId, DateTime start, DateTime end);
+    public Task<SensorDataResult> GetAllSensorData(string type, DateTime start, DateTime end);
     
     public Task<SensorDataResult> GetLatestSensorData(string type);
     

@@ -120,11 +120,15 @@ public class IotDeviceService : IIotDeviceService
        
     }
 
-    public async Task<IIotDeviceService.SensorDataResult> GetAllSensorData(Guid deviceId, DateTime start, DateTime end)
+    public async Task<IIotDeviceService.SensorDataResult> GetAllSensorData(string type, DateTime start, DateTime end)
     {
-        var sensorData = (await _sensorDataRepo.GetAllAsync(deviceId, start, end)).ToList();
+        var deviceId =  _devices.Find(device => device.DeviceType == type)?.DeviceId ?? throw new Exception("Device not found");
         
-        return new IIotDeviceService.SensorDataResult(true, sensorData);
+        var sensorData= await _sensorDataRepo.GetAllAsync(deviceId, DateTime.MinValue, DateTime.Now);
+        
+        var listData = (sensorData.OrderByDescending(data => data.TimeStamp)).ToList(); 
+        
+        return new IIotDeviceService.SensorDataResult(true, listData);
     }
 
     public async Task<IIotDeviceService.SensorDataResult> GetLatestSensorData(string type)

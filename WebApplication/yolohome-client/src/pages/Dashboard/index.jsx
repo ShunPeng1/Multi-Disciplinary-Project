@@ -1,5 +1,4 @@
 import "./Dashboard.css";
-import React from 'react';
 import LightCard from "../../components/Cards/LightCard";
 import FanCard from "../../components/Cards/FanCard";
 import DoorCard from "../../components/Cards/DoorCard";
@@ -10,9 +9,13 @@ import FanSpeedSlider from "../../components/FanSlider";
 import TemperatureChart from "../../components/Charts/TempChart";
 import HumidityChart from "../../components/Charts/HumidChart";
 
-const Dashboard = (props) => {
+import React, { useState, useEffect } from "react";
+import FetchRequest from "../../components/api/api";
 
-  // data for TempChart
+
+const Dashboard = (props) => {
+  
+  /*// data for TempChart
   const temperatureData = [
     { time: '0AM', value: 22 },
     { time: '1PM', value: 26 },
@@ -39,6 +42,54 @@ const Dashboard = (props) => {
     { time: '8PM', value: 90 },
     { time: '9PM', value: 99 },
   ];
+*/
+  const [temperatureData, setTemperatureData] = useState([]);
+  const [humidityData, setHumidityData] = useState([]);
+
+  useEffect(() => {
+    fetchData('Temper', setTemperatureData);
+    fetchData('Humidity', setHumidityData);
+    const intervalId = setInterval(() => {
+      fetchData('Temper', setTemperatureData);
+      fetchData('Humidity', setHumidityData);
+    }, 5000); // Fetch data every 5 seconds
+
+    return () => {
+      clearInterval(intervalId); // Clear interval on component unmount
+    };
+  }, []);
+
+  const fetchData = (deviceType, setFunction) => {
+    const now = new Date();
+    const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000); // 24 hours ago
+
+    FetchRequest('api/IotDeviceApi/GetAllSensorData', 'GET', {
+      DeviceType: deviceType,
+      Start: twentyFourHoursAgo,
+      End: now
+    }, (data) => successCallback(data, setFunction), errorCallback);
+  };
+
+  
+
+  const successCallback = (data, setFunction) => {
+    console.log('Success:', data);
+    const formattedData = data.Response.map(item => {
+      const date = new Date(item.TimeStamp);
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+      const formattedTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes}`; // Format time as 'HH:MM'
+      return {
+        time: formattedTime,
+        value: parseFloat(item.Response) // Ensure the value is a number
+      };
+    });
+    setFunction(formattedData);
+  }
+  const errorCallback = (error) => {
+    console.error('Error:', error);
+  }
+
 
   // layout
   return (

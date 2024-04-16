@@ -35,7 +35,9 @@ public class IotDeviceApiController : ControllerBase
     
     public class SensorDataResponse
     {
+        public Guid DeviceId { get; set; } = Guid.Empty;
         public string Response { get; set; } = null!;
+        public DateTime TimeStamp { get; set; }
     }
      
     [Route("GetAllDevices")]
@@ -57,10 +59,16 @@ public class IotDeviceApiController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<SensorDataResponse>>> GetAllSensorData([FromQuery] SensorDataRequest sensorDataRequest)
     {
-        var result = await _iotDeviceService.GetAllSensorData(sensorDataRequest.DeviceId, sensorDataRequest.Start, sensorDataRequest.End);
+        var result = await _iotDeviceService.GetAllSensorData(sensorDataRequest.DeviceType, sensorDataRequest.Start, sensorDataRequest.End);
         if (result.IsSuccess)
         {
-            var sensorDataResponses = result.Response.Select(sensorData => new SensorDataResponse() { Response = sensorData.Value }).ToList();
+            var sensorDataResponses = result.Response.Select(
+                sensorData => new SensorDataResponse()
+                {
+                    DeviceId = sensorData.DeviceId,
+                    Response = sensorData.Value,
+                    TimeStamp = sensorData.TimeStamp
+                }).ToList();
             return Ok(sensorDataResponses);
         }
         else
@@ -77,8 +85,14 @@ public class IotDeviceApiController : ControllerBase
         var result = await _iotDeviceService.GetLatestSensorData(sensorDataRequest.DeviceType);
         if (result.IsSuccess)
         {
-            var sensorDataResponses = result.Response.Select(sensorData => new SensorDataResponse() { Response = sensorData.Value }).ToList();
-            return Ok(sensorDataResponses.Count > 0 ? sensorDataResponses[0] : new SensorDataResponse() { Response = "No data found" });
+            var sensorDataResponses = result.Response.Select(
+                sensorData => new SensorDataResponse()
+                {
+                    DeviceId = sensorData.DeviceId, 
+                    Response = sensorData.Value,
+                    TimeStamp = sensorData.TimeStamp
+                }).ToList();
+            return Ok(sensorDataResponses.Count > 0 ? sensorDataResponses[0] : new SensorDataResponse() {Response = "No data found", TimeStamp = DateTime.Now});
         }
         else
         {
