@@ -20,20 +20,19 @@ CREATE TABLE IF NOT EXISTS log_record
 			REFERENCES users(username)
 );
 
-CREATE TABLE IF NOT EXISTS device
-(
-	device_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-	d_name VARCHAR(30) NOT NULL,
-	d_location VARCHAR(30),
-	d_type VARCHAR(10),
-	d_state VARCHAR(10)
+CREATE TABLE IF NOT EXISTS device (
+  device_id SERIAL PRIMARY KEY, -- Auto-increments from 1 by default
+  d_name VARCHAR(30) NOT NULL,
+  d_location VARCHAR(30),
+  d_type VARCHAR(10),
+  d_state VARCHAR(10)
 );
 
 CREATE TABLE IF NOT EXISTS sensor_data
 (
 	s_timestmp TIMESTAMP PRIMARY KEY DEFAULT NOW(),
 	s_value VARCHAR(50) NOT NULL,
-	s_did_fk UUID,
+	s_did_fk SERIAL,
 	CONSTRAINT fk_sensor_data
 		FOREIGN KEY(s_did_fk)
 			REFERENCES device(device_id)
@@ -42,7 +41,7 @@ CREATE TABLE IF NOT EXISTS sensor_data
 CREATE TABLE IF NOT EXISTS controls
 (
 	c_username VARCHAR(30),
-	c_did UUID,
+	c_did SERIAL,
 	recurrence VARCHAR(30),
 	start_time TIME,
 	end_time TIME,
