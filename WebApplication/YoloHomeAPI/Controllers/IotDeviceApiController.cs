@@ -30,7 +30,11 @@ public class IotDeviceApiController : ControllerBase
     
     public class IotDeviceResponse
     {
-        public string Response { get; set; } = null!;
+        public Guid DeviceId { get; set; }
+        public string DeviceName { get; set; } = null!;
+        public string DeviceLocation { get; set; } = null!;
+        public string DeviceType { get; set; } = null!;
+        public string DeviceState { get; set; } = null!;
     }
     
     public class SensorDataResponse
@@ -42,12 +46,26 @@ public class IotDeviceApiController : ControllerBase
      
     [Route("GetAllDevices")]
     [HttpGet]
-    public async Task<ActionResult<IotDeviceResponse>> GetAllDevices([FromQuery] IotDeviceRequest iotDeviceRequest)
+    public async Task<ActionResult<List<IotDeviceResponse>>> GetAllDevices([FromQuery] IotDeviceRequest iotDeviceRequest)
     {
         var result = await _iotDeviceService.GetAllDevices(iotDeviceRequest.Username);
         if (result.IsSuccess)
         {
-            return Ok(result.Response);
+            List<IotDeviceResponse> responses = new();
+            foreach (var iotDeviceData in result.Response)
+            {
+                IotDeviceResponse response = new IotDeviceResponse()
+                {
+                    DeviceId = iotDeviceData.DeviceId,
+                    DeviceName = iotDeviceData.DeviceName,
+                    DeviceLocation = iotDeviceData.DeviceLocation,
+                    DeviceType = iotDeviceData.DeviceType,
+                    DeviceState = iotDeviceData.DeviceState
+                };
+                responses.Add(response);
+            }
+            
+            return Ok(responses);
         }
         else
         {
