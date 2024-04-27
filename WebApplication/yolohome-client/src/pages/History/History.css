@@ -127,3 +127,27 @@ td{
     color: #7F56D9;
     padding: 20px 0px;
 }
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .filter-label {
+    margin-right: 10px;
+  }
+  
+  .filter-input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .filter-input:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  }

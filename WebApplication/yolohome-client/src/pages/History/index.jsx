@@ -4,12 +4,13 @@
   import FetchRequest from "../../components/api/api";
 
   const History = (props) => {
-    const [addModal, setAddModal] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [addValue, setAddValue] = useState(0);
+    // const [addModal, setAddModal] = useState(false);
+    // const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [addValue, setAddValue] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5);
     const [historyData, setHistoryData] = useState([]);
+    const [filter, setFilter] = useState('');
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -52,22 +53,31 @@
               <span className="boxTitle">History</span>
             </div>
 
+            <div className="filter-container">
+              <label htmlFor="filter" className="filter-label">Filter by device:</label>
+              <input id="filter" type="text" value={filter} onChange={(e) => setFilter(e.target.value)} className="filter-input" />
+            </div>
             <table className="table">
               <thead>
                 <tr>
                   <th>Username</th>
                   <th>Activity</th>
+                  <th>Device</th>
                   <th>Time</th>
                 </tr>
               </thead>
               <tbody>
-                {historyData && [...historyData].reverse().slice(indexOfFirstItem, indexOfLastItem).map((item, index) => (
+                {historyData && [...historyData].reverse().filter(item => item.UserName.split(" ").pop().toLowerCase().includes(filter.toLowerCase())).slice(indexOfFirstItem, indexOfLastItem).map((item, index) => (
                   <tr key={index}>
                     <td>{item.Activity}</td>
                     <td>{item.UserName}</td>
                     <td>
+                      {item.UserName.split(" ").pop()}
+                    </td>
+                    <td>
                       {new Date(item.TimeStamp).toLocaleDateString()} {new Date(item.TimeStamp).toLocaleTimeString()}
                     </td>
+                    
                   </tr>
                 ))}
               </tbody>
