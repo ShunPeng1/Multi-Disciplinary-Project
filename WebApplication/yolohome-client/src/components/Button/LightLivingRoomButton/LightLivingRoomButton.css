@@ -1,4 +1,4 @@
-.light-button-container {
+.LightLivingRoom-button-container {
   display: flex;
   flex-direction: column;
   
@@ -9,7 +9,7 @@
   align-items: center;
 }
 
-.icon-light img {
+.icon-LightLivingRoom img {
   width: 60px; /* Adjust as needed */
   margin-right: 20px; /* Space between the icon and the toggle button */
 }
@@ -44,7 +44,7 @@
   left: 48px; /* Move circle to the right when on */
 }
 
-.state-light {
+.state-LightLivingRoom {
   margin-top: -20px;
   margin-left: 108px;
   font-size: 15px;

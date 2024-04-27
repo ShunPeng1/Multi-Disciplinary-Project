@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import './LightButton.css';
+import './LightBedRoomButton.css';
 import FetchRequest from "../../api/api";
 
-const LightButton = () => {
-  const storedLightState = localStorage.getItem('isLightOn');
-  const [isOn, setIsOn] = useState(storedLightState ? JSON.parse(storedLightState) : false);
+const LightBedRoomButton = () => {
+  const storedLightBedRoomState = localStorage.getItem('isLightBedRoomOn');
+  const [isOn, setIsOn] = useState(storedLightBedRoomState ? JSON.parse(storedLightBedRoomState) : false);
   const [isHandling, setIsHandling] = useState(false);
   const username = localStorage.getItem('username');
 
   useEffect(() => {
-    localStorage.setItem('isLightOn', JSON.stringify(isOn));
+    localStorage.setItem('isLightBedRoomOn', JSON.stringify(isOn));
   }, [isOn]);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const LightButton = () => {
   const handleSubmit = () => {
     FetchRequest('api/ManualControlApi/Control', 'POST', {
       UserName : username,
-      Kind : 'Light',
+      Kind : 'LightBedRoom',
       Command : isOn ? 'Off' : 'On' // Toggle the command
     }, successCallback, errorCallback);
   };
@@ -39,7 +39,7 @@ const LightButton = () => {
   const fetchData = () => {
     setIsHandling(true);
     FetchRequest('api/IotDeviceApi/GetLatestSensorData', 'GET', {
-      DeviceType: 'Light'
+      DeviceType: 'LightBedRoom'
     }, successCallback, errorCallback);
   };
 
@@ -56,20 +56,20 @@ const LightButton = () => {
 
   // data display
   return (
-    <div className="light-button-container">
+    <div className="LightBedRoom-button-container">
       <div className="icon-and-toggle">
-        <div className={`icon-light ${isHandling ? 'pending' : ''}`} onClick={toggle}>
-          <img src={isOn ? "./Images/light_on.png" : "./Images/light_off.png"} alt={isOn ? 'Light On' : 'Light Off'} />
+        <div className={`icon-LightBedRoom ${isHandling ? 'pending' : ''}`} onClick={toggle}>
+          <img src={isOn ? "./Images/LightBedRoom_on.png" : "./Images/LightBedRoom_off.png"} alt={isOn ? 'LightBedRoom On' : 'LightBedRoom Off'} />
         </div>
         <div className={`toggle-button ${isOn ? 'on' : ''} ${isHandling ? 'pending' : ''}`} onClick={toggle}>
           <div className="toggle-circle"></div>
         </div>
       </div>
-      <div className="state-light">
+      <div className="state-LightBedRoom">
         {isHandling ? 'Handling' : (isOn ? 'On' : 'Off')}
       </div>
     </div>
   );
 };
 
-export default LightButton;
+export default LightBedRoomButton;

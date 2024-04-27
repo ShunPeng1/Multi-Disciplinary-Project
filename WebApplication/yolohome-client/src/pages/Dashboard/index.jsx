@@ -1,5 +1,8 @@
 import "./Dashboard.css";
-import LightCard from "../../components/Cards/LightCard";
+import LightLivingRoomCard from "../../components/Cards/LightLivingRoomCard";
+import LightBedRoomCard from "../../components/Cards/LightBedRoomCard";
+import LightKitchenCard from "../../components/Cards/LightKitchenCard";
+import LightBathRoomCard from "../../components/Cards/LightBathRoomCard";
 import FanCard from "../../components/Cards/FanCard";
 import DoorCard from "../../components/Cards/DoorCard";
 import HumidityCard from "../../components/Cards/HumidityCard";
@@ -102,9 +105,9 @@ const Dashboard = (props) => {
         
         {/* Display Information */}
 
-        <div className="light-and-humid">
-          <div className="lightCard">
-            <LightCard />
+        <div className="lightLivingRoom-and-humid">
+          <div className="LightLivingRoomCard">
+            <LightLivingRoomCard />
           </div>
           <div className="humidityCard">
             <HumidityCard />
@@ -135,6 +138,19 @@ const Dashboard = (props) => {
           </div>
           <div className="sliderBar">
             <FanSpeedSlider />
+          </div>
+        </div>
+        <div className="lightBedRoom-and-lightKitchen">
+          <div className="LightBedRoomCard">
+            <LightBedRoomCard />
+          </div>
+          <div className="LightKitchenCard">
+            <LightKitchenCard />
+          </div>
+        </div>
+        <div className="lightBathRoom">
+          <div className="LightBathRoomCard">
+            <LightBathRoomCard />
           </div>
         </div>
         
