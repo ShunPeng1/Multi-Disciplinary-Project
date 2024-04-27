@@ -61,6 +61,9 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
 
         var mqttSubscribeOptions = mqttFactory.CreateSubscribeOptionsBuilder()
             .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.LightTopicPath); })
+            .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.Light2TopicPath); })
+            .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.Light3TopicPath); })
+            .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.Light4TopicPath); })
             .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.FanTopicPath); })
             .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.DoorTopicPath); })
             .WithTopicFilter(f => { f.WithTopic(_adafruitSetting.HumidityTopicPath); })

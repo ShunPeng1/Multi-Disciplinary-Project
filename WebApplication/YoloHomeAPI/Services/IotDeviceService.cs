@@ -82,6 +82,36 @@ public class IotDeviceService : IIotDeviceService
         };
         await _iotDeviceRepo.AddAsync(lightSensor);
         
+        var light2Sensor = new IotDeviceData()
+        {
+            DeviceId = Guid.NewGuid(),
+            DeviceName = "Light Sensor",
+            DeviceType = "Light2",
+            DeviceLocation = "Bath Room",
+            DeviceState = "Running"
+        };
+        await _iotDeviceRepo.AddAsync(lightSensor);
+        
+        var light3Sensor = new IotDeviceData()
+        {
+            DeviceId = Guid.NewGuid(),
+            DeviceName = "Light Sensor",
+            DeviceType = "Light3",
+            DeviceLocation = "Kitchen Room",
+            DeviceState = "Running"
+        };
+        await _iotDeviceRepo.AddAsync(light3Sensor);
+
+        var light4Sensor = new IotDeviceData()
+        {
+            DeviceId = Guid.NewGuid(),
+            DeviceName = "Light Sensor",
+            DeviceType = "Light4",
+            DeviceLocation = "Bed Room",
+            DeviceState = "Running"
+        };
+        await _iotDeviceRepo.AddAsync(light4Sensor);
+        
         var fanSensor = new IotDeviceData()
         {
             DeviceId = Guid.NewGuid(),
@@ -152,7 +182,13 @@ public class IotDeviceService : IIotDeviceService
         else if (topic.Contains(_adafruitSettings.TemperatureTopicPath))
             TemperatureMessageReceivedHandler(data);
         else if (topic.Contains(_adafruitSettings.LightTopicPath))
-            LightMessageReceivedHandler(data);
+            LightMessageReceivedHandler(data, "Light");
+        else if (topic.Contains(_adafruitSettings.Light2TopicPath))
+            LightMessageReceivedHandler(data, "Light2");
+        else if (topic.Contains(_adafruitSettings.Light3TopicPath))
+            LightMessageReceivedHandler(data, "Light3");
+        else if (topic.Contains(_adafruitSettings.Light4TopicPath))
+            LightMessageReceivedHandler(data, "Light4");
         else if (topic.Contains(_adafruitSettings.FanTopicPath))
             FanReceivedHandler(data);
         else if (topic.Contains(_adafruitSettings.DoorTopicPath))
@@ -167,11 +203,9 @@ public class IotDeviceService : IIotDeviceService
     }
 
     
-    
-    
-    private void LightMessageReceivedHandler(AdafruitDataReceiveData obj)
+    private void LightMessageReceivedHandler(AdafruitDataReceiveData obj, string type)
     {
-        IotDeviceData deviceId = _devices.Find(device => device.DeviceType == "Light") ?? throw new Exception("Device not found");
+        IotDeviceData deviceId = GetLightDevice(type);
         var values = obj.Values;
 
         foreach (var value in values)
@@ -184,6 +218,11 @@ public class IotDeviceService : IIotDeviceService
             };
             _sensorDataRepo.AddAsync(sensorData);
         }
+    }
+    
+    private IotDeviceData GetLightDevice(string type)
+    {
+        return _devices.Find(device => device.DeviceType == type) ?? throw new Exception("Device not found");
     }
 
     private void FanReceivedHandler(AdafruitDataReceiveData obj)
