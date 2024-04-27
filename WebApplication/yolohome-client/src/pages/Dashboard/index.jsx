@@ -128,7 +128,7 @@ const Dashboard = (props) => {
             {/* <img src="./Images/temp_chart.png" alt="Temperature Chart" /> */}
             <TemperatureChart data={[...temperatureData].reverse()} />
           </div>
-        </div>
+        </div>  
         <div className="fan-and-slider">
           <div className="fanCard">
             <FanCard />
