@@ -18,34 +18,6 @@ import FetchRequest from "../../components/api/api";
 
 const Dashboard = (props) => {
   
-  /*// data for TempChart
-  const temperatureData = [
-    { time: '0AM', value: 22 },
-    { time: '1PM', value: 26 },
-    { time: '2PM', value: 24 },
-    { time: '3PM', value: 22 },
-    { time: '4PM', value: 20 },
-    { time: '5PM', value: 21 },
-    { time: '6PM', value: 23 },
-    { time: '7PM', value: 25 },
-    { time: '8PM', value: 27 },
-    { time: '9PM', value: 29 },
-  ];
-
-  // data for the HumidChart
-  const humidityData = [
-    { time: '0AM', value: 50 },
-    { time: '1PM', value: 60 },
-    { time: '2PM', value: 70 },
-    { time: '3PM', value: 20 },
-    { time: '4PM', value: 20 },
-    { time: '5PM', value: 10 },
-    { time: '6PM', value: 30 },
-    { time: '7PM', value: 58 },
-    { time: '8PM', value: 90 },
-    { time: '9PM', value: 99 },
-  ];
-*/
   const [temperatureData, setTemperatureData] = useState([]);
   const [humidityData, setHumidityData] = useState([]);
 
