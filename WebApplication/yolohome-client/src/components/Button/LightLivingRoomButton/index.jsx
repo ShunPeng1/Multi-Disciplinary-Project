@@ -31,7 +31,7 @@ const LightLivingRoomButton = () => {
   const handleSubmit = () => {
     FetchRequest('api/ManualControlApi/Control', 'POST', {
       UserName : username,
-      Kind : 'LightLivingRoom',
+      Kind : 'Light',
       Command : isOn ? 'Off' : 'On' // Toggle the command
     }, successCallback, errorCallback);
   };
@@ -39,7 +39,7 @@ const LightLivingRoomButton = () => {
   const fetchData = () => {
     setIsHandling(true);
     FetchRequest('api/IotDeviceApi/GetLatestSensorData', 'GET', {
-      DeviceType: 'LightLivingRoom'
+      DeviceType: 'Light'
     }, successCallback, errorCallback);
   };
 

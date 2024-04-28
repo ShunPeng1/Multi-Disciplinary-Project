@@ -31,7 +31,7 @@ const LightKitchenButton = () => {
   const handleSubmit = () => {
     FetchRequest('api/ManualControlApi/Control', 'POST', {
       UserName : username,
-      Kind : 'LightKitchen',
+      Kind : 'Light3',
       Command : isOn ? 'Off' : 'On' // Toggle the command
     }, successCallback, errorCallback);
   };
@@ -39,7 +39,7 @@ const LightKitchenButton = () => {
   const fetchData = () => {
     setIsHandling(true);
     FetchRequest('api/IotDeviceApi/GetLatestSensorData', 'GET', {
-      DeviceType: 'LightKitchen'
+      DeviceType: 'Light3'
     }, successCallback, errorCallback);
   };
 

@@ -81,16 +81,18 @@ public class IotDeviceService : IIotDeviceService
             DeviceState = "Running"
         };
         await _iotDeviceRepo.AddAsync(lightSensor);
+        _devices.Add(lightSensor);
         
         var light2Sensor = new IotDeviceData()
         {
             DeviceId = Guid.NewGuid(),
             DeviceName = "Light Sensor",
             DeviceType = "Light2",
-            DeviceLocation = "Bath Room",
+            DeviceLocation = "Bed Room",
             DeviceState = "Running"
         };
-        await _iotDeviceRepo.AddAsync(lightSensor);
+        await _iotDeviceRepo.AddAsync(light2Sensor);
+        _devices.Add(light2Sensor);
         
         var light3Sensor = new IotDeviceData()
         {
@@ -101,16 +103,18 @@ public class IotDeviceService : IIotDeviceService
             DeviceState = "Running"
         };
         await _iotDeviceRepo.AddAsync(light3Sensor);
+        _devices.Add(light3Sensor);
 
         var light4Sensor = new IotDeviceData()
         {
             DeviceId = Guid.NewGuid(),
             DeviceName = "Light Sensor",
             DeviceType = "Light4",
-            DeviceLocation = "Bed Room",
+            DeviceLocation = "Bath Room",
             DeviceState = "Running"
         };
         await _iotDeviceRepo.AddAsync(light4Sensor);
+        _devices.Add(light4Sensor);
         
         var fanSensor = new IotDeviceData()
         {
@@ -121,6 +125,7 @@ public class IotDeviceService : IIotDeviceService
             DeviceState = "Running"
         };
         await _iotDeviceRepo.AddAsync(fanSensor);
+        _devices.Add(fanSensor);
         
     }
 

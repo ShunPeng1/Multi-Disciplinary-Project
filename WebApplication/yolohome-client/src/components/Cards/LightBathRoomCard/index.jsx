@@ -10,7 +10,7 @@ const LightBathRoomCard = () => {
                 <LightBathRoomButton />
             </div>
             <div className="LightBathRoom-header">
-                {'LightBathRoom'}
+                {'Light Bath Room'}
             </div>
         </div>
 

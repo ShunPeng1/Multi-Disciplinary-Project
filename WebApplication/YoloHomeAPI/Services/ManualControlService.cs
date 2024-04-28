@@ -29,7 +29,46 @@ public class ManualControlService : IManualControlService
                 {
                     var result = command == "On" ? "1" : "0"; 
                     _adafruitMqttService.PublishMessage(_adafruitSettings.LightTopicPath, result);
-                    _activityLogService.Add(userName, userName + " turns " + command + " the light.", DateTime.Now);
+                    _activityLogService.Add(userName, "Turn " + command.ToLower() + " the Light Living Room", DateTime.Now);
+                    return new IManualControlService.ManualControlResult(true, result);
+                }
+                catch (Exception _)
+                {
+                    return new IManualControlService.ManualControlResult(false, "Invalid command");
+
+                }
+            case "Light2":
+                try
+                {
+                    var result = command == "On" ? "1" : "0"; 
+                    _adafruitMqttService.PublishMessage(_adafruitSettings.Light2TopicPath, result);
+                    _activityLogService.Add(userName, "Turn " + command.ToLower() + " the Light Bed Room", DateTime.Now);
+                    return new IManualControlService.ManualControlResult(true, result);
+                }
+                catch (Exception _)
+                {
+                    return new IManualControlService.ManualControlResult(false, "Invalid command");
+
+                }
+            case "Light3":
+                try
+                {
+                    var result = command == "On" ? "1" : "0"; 
+                    _adafruitMqttService.PublishMessage(_adafruitSettings.Light3TopicPath, result);
+                    _activityLogService.Add(userName, "Turn " + command.ToLower() + " the Light Kitchen", DateTime.Now);
+                    return new IManualControlService.ManualControlResult(true, result);
+                }
+                catch (Exception _)
+                {
+                    return new IManualControlService.ManualControlResult(false, "Invalid command");
+
+                }
+            case "Light4":
+                try
+                {
+                    var result = command == "On" ? "1" : "0"; 
+                    _adafruitMqttService.PublishMessage(_adafruitSettings.Light4TopicPath, result);
+                    _activityLogService.Add(userName, "Turn " + command.ToLower() + " the Light Bath Room", DateTime.Now);
                     return new IManualControlService.ManualControlResult(true, result);
                 }
                 catch (Exception _)
@@ -43,7 +82,7 @@ public class ManualControlService : IManualControlService
                 {
                     var result = command == "On" ? "1" : "0"; 
                     _adafruitMqttService.PublishMessage(_adafruitSettings.FanTopicPath, result );
-                    _activityLogService.Add(userName, userName + " turns " + command + " the fan.", DateTime.Now);
+                    _activityLogService.Add(userName, "Turn " + command.ToLower() + " the Fan", DateTime.Now);
                     return new IManualControlService.ManualControlResult(true, result);
                 }
                 catch (Exception _)
@@ -57,7 +96,7 @@ public class ManualControlService : IManualControlService
                 {
                     var result = command == "Open" ? "1" : "0"; 
                     _adafruitMqttService.PublishMessage(_adafruitSettings.DoorTopicPath, result);
-                    _activityLogService.Add(userName, userName+" " + command + " the door.", DateTime.Now);
+                    _activityLogService.Add(userName, command + " the Door", DateTime.Now);
                     return new IManualControlService.ManualControlResult(true, result);
                 }
                 catch (Exception _)

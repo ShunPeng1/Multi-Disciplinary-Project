@@ -10,7 +10,7 @@ const LightKitchenCard = () => {
                 <LightKitchenButton />
             </div>
             <div className="LightKitchen-header">
-                {'LightKitchen'}
+                {'Light Kitchen'}
             </div>
         </div>
 

@@ -19,10 +19,11 @@ public class ActivityLogRepo : IActivityLogRepo
     
     public async Task<IEnumerable<ActivityLogData>> GetAllAsync(string username, DateTime start, DateTime end)
     {
-        var query = "SELECT * FROM log_record WHERE l_username_fk = @username AND l_timestmp >= @start AND l_timestmp <= @end";
+        //var query = "SELECT * FROM log_record WHERE l_username_fk = @username AND l_timestmp >= @start AND l_timestmp <= @end";
+        var query = "SELECT * FROM log_record WHERE l_timestmp >= @start AND l_timestmp <= @end";
         await using var dataSource = NpgsqlDataSource.Create(_connectionString);
         await using var cmd = dataSource.CreateCommand(query);
-        cmd.Parameters.AddWithValue("username", username);
+        //cmd.Parameters.AddWithValue("username", username);
         cmd.Parameters.AddWithValue("start", start);
         cmd.Parameters.AddWithValue("end", end);
         await using var reader = await cmd.ExecuteReaderAsync();
@@ -32,8 +33,8 @@ public class ActivityLogRepo : IActivityLogRepo
             activityLogs.Add(new ActivityLogData
             {
                 TimeStamp = reader.GetDateTime(0),
-                UserName = reader.GetString(1),
-                Activity = reader.GetString(2)
+                Activity = reader.GetString(1),
+                UserName = reader.GetString(2)
             });
         }
         return activityLogs;
