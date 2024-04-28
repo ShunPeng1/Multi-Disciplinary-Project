@@ -13,7 +13,6 @@ const LightBathRoomCard = () => {
                 {'Light Bath Room'}
             </div>
         </div>
-
     );
 }
 
