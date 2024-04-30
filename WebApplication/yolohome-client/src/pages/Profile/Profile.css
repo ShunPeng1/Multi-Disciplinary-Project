@@ -1,14 +1,75 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ensure the profile component covers the entire viewport height */
+  background-color: #0C153B;
+  width: 182vh;
+}
+
 .profile .contentSection2 {
     flex-grow: 1;
     width: 100%;
-    padding: 2.5% 2.5% 0 2.5%;
+    /* padding: 2.5% 2.5% 0 2.5%; */
+    padding: 2.5% 2.5% 0 2.5%;    
     background-color: #0C153B;
 }
 
-.profile {
+.profile .contentSection {
+  flex-grow: 1;
+  width: 100%;
+  height: 60%;
+  /* padding: 2.5% 2.5% 0 2.5%; */
+  padding: 5% 2.5% 0 2.5%;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+
+/* Profile.css */
+.profile .profilee {
   display: flex;
-  width: 106%;
-  min-height: 100vh;
-  max-height: 100%;
   flex-direction: column;
+  margin-top: 20px;
+  padding: 40px; /* Increase padding to make the box bigger */
+  border-radius: 10px;
+  color: rgba(102,112,133,1);
+  font-size: 15px;
+  box-shadow: 0 -4px 4px 0px rgba(0, 0, 0, 0.1),
+            4px 0 4px 0 rgba(0, 0, 0, 0.1),
+            0 4px 4px 0 rgba(0, 0, 0, 0.1),
+            -4px 0 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+
+.profile .specialWelcomee {
+  color: #000;
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.profile .info {
+  display: flex;
+  justify-content: space-between;
+}
+/* Profile.css */
+.profile .accountProp {
+  display: flex;
+}
+
+.profile .accountProp .column {
+  flex: 1;
+  margin-right: 450px; /* Add spacing between columns */
+}
+
+.profile .disableInput:disabled {
+  width: 25vw;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  background: #E4E7EC;
+  box-shadow: 0px 6px 15px 0px rgba(64, 79, 104, 0.05);
+  padding: 16px 18px;
+  color: #98A2B3;
+  margin-bottom: 16px;
 }
