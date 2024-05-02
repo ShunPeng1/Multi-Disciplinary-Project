@@ -24,6 +24,9 @@ const Weather = ({ city }) => {
     };
 
     fetchWeather();
+    const intervalId = setInterval(fetchWeather, 600000); // Fetches every 10 minutes
+
+    return () => clearInterval(intervalId); // Cleanup on component unmount
   }, [city]);
 
   if (error) {
