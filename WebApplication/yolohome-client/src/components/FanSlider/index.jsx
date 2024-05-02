@@ -6,7 +6,6 @@ const FanSpeedSlider = () => {
 
   const handleSliderChange = (event) => {
     setFanSpeed(event.target.value);
-    handleSubmit();
   };
 
   const handleInputChange = (event) => {
@@ -14,14 +13,6 @@ const FanSpeedSlider = () => {
     if (!isNaN(value) && value >= 0 && value <= 100) {
       setFanSpeed(value);
     }
-  };
-
-  const handleSubmit = () => {
-    FetchRequest('api/ManualControlApi/Control', 'POST', {
-      UserName : username,
-      Kind : 'Fan',
-      Command : value,
-    }, successCallback, errorCallback);
   };
 
   return (
