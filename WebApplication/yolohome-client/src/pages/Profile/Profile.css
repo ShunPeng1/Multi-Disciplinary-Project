@@ -3,7 +3,7 @@
   flex-direction: column;
   height: 100vh; /* Ensure the profile component covers the entire viewport height */
   background-color: #0C153B;
-  width: 182vh;
+  width: 1600px;
 }
 
 .profile .contentSection2 {
@@ -59,7 +59,7 @@
 
 .profile .accountProp .column {
   flex: 1;
-  margin-right: 450px; /* Add spacing between columns */
+  margin-right: 400px; /* Add spacing between columns */
 }
 
 .profile .disableInput:disabled {

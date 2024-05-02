@@ -16,7 +16,7 @@ ChartJS.register(
 const TemperatureChart = ({ data }) => {
   // Preparing the data for the chart
   const chartData = {
-    labels: data.map(item => item.time),  // Assuming 'time' is your label
+    labels: data.map(item => item.time),
     datasets: [
       {
         label: 'Temperature',

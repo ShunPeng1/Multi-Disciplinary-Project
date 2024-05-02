@@ -12,7 +12,7 @@ const Profile = () => {
 
         <div className="contentSection">
           <div className="welcome">
-            <p className="specialWelcomee">Hồ sơ của bạn</p>
+            <p className="specialWelcomee">Your Profile</p>
           </div>
           <div className="profilee">
             <div className="info">

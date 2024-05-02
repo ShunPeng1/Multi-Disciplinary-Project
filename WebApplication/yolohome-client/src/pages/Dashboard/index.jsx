@@ -77,9 +77,12 @@ const Dashboard = (props) => {
         
         {/* Display Information */}
 
-        <div className="lightLivingRoom-and-humid">
+        <div className="living_kitchen_humid_charthumid">
           <div className="LightLivingRoomCard">
             <LightLivingRoomCard />
+          </div>
+          <div className="LightKitchenCard">
+            <LightKitchenCard />
           </div>
           <div className="humidityCard">
             <HumidityCard />
@@ -91,10 +94,13 @@ const Dashboard = (props) => {
           </div>
         </div>
         
-        <div className="door-and-temp">
+        <div className="bath_door_temp">
+          <div className="LightBathRoomCard">
+            <LightBathRoomCard />
+          </div>
           <div className="doorCard">
             <DoorCard />
-          </div>
+          </div>   
           <div className="temperatureCard">
             <TemperatureCard />
           </div>
@@ -105,24 +111,14 @@ const Dashboard = (props) => {
           </div>
         </div>  
         <div className="fan-and-slider">
+          <div className="LightBedRoomCard">
+            <LightBedRoomCard />
+          </div>
           <div className="fanCard">
             <FanCard />
           </div>
           <div className="sliderBar">
             <FanSpeedSlider />
-          </div>
-        </div>
-        <div className="lightBedRoom-and-lightKitchen">
-          <div className="LightBedRoomCard">
-            <LightBedRoomCard />
-          </div>
-          <div className="LightKitchenCard">
-            <LightKitchenCard />
-          </div>
-        </div>
-        <div className="lightBathRoom">
-          <div className="LightBathRoomCard">
-            <LightBathRoomCard />
           </div>
         </div>
         

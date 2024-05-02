@@ -16,7 +16,7 @@ ChartJS.register(
 const HumidityChart = ({ data }) => {
   // Preparing the data for the chart
   const chartData = {
-    labels: data.map(item => item.time),  // Assuming 'time' is your label
+    labels: data.map(item => item.time),
     datasets: [
       {
         label: 'Humidity',
@@ -63,7 +63,7 @@ const HumidityChart = ({ data }) => {
         display: true,
         position: 'bottom',
         labels: {
-          color: 'green'
+          color: 'white'
         }
       }
     },
