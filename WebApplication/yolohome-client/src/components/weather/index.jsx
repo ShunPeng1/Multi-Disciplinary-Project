@@ -6,7 +6,16 @@ const Weather = ({ city }) => {
   const [error, setError] = useState(null);
 
   // initialize time data
-  const [currentDateTime, setCurrenDateTime] = useState(new Date());
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
+  const [storeDay, setStoreDay] = useState('');
+  const [storeMon, setStoreMon] = useState('');
+  const [storeYear, setStoreYear] = useState('');
+  const [storeHour, setStoreHour] = useState('');
+  const [storeMin, setStoreMin] = useState('');
+  const [storeSec, setStoreSec] = useState('');
+  const [humid, setHumid] = useState(0);
+  const [tempe, setTempe] = useState(0);
+  const [cond, setCond] = useState('');
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -18,12 +27,18 @@ const Weather = ({ city }) => {
         if (!response.ok) {
           throw new Error('Failed to fetch weather data');
         }
+        else {
+
+        }
         const data = await response.json();
         setWeather(data);
       } catch (error) {
         setError(error.message);
         console.error("Failed to fetch weather data:", error);
       }
+      setHumid(weather.main.humidity);
+      setTempe(weather.main.temp);
+      setCond(weather.weather[0].main);
     };
 
     fetchWeather();
@@ -31,8 +46,25 @@ const Weather = ({ city }) => {
 
     // set time each second
     const timeInterval = setInterval(() => {
-      setCurrenDateTime(new Date());
+      setCurrentDateTime(new Date());
+      updateDateComponents(new Date());
     }, 1000);
+
+    const updateDateComponents = (date) => {
+      const options = {year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false};
+      const formattedString = new Intl.DateTimeFormat('en-US', options).format(date);
+
+      const [monthDay, year, time] = formattedString.split(', ');
+      const [month, day] = monthDay.split(' ');
+      const [hour, minute, second] = time.split(':');
+
+      setStoreDay(day);
+      setStoreMon(month);
+      setStoreYear(year);
+      setStoreHour(hour);
+      setStoreMin(minute);
+      setStoreSec(second);
+    }
 
     return () => {
       clearInterval(intervalId); // Cleanup on component unmount
@@ -51,10 +83,10 @@ const Weather = ({ city }) => {
   return (
     <div>
       <h2 className='mycity'>Weather in {city}</h2>
-      <p className='currTemp'>Temperature: {weather.main.temp}°C</p>
-      <p className='cond'>Weather Condition: {weather.weather[0].main}</p>
-      <p className='humid'>Humidity: {weather.main.humidity}%</p>
-      <p className='dateAndTime'>Current Time: {currentDateTime.toLocaleString()}</p>
+      <p className='currTemp'>Temperature: {tempe}°C</p>
+      <p className='cond'>Weather Condition: {cond}</p>
+      <p className='humid'>Humidity: {humid}%</p>
+      <p className='dateAndTime'>{storeDay}, {storeMon}, {storeYear}, {storeHour}, {storeMin}, {storeSec}</p>
     </div>
   );
 };
