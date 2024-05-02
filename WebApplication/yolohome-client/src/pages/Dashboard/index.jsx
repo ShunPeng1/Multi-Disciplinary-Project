@@ -52,7 +52,7 @@ const Dashboard = (props) => {
     const formattedData = data.map(item => {
       const date = new Date(item.TimeStamp);
       const hours = date.getHours();
-      const minutes = date.getMinutes();
+      const minutes = date.getMinutches();
       const formattedTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes}`; // Format time as 'HH:MM'
       return {
         time: formattedTime,

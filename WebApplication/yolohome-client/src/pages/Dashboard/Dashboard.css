@@ -109,12 +109,6 @@
   height: 134px;
 }
 
-.humidityChart img, .tempChart img {
-  width: 775px;
-  height: 267px;
-  margin-top: -20px;
-}
-
 .doorCard, .temperatureCard, .LightBathRoomCard {
   margin-top: -70px;
 }
@@ -128,6 +122,9 @@
   width: 851px;
   background-color: #454067;
   border-radius: 56px;
-  padding: 50px;
+  padding-bottom: 50px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 30px;
   margin-left: 10px;
 }
