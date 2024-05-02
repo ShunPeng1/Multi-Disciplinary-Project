@@ -53,17 +53,33 @@ const TemperatureChart = ({ data }) => {
           drawOnChartArea: true,
           drawTicks: true,
         },
-        ticks: {
+        title: {
+          display: true,
+          text: "Temp. (℃)",
           color: 'white'
         },
+        ticks: {
+          color: 'white'
+        }
       }
     },
     plugins: {
+      title: {
+        display: true,
+        text: "Temperature Chart",
+        color: 'white',
+        font: {
+          size: 20
+        }
+      },
       legend: {
         display: true,
         position: 'bottom',
         labels: {
-          color: 'white'
+          color: 'white',
+          font: {
+            size: 13
+          }
         }
       }
     },

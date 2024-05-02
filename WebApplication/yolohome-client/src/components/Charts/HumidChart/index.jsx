@@ -53,17 +53,33 @@ const HumidityChart = ({ data }) => {
           drawOnChartArea: true,
           drawTicks: true,
         },
+        title: {
+          display: true,
+          text: "Humid. (%)",
+          color: 'white'
+        },
         ticks: {
           color: 'white'
         }
       }
     },
     plugins: {
+      title: {
+        display: true,
+        text: "Humidity Chart",
+        color: 'white',
+        font: {
+          size: 20
+        }
+      },
       legend: {
         display: true,
         position: 'bottom',
         labels: {
-          color: 'white'
+          color: 'white',
+          font: {
+            size: 13
+          }
         }
       }
     },
