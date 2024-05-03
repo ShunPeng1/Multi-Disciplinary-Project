@@ -64,12 +64,24 @@
                 </tr>
               </thead>
               <tbody>
-                {historyData && [...historyData].reverse().filter(item => item.UserName.split(" ").pop().toLowerCase().includes(filter.toLowerCase())).slice(indexOfFirstItem, indexOfLastItem).map((item, index) => (
+                {historyData && [...historyData].reverse().filter(item => item.Activity.split(" ").slice(-3).join(" ").toLowerCase().includes(filter.toLowerCase())).slice(indexOfFirstItem, indexOfLastItem).map((item, index) => (
                   <tr key={index}>
                     <td>{item.UserName}</td>
                     <td>{item.Activity}</td>
                     <td>
-                      {item.Activity.split(" ").pop()}
+                      {
+                        (() => {
+                          const words = item.Activity.split(" ");
+                          if (words.includes("Light")) {
+                            if (words.includes("Kitchen")) {
+                              return words.slice(-2).join(" ");
+                            }
+                            return words.slice(-3).join(" ");
+                          } else {
+                            return words.pop();
+                          }
+                        })()
+                      }
                     </td>
                     <td>
                       {new Date(item.TimeStamp).toLocaleDateString()} {new Date(item.TimeStamp).toLocaleTimeString()}
