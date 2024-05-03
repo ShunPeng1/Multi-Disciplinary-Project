@@ -10,6 +10,9 @@
     text-align: center;
     position: relative;
     overflow: hidden;
+
+    margin-left: 44px;
+    margin-right: 44px;
 }
 
 .date-time {
@@ -23,11 +26,15 @@
     margin-bottom: 10px;
 }
 
+.weatherArea {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    display: flex;
+}
+
 .weather-info {
-    position: absolute;
-    bottom: 20px;
-    left: 0;
-    width: 100%;
+    margin-top: 5px;
+    margin-left: 20px;
 }
 
 .condition {
@@ -43,4 +50,9 @@
 .temperature {
     font-size: 2em;
     font-weight: bold;
+}
+
+.weatherIcon img {
+    width: auto;
+    height: auto;
 }

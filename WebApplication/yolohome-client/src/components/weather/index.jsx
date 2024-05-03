@@ -13,6 +13,23 @@ const Weather = ({ city }) => {
   const [storeHour, setStoreHour] = useState('');
   const [storeMin, setStoreMin] = useState('');
   const [storeSec, setStoreSec] = useState('');
+  
+      // The possible weather conditions:
+      //   1. Clear
+      //   2. Clouds
+      //   3. Thunderstorm
+      //   4. Drizzle
+      //   5. Rain
+      //   6. Snow
+
+  const weatherIcons = {
+    Clear: "clear_icon.png",
+    Clouds: "clouds_icon.png",
+    Thunderstorm: "thunder_icon.png",
+    Drizzle: "drizzle_icon.png",
+    Rain: "rain_icon.png",
+    Snow: "snow_icon.png"
+  }
 
   const updateDateComponents = useCallback((date) => {
     const options = {year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false};
@@ -28,6 +45,7 @@ const Weather = ({ city }) => {
     setStoreHour(hour);
     setStoreMin(minute);
     setStoreSec(second);
+    
   }, []);
 
   useEffect(() => {
@@ -71,15 +89,25 @@ const Weather = ({ city }) => {
     return <p>Loading...</p>;
   }
 
+  // Select the correct icon based on the weather condition
+  const iconSrc = `./Images/${weatherIcons[weather.weather[0].main]}`;
+
   return (
     <div className="weather-widget">
       <div className="date-time">{storeMon} {storeDay}</div>
       <div className="time">{storeHour}:{storeMin}</div>
-      <div className="weather-info">
-        <div className="condition">{weather.weather[0].main}</div>
-        <div className="location">{city}</div>
-        <div className="temperature">{Math.round(weather.main.temp)}°C</div>
+
+      <div className='weatherArea'>
+        <div className='weatherIcon'>
+          <img src={iconSrc} alt={`Weather condition`} />
+        </div>
+        <div className="weather-info">
+          <div className="condition">{weather.weather[0].main}</div>
+          <div className="temperature">{Math.round(weather.main.temp)}°C</div>
+        </div>
       </div>
+
+      <div className="location">{city}</div>
     </div>  
   );
 };
