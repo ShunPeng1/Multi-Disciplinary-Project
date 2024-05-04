@@ -123,6 +123,56 @@ public class DoorControlCommand : ICommand
     }
 }
 
+// Factory interface
+public interface ICommandFactory
+{
+    ICommand CreateCommand(string kind);
+}
+
+// Concrete Factory
+public class CommandFactory : ICommandFactory
+{
+    private readonly IAdafruitMqttService _adafruitMqttService;
+    private readonly AdafruitSettings _adafruitSettings;
+    private readonly IActivityLogService _activityLogService;
+    private readonly string _userName;
+    private readonly string _command;
+
+
+    public CommandFactory(IAdafruitMqttService adafruitMqttService, AdafruitSettings adafruitSettings,
+        IActivityLogService activityLogService, string userName, string command)
+    {
+        _adafruitMqttService = adafruitMqttService;
+        _adafruitSettings = adafruitSettings;
+        _activityLogService = activityLogService;
+        _userName = userName;
+        _command = command;
+    }
+    
+    public ICommand CreateCommand(string kind)
+    {
+        return kind switch
+        {
+            "Light" => new LightControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
+                _userName, _command, _adafruitSettings.LightTopicPath),
+            "Light2" => new LightControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
+                _userName, _command, _adafruitSettings.Light2TopicPath),
+            "Light3" => new LightControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
+                _userName, _command, _adafruitSettings.Light3TopicPath),
+            "Light4" => new LightControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
+                _userName, _command, _adafruitSettings.Light4TopicPath),
+            "Fan" => new FanControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
+                _userName, _command, _adafruitSettings.FanTopicPath),
+            "Door" => new DoorControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
+                _userName, _command, _adafruitSettings.DoorTopicPath),
+            
+            // Add more cases for different kinds of controls as needed
+            _ => throw new ArgumentException($"Unknown kind: {kind}")
+        };
+    }
+    
+}
+
 // Invoker
 public class ManualControlInvoker
 {
@@ -156,25 +206,10 @@ public class ManualControlService : IManualControlService
     {
         try
         {
-            // Create the appropriate command based on the kind
-            ICommand commandObj = kind switch
-            {
-                "Light" => new LightControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
-                    userName, command, _adafruitSettings.LightTopicPath),
-                "Light2" => new LightControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
-                    userName, command, _adafruitSettings.Light2TopicPath),
-                "Light3" => new LightControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
-                    userName, command, _adafruitSettings.Light3TopicPath),
-                "Light4" => new LightControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
-                    userName, command, _adafruitSettings.Light4TopicPath),
-                "Fan" => new FanControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
-                    userName, command, _adafruitSettings.FanTopicPath),
-                "Door" => new DoorControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
-                    userName, command, _adafruitSettings.DoorTopicPath),
-                // Add more cases for different kinds of controls as needed
-                _ => throw new ArgumentOutOfRangeException(nameof(kind), kind, null)
-            };
-
+            // Create factory and command
+            var factory = new CommandFactory(_adafruitMqttService, _adafruitSettings, _activityLogService, userName, command);
+            var commandObj = factory.CreateCommand(kind);
+            
             // Create invoker and execute the command
             var invoker = new ManualControlInvoker(commandObj);
             var result = invoker.ExecuteCommand();
