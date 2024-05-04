@@ -8,11 +8,28 @@
     const [itemsPerPage, setItemsPerPage] = useState(4);
     const [historyData, setHistoryData] = useState([]);
     const [filter, setFilter] = useState('');
+    const [usernameSort, setUsernameSort] = useState(true);
+    const [activitySort, setActivitySort] = useState(true);
+    const [deviceSort, setDeviceSort] = useState(true);
+    const [timeSort, setTimeSort] = useState(true);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
+
     const username = localStorage.getItem("username");
+
+    const sortData = (data, column) => {
+      return data.sort((a, b) => {
+        let comparison = 0;
+        if (a[column] > b[column]) {
+          comparison = 1;
+        } else if (a[column] < b[column]) {
+          comparison = -1;
+        }
+        return comparison;
+      });
+    };
 
     useEffect(() => {
       fetchData();
@@ -26,17 +43,29 @@
     const fetchData = () => {
       FetchRequest('api/ActivityLogApi/GetAll', 'GET', {
         Username: username,
-       
       }, successCallback, errorCallback);
     };
-
+    
     const successCallback = (data) => {
       console.log('Success:', data);
-      setHistoryData(data);
-    }   
-
+      const sortedData = sortData(data, 'UserName');
+      if (!usernameSort) {
+        sortedData.reverse();
+      }
+      setHistoryData(sortedData);
+    }    
+    
     const errorCallback = (error) => {
       console.error('Error:', error);
+    }
+
+    const handleSort = (column, setSort) => {
+      setSort(prev => !prev);
+      const sortedData = sortData([...historyData], column);
+      if (!setSort) {
+        sortedData.reverse();
+      }
+      setHistoryData(sortedData);
     }
     
     return (
@@ -56,12 +85,12 @@
             </div>
             <table className="table">
               <thead>
-                <tr>
-                  <th>Username</th>
-                  <th>Activity</th>
-                  <th>Device</th>
-                  <th>Time</th>
-                </tr>
+              <tr>
+                <th onClick={() => handleSort('UserName', setUsernameSort)}>Username</th>
+                <th onClick={() => handleSort('Activity', setActivitySort)}>Activity</th>
+                <th onClick={() => handleSort('Device', setDeviceSort)}>Device</th>
+                <th onClick={() => handleSort('TimeStamp', setTimeSort)}>Time</th>
+              </tr>
               </thead>
               <tbody>
                 {historyData && [...historyData].reverse().filter(item => item.Activity.split(" ").slice(-3).join(" ").toLowerCase().includes(filter.toLowerCase())).slice(indexOfFirstItem, indexOfLastItem).map((item, index) => (
