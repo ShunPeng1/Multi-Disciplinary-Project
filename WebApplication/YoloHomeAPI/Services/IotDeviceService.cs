@@ -182,21 +182,21 @@ public class IotDeviceService : IIotDeviceService
     public Task<IIotDeviceService.IotDeviceResult> AddSensorDataAsync(AdafruitDataReceiveData data)
     {
         var topic = data.Topic;
-        if (topic.Contains(_adafruitSettings.HumidityTopicPath))   
+        if (topic == (_adafruitSettings.HumidityTopicPath))   
             HumidityMessageReceivedHandler(data);
-        else if (topic.Contains(_adafruitSettings.TemperatureTopicPath))
+        else if (topic == (_adafruitSettings.TemperatureTopicPath))
             TemperatureMessageReceivedHandler(data);
-        else if (topic.Contains(_adafruitSettings.LightTopicPath))
+        else if (topic == (_adafruitSettings.LightTopicPath))
             LightMessageReceivedHandler(data, "Light");
-        else if (topic.Contains(_adafruitSettings.Light2TopicPath))
+        else if (topic == (_adafruitSettings.Light2TopicPath))
             LightMessageReceivedHandler(data, "Light2");
-        else if (topic.Contains(_adafruitSettings.Light3TopicPath))
+        else if (topic == (_adafruitSettings.Light3TopicPath))
             LightMessageReceivedHandler(data, "Light3");
-        else if (topic.Contains(_adafruitSettings.Light4TopicPath))
+        else if (topic == (_adafruitSettings.Light4TopicPath))
             LightMessageReceivedHandler(data, "Light4");
-        else if (topic.Contains(_adafruitSettings.FanTopicPath))
+        else if (topic == (_adafruitSettings.FanTopicPath))
             FanReceivedHandler(data);
-        else if (topic.Contains(_adafruitSettings.DoorTopicPath))
+        else if (topic == (_adafruitSettings.DoorTopicPath))
             DoorMessageReceivedHandler(data);
         else
         {

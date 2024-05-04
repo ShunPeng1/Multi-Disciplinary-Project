@@ -43,6 +43,11 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
             .Build();
     }
 
+    protected override Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        return Task.CompletedTask;
+    }
+
     public override async Task StartAsync(CancellationToken cancellationToken)
     {
         Console.WriteLine("Starting AdafruitMqttService...");
@@ -84,53 +89,6 @@ public class AdafruitMqttService : BackgroundService, IAdafruitMqttService
         
         
         Console.WriteLine("AdafruitMqttService stopped successfully.");
-    }
-
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        var timer = new PeriodicTimer(TimeSpan.FromSeconds(SEND_DATA_BACK_TIMER));
-        while (await timer.WaitForNextTickAsync(stoppingToken))
-        {
-            /*
-            if (_accumulatedPlantDataLogs.Count == 0)
-            {
-                Console.WriteLine("WARNING: The server did not accumulate any log in the last timespan (" + _accumulatorStartTimeString + " to " + DateTime.Now + ").");
-                continue;
-            }
-
-            
-            using var scope = _serviceScopeFactory.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<DbContext>();
-
-            var averagedLightValue = _accumulatedPlantDataLogs.Average(log => log.AveragedLightValue);
-            var averagedTemperatureValue = _accumulatedPlantDataLogs.Average(log => log.AveragedTemperatureValue);
-            var averagedMoistureValue = _accumulatedPlantDataLogs.Average(log => log.AveragedMoistureValue);
-
-            PublishMessage(_helperService.LightTopicPath, averagedLightValue.ToString("0.00"));
-            PublishMessage(_helperService.TemperatureTopicPath, averagedTemperatureValue.ToString("0.00"));
-            PublishMessage(_helperService.HumidityTopicPath, averagedMoistureValue.ToString("0.00"));
-
-            foreach (var accumulatedPlantDataLog in _accumulatedPlantDataLogs)
-            {
-                var ownerPlant = dbContext.PlantInformations.FirstOrDefault(info => info.Kind == accumulatedPlantDataLog.PlantId);
-                if (ownerPlant == null) continue;
-
-                dbContext.PlantDataLogs.AddOwner(new PlantDataLog()
-                {
-                    Timestamp = DateTime.UtcNow,
-                    LightValue = accumulatedPlantDataLog.AveragedLightValue,
-                    TemperatureValue = accumulatedPlantDataLog.AveragedTemperatureValue,
-                    MoistureValue = accumulatedPlantDataLog.AveragedMoistureValue,
-                    LoggedPlant = ownerPlant,
-                });
-            }
-
-            await dbContext.SaveChangesAsync(stoppingToken);
-
-            _accumulatedPlantDataLogs = new();
-            _accumulatorStartTimeString = DateTime.UtcNow.ToString();
-            */
-        }
     }
 
     public async void PublishMessage(string topic, string content)
