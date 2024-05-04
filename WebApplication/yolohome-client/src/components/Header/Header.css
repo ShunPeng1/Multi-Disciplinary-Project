@@ -15,8 +15,7 @@
   padding: 40px;
   width: 800px;
   height: 283px; 
-  margin-right: 20px;
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -30,7 +29,7 @@
 .viewImg2 img {
   border-radius: 20px;
   height: 283px;
-  width: 750px;
+  width: 678px;
 }
 
 .viewItem:last-child {

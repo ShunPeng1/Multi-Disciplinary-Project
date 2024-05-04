@@ -1,3 +1,58 @@
-.mycity, .currTemp, .cond, .humid, .dateAndTime {
+.weather-widget {
+    background: linear-gradient(45deg, #f06a7b 0%, #5e44ff 100%);
+    border-radius: 20px;
     color: white;
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    width: 218px; 
+    height: 283px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+
+    margin-left: 44px;
+    margin-right: 44px;
+}
+
+.date-time {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.time {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.weatherArea {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    display: flex;
+}
+
+.weather-info {
+    margin-top: 5px;
+    margin-left: 20px;
+}
+
+.condition {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.location {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.temperature {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.weatherIcon img {
+    width: auto;
+    height: auto;
 }
