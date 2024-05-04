@@ -103,7 +103,9 @@ public class IotDeviceApiController : ControllerBase
         var result = await _iotDeviceService.GetLatestSensorData(sensorDataRequest.DeviceType);
         if (result.IsSuccess)
         {
-            var sensorDataResponses = result.Response.Select(
+            var sensorDataResponses = result.Response
+                .Where(sensorData => sensorData != null) // Add null check here
+                .Select(
                 sensorData => new SensorDataResponse()
                 {
                     DeviceId = sensorData.DeviceId, 

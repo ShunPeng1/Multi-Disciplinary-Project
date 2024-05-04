@@ -80,9 +80,9 @@ public class ManualControlService : IManualControlService
             case "Fan":
                 try
                 {
-                    var result = command == "On" ? "1" : "0"; 
-                    _adafruitMqttService.PublishMessage(_adafruitSettings.FanTopicPath, result );
-                    _activityLogService.Add(userName, "Turn " + command.ToLower() + " the Fan", DateTime.Now);
+                    var result = command; 
+                    _adafruitMqttService.PublishMessage(_adafruitSettings.FanTopicPath, result);
+                    _activityLogService.Add(userName, "Set speed to " + command.ToLower() + " the Fan", DateTime.Now);
                     return new IManualControlService.ManualControlResult(true, result);
                 }
                 catch (Exception _)
