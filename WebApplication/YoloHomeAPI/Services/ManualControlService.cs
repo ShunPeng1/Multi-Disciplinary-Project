@@ -18,9 +18,10 @@ public class LightControlCommand : ICommand
     private readonly string _userName;
     private readonly string _command;
     private readonly string _topicPath;
+    private readonly string _roomName;
 
     public LightControlCommand(IAdafruitMqttService adafruitMqttService, AdafruitSettings adafruitSettings,
-        IActivityLogService activityLogService, string userName, string command, string topicPath)
+        IActivityLogService activityLogService, string userName, string command, string topicPath, string roomName)
     {
         _adafruitMqttService = adafruitMqttService;
         _adafruitSettings = adafruitSettings;
@@ -28,6 +29,7 @@ public class LightControlCommand : ICommand
         _userName = userName;
         _command = command;
         _topicPath = topicPath;
+        _roomName = roomName;
     }
 
     public string Execute()
@@ -36,7 +38,7 @@ public class LightControlCommand : ICommand
         {
             var result = _command == "On" ? "1" : "0";
             _adafruitMqttService.PublishMessage(_topicPath, result);
-            _activityLogService.Add(_userName, $"Turn {_command.ToLower()} the Light", DateTime.Now);
+            _activityLogService.Add(_userName, $"Turn {_command.ToLower()} the Light "+_roomName, DateTime.Now);
             Console.WriteLine($"Executed command {_command} on Light");
             return result;
         }
@@ -154,13 +156,13 @@ public class CommandFactory : ICommandFactory
         return kind switch
         {
             "Light" => new LightControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
-                _userName, _command, _adafruitSettings.LightTopicPath),
+                _userName, _command, _adafruitSettings.LightTopicPath, "Living Room"),
             "Light2" => new LightControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
-                _userName, _command, _adafruitSettings.Light2TopicPath),
+                _userName, _command, _adafruitSettings.Light2TopicPath, "Bed Room"),
             "Light3" => new LightControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
-                _userName, _command, _adafruitSettings.Light3TopicPath),
+                _userName, _command, _adafruitSettings.Light3TopicPath, "Kitchen"),
             "Light4" => new LightControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
-                _userName, _command, _adafruitSettings.Light4TopicPath),
+                _userName, _command, _adafruitSettings.Light4TopicPath, "Bath Room"),
             "Fan" => new FanControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
                 _userName, _command, _adafruitSettings.FanTopicPath),
             "Door" => new DoorControlCommand(_adafruitMqttService, _adafruitSettings, _activityLogService,
