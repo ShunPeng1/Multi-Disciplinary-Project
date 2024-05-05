@@ -1,8 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Profile.css";
 import Header from "../../components/Header/Header";
+import FetchRequest from "../../components/api/api";
 
 const Profile = () => {
+  const [userData, setUserData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    username: ''
+  });
+
+  useEffect(() => {
+    const username = localStorage.getItem('username');
+    FetchRequest(`api/UserApi/GetUserInformation`, 'GET', {
+        UserName: username
+    }, successCallback, errorCallback);
+  }, []);
+
+  const successCallback = (data) => {
+    setUserData({
+      firstName: data.FirstName,
+      lastName: data.LastName,
+      email: data.Email,
+      username: data.UserName
+    });
+  }
+
+  const errorCallback = (error) => {
+    console.error('Error:', error);
+  }
+
   return (
     <div className="profile">
       <div className="contentSection2">
@@ -23,17 +51,17 @@ const Profile = () => {
                   <input
                     type="text"
                     disabled="disabled"
-                    value="Thanh"
+                    value={userData.firstName}
                     className="disableInput"
                   />
                   <p>Last Name</p>
                   <input
                     type="text"
                     disabled="disabled"
-                    value="Thanh"
+                    value={userData.lastName}
                     className="disableInput"
                   />
-                  
+
                 </div>
                 <div className="column">
                   {/* second column */}
@@ -41,14 +69,14 @@ const Profile = () => {
                   <input
                     type="text"
                     disabled="disabled"
-                    value="test@hcmut.edu.vn"
+                    value={userData.email}
                     className="disableInput"
                   />
                   <p>Username</p>
                   <input
                     type="text"
                     disabled="disabled"
-                    value="Thanh"
+                    value={userData.username}
                     className="disableInput"
                   />
                 </div>

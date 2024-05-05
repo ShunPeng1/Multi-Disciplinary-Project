@@ -31,6 +31,8 @@ public static class AdafruitServiceBuilderExtension
 
         builder.Services.AddScoped<IManualControlService, ManualControlService>();
         
+        builder.Services.AddScoped<IUserService, UserService>();
+        
     }
     
 }
