@@ -20,13 +20,19 @@ const Dashboard = (props) => {
   
   const [temperatureData, setTemperatureData] = useState([]);
   const [humidityData, setHumidityData] = useState([]);
+  const [fanSpeed, setFanSpeed] = useState(0);
+  const [isFanHandling, setIsFanHandling] = useState(false);
+
+  const username = localStorage.getItem('username');
 
   useEffect(() => {
     fetchData('Temper', setTemperatureData);
     fetchData('Humidity', setHumidityData);
+    fetchFanData();
     const intervalId = setInterval(() => {
       fetchData('Temper', setTemperatureData);
       fetchData('Humidity', setHumidityData);
+      fetchFanData();
     }, 5000); // Fetch data every 5 seconds
 
     return () => {
@@ -44,9 +50,7 @@ const Dashboard = (props) => {
       End: now
     }, (data) => successCallback(data, setFunction), errorCallback);
   };
-
   
-
   const successCallback = (data, setFunction) => {
     console.log('Success:', data);
     const formattedData = data.map(item => {
@@ -64,7 +68,35 @@ const Dashboard = (props) => {
   const errorCallback = (error) => {
     console.error('Error:', error);
   }
+  
+  const fetchFanData = () => {
+    FetchRequest('api/IotDeviceApi/GetLatestSensorData', 'GET', {
+      DeviceType: 'Fan'
+    }, successFanCallback, errorFanCallback);
+  }
 
+  const changeFanSpeed = (fanSpeed) => {
+    if (isFanHandling) {
+      return;
+    }
+    
+    setIsFanHandling(true);
+    setFanSpeed(fanSpeed);
+    FetchRequest('api/ManualControlApi/Control', 'POST', {
+      UserName: username,
+      Kind: 'Fan',
+      Command: fanSpeed // Use the passed fan speed
+    }, successFanCallback, errorFanCallback);
+  }
+  const successFanCallback = (data) => {
+    console.log('Success:', data);
+    setFanSpeed(data.Response);
+    setIsFanHandling(false);
+  }
+  const errorFanCallback = (error) => {
+    console.error('Error:', error);
+    setIsFanHandling(false);
+  }
 
   // layout
   return (
@@ -115,10 +147,10 @@ const Dashboard = (props) => {
             <LightBedRoomCard />
           </div>
           <div className="fanCard">
-            <FanCard />
+            <FanCard fanSpeed={fanSpeed} changeFanSpeed={changeFanSpeed} isFanHandling={isFanHandling}/>
           </div>
           <div className="sliderBar">
-            <FanSpeedSlider />
+            <FanSpeedSlider fanSpeed={fanSpeed} changeFanSpeed={changeFanSpeed} isFanHandling={isFanHandling}/>
           </div>
         </div>
         

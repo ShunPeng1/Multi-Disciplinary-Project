@@ -6,7 +6,6 @@ const Weather = ({ city }) => {
   const [error, setError] = useState(null);
 
   // Initialize time data
-  const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [storeDay, setStoreDay] = useState('');
   const [storeMon, setStoreMon] = useState('');
   const [storeYear, setStoreYear] = useState('');
@@ -71,7 +70,6 @@ const Weather = ({ city }) => {
     
     const timeInterval = setInterval(() => {
       const now = new Date();
-      setCurrentDateTime(now);
       updateDateComponents(now);
     }, 1000);
 
