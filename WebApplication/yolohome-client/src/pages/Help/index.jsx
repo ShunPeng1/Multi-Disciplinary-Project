@@ -40,7 +40,7 @@ const Help = (props) => {
         <div>
           <p>To view your activity history in the app, follow these steps:</p>
           <ol>
-            <li>Open the app on your mobile device.</li>
+            <li>Open the History Tab.</li>
             <li>Navigate to the activity history section.</li>
             <li>Here, you can access a log of your past activities and interactions.</li>
           </ol>
