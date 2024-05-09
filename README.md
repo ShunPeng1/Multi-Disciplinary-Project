@@ -4,6 +4,9 @@
 ## Introduction
 The YOLO HOME System project is an exciting endeavor undertaken by our group to create an efficient smart home solution. Our aim is to enhance convenience, security, and energy efficiency for homeowners by seamlessly controlling various indoor devices such as LED lights and appliances. This is achieved through the integration of electronic devices managed by a central processing unit (CPU).
 
+## Demo
+Youtube: https://www.youtube.com/playlist?list=PLLNhyX2CxXhRVQXpgvsloJ39_eZKb_Qi7
+
 ## Technologies Used
 Frontend: React.js
 Backend Server: .NET
