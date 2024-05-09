@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Header from "../../components/Header/Header";
 import "./Help.css";
 
 const Help = (props) => {
