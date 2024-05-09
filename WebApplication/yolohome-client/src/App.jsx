@@ -16,13 +16,9 @@ const MaybeShowNavbar = ({children}) => {
   const [showNavbar, setShowNavbar] = useState(false);
 
   useEffect(() => {
-    if (location.pathname === '/' || location.pathname === '/register' || location.pathname === '/PrintConfig') {
-      setShowNavbar(false);
-    }
-    else {
-      setShowNavbar(true);
-    }
-  }, [location])
+    const noNavbarRoutes = ['/', '/register', '/PrintConfig'];
+    setShowNavbar(!noNavbarRoutes.includes(location.pathname));
+  }, [location]);
 
   return (
     <div>{showNavbar && children}</div>
@@ -36,7 +32,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <MaybeShowNavbar>
+        <MaybeShowNavbar className="custom-navbar">
           <NavBar/>
         </MaybeShowNavbar>
         <div className="content">

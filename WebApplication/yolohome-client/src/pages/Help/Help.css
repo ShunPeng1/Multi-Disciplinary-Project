@@ -48,7 +48,7 @@
   flex-direction: column;
   padding: 40px 20px; /* Adjust padding as needed */
   color: white; /* Set text color to white */
-  margin-bottom: 50px; /* Adjust margin between FAQ section and button */
+  margin-bottom: 50px;
 }
 
 .help .faq {
@@ -56,7 +56,7 @@
   padding: 20px; /* Padding around the FAQ content */
   border-radius: 8px; /* Rounded corners for the FAQ box */
   margin-bottom: 20px; /* Adjust margin between FAQs */
-  width: 1000px; /* Set a fixed width for the FAQ box */
+  width: 700px; /* Set a fixed width for the FAQ box */
   
 }
 
@@ -95,4 +95,10 @@
 
 .help .expandButton:hover {
   color: #45a049; /* Darker green */
+}
+
+.faqSection .faqq {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Creates two columns of equal width */
+  grid-gap: 20px; /* Space between columns */
 }

@@ -1,11 +1,9 @@
-// help.jsx
-
-import "./Help.css";
 import React, { useState } from 'react';
 import Header from "../../components/Header/Header";
+import "./Help.css";
 
 const Help = (props) => {
-  const [expanded, setExpanded] = useState(Array(5).fill(false));
+  const [expanded, setExpanded] = useState(Array(4).fill(false));
 
   const toggleExpansion = (index) => {
     const newExpanded = [...expanded];
@@ -33,7 +31,7 @@ const Help = (props) => {
           <p>For further assistance, please contact us for more support.</p>
         </div>
       )
-    },    
+    },
     {
       question: "How can I view my activity history in the app?",
       answer: (
@@ -47,19 +45,17 @@ const Help = (props) => {
           <p>For further assistance, please contact us for more support.</p>
         </div>
       )
-    },    
+    },
     {
       question: "Can I access my smart home devices remotely when I'm away from home?",
       answer: (
         <div>
           <p>Yes, you can access your smart home devices remotely when you're away from home by using your mobile device's 4G or internet connection.</p>
-          <p> </p>
           <p>Simply open the app on your mobile device and navigate to the remote access section. From there, you can control your smart home devices from anywhere with an internet connection.</p>
-          <p> </p>
           <p>For further assistance, refer to the app's user manual or contact support.</p>
         </div>
       )
-    }    
+    }
   ];
 
   return (
@@ -68,19 +64,19 @@ const Help = (props) => {
         <div className="faqSection">
           <h2>Frequently Asked Questions</h2>
           <div className="faqq">
-          {faqData.map((faq, index) => (
-            <div key={index} className={`faq ${expanded[index] ? 'expanded' : ''}`}>
-              <div className="question">
-                <h3>{faq.question}</h3>
-                <button className="expandButton" onClick={() => toggleExpansion(index)}>+</button>
-              </div>
-              {expanded[index] && (
-                <div className="answer">
-                  <p>{faq.answer}</p>
+            {faqData.map((faq, index) => (
+              <div key={index} className={`faq ${expanded[index] ? 'expanded' : ''}`}>
+                <div className="question">
+                  <h3>{faq.question}</h3>
+                  <button className="expandButton" onClick={() => toggleExpansion(index)}>+</button>
                 </div>
-              )}
-            </div>
-          ))}
+                {expanded[index] && (
+                  <div className="answer">
+                    {faq.answer}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
         <a href="https://forms.gle/sZ3vMUUJJxgo1QLc8" target="_blank" rel="noopener noreferrer">
